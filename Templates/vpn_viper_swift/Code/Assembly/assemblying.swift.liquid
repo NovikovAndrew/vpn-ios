@@ -1,0 +1,17 @@
+{% assign hasPresenterModuleOutput = custom_parameters.hasPresenterModuleOutput %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}import UIKit
+
+{% if extensionPrefix != blank %}extension {{ custom_parameters.modulePath }} {
+    public struct {{ module_info.name }} { {% if hasPresenterModuleOutput == "true" or hasPresenterModuleOutput == blank %}
+        public typealias Configuration = (ModuleInput) -> ModuleOutput?{% endif %}{% if hasPresenterModuleOutput == "false" %}
+        public typealias Configuration = (ModuleInput) -> Void{% endif %}
+        public typealias ModuleAssemblying = {{ protocolPrefix }}ModuleAssemblying
+    }
+}{% else %}public struct {{ module_info.name }} { {% if hasPresenterModuleOutput == "true" or hasPresenterModuleOutput == blank %}
+    public typealias Configuration = (ModuleInput) -> ModuleOutput?{% endif %}{% if hasPresenterModuleOutput == "false" %}
+    public typealias Configuration = (ModuleInput) -> Void{% endif %}
+    public typealias ModuleAssemblying = {{ protocolPrefix }}ModuleAssemblying
+}{% endif %}
+
+public protocol {{ protocolPrefix }}ModuleAssemblying {
+    func assemble(_ configuration: {{ moduleFullName }}.Configuration?) -> UIViewController
+}

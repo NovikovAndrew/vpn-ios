@@ -1,0 +1,28 @@
+{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}import XCTest
+@testable import {{ module_info.product_module_name }}
+
+private typealias Module = {{ moduleFullName }}
+
+class {{ module_info.name }}ViewTests: XCTestCase {
+    private var sut: Module.ViewController!
+    private var presenter: PresenterMock!
+
+    override func setUp() {
+        super.setUp()
+        sut = .init()
+        presenter = .init()
+        sut.output = presenter{% if custom_parameters.hasViewManager == "true" %}
+        sut.viewManager = Module.ViewManager(){% endif %}
+        
+        sut.loadViewForTests()
+        sut.display(viewModel: .init())
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+}
+
+private class PresenterMock: Module.ViewOutput {
+
+}

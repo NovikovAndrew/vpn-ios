@@ -1,0 +1,28 @@
+{% assign moduleType = custom_parameters.type %}{% assign hasPresenterModuleOutput = custom_parameters.hasPresenterModuleOutput %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}private typealias Module = {{ moduleFullName }}
+
+extension Module {
+    final class ModuleAssembly: BaseModuleAssembly, ModuleAssemblying {
+        func assemble(_ configuration: Configuration? = nil) -> UIViewController {
+            let presenter: Presenter = .init()
+
+            let viewController: ViewController = .init()
+            presenter.view = viewController
+            viewController.output = presenter{% if moduleType == "VIPER" or moduleType == blank %}
+            
+            let router: Router = .init()
+            router.viewController = viewController
+            presenter.router = router
+
+            let interactor: Interactor = .init()
+            interactor.output = presenter
+            presenter.interactor = interactor{% endif %}{% if custom_parameters.hasViewManager == "true" %}
+
+            let viewManager: ViewManager = .init()
+            viewController.viewManager = viewManager{% endif %}{% if hasPresenterModuleOutput == "true" or hasPresenterModuleOutput == blank %}
+            presenter.moduleOutput = configuration?(presenter){% endif %}{% if hasPresenterModuleOutput == "false" %}
+            configuration?(presenter){% endif %}
+
+            return viewController
+        }
+    }
+}

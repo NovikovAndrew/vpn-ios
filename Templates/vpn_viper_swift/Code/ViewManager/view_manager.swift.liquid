@@ -1,0 +1,39 @@
+{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}import UIKit
+
+private typealias Module = {{ moduleFullName }}
+
+protocol {{ protocolPrefix }}ViewManaging: UITableViewDataSource {
+    var customizedTable: UITableView { get }
+    func reloadViewData(_ data: [{{ moduleFullName }}.Cell.ViewModel])
+}
+
+extension Module {
+    typealias ViewManaging = {{ protocolPrefix }}ViewManaging
+
+    class ViewManager: NSObject, ViewManaging {
+        private var data: [Cell.ViewModel] = []
+    
+        lazy private(set) var customizedTable: UITableView = {
+            let tableView = UITableView(frame: .zero, style: .plain)
+            tableView.backgroundColor = .clear
+            tableView.dataSource = self
+            tableView.register(Cell.self)
+            return tableView
+        }()
+        
+        func reloadViewData(_ data: [Cell.ViewModel]) {
+            self.data = data
+            customizedTable.reloadData()
+        }
+        
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return data.count
+        }
+        
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell: Cell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+            cell.set(viewModel: data[indexPath.row])
+            return cell
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}private typealias Module = {{ moduleFullName }}
+
+extension Module {
+    public typealias ModuleInput = {{ protocolPrefix }}ModuleInput
+    public typealias ModuleOutput = {{ protocolPrefix }}ModuleOutput
+
+    public struct ConfigData {
+        public init() {}
+    }
+}
+
+public protocol {{ protocolPrefix }}ModuleInput: AnyObject {
+    func configure(_ data: {{ moduleFullName }}.ConfigData)
+}
+
+public protocol {{ protocolPrefix }}ModuleOutput: AnyObject {}

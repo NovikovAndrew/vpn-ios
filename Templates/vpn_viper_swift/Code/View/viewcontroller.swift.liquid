@@ -1,0 +1,44 @@
+{% assign hasViewManager = custom_parameters.hasViewManager %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}private typealias Module = {{ moduleFullName }}
+private typealias ViewController = {{ moduleFullName }}.ViewController
+
+extension Module {
+    final class ViewController: BaseController {
+
+        // MARK: - Dependencies
+
+        var output: ViewOutput?{% if hasViewManager == "true" %}
+        var viewManager: ViewManaging!{% endif %}{% if hasViewManager == "false" or hasViewManager == blank %}
+        
+        private lazy var contentView: View = build{<#T##(T) -> Void#>}{% endif %}
+
+        // MARK: - Lifecycle{% if hasViewManager == "false" or hasViewManager == blank %}
+
+        override func loadView() {
+            super.loadView()
+            self.view = contentView
+        }{% endif %}
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            output?.didLoad()
+        }
+
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            output?.didAppear()
+        }
+        
+        override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+            output?.didDisappear()
+        }
+    }
+}
+
+// MARK: - ViewInput
+
+extension ViewController: Module.ViewInput {
+    func display(viewModel: {{ moduleFullName }}.ViewModel) {
+
+    }
+}

@@ -1,0 +1,66 @@
+# Template information section
+name: "vpn_viper_swift"
+summary: "Swift VIPER module template for vpn-ios project"
+author: "Novikov Andrey"
+
+{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}
+{% assign filePrefix = extensionPrefix | replace: ".", "" %}
+{% assign customFileName = filePrefix | append: module_info.name %}
+
+# PARAMETERS FAQ
+# declaration: --custom-parameters=[parameter_name:value parameter_name:value etc.]
+# parameters list:
+#   1. hasViewManager = true/false(default)
+#   2. hasPresenterModuleOutput = true(default)/false
+#   2. modulePath = example: [BigModule] or nested variant: [BigModule.SubModule]
+#   3. type = MVP, VIPER(default)
+
+# The declarations for code files
+
+code_files:
+# Assembly
+- {custom_name: {{ customFileName }}Assemblying.swift, name: "Assembly/.swift", path: Code/Assembly/assemblying.swift.liquid}
+- {custom_name: {{ customFileName }}Assembly.swift, name: "Assembly/.swift", path: Code/Assembly/assembly.swift.liquid}
+
+# Presenter layer
+- {custom_name: {{ customFileName }}ModuleInputOutput.swift, name: "Presenter/.swift", path: Code/Presenter/module_input_output.swift.liquid}
+- {custom_name: {{ customFileName }}Presenter.swift, name: "Presenter/.swift", path: Code/Presenter/presenter.swift.liquid}
+
+{% if custom_parameters.type == "VIPER" or custom_parameters.type == blank %}
+# Interactor layer
+- {custom_name: {{ customFileName }}InteractorInput.swift, name: "Interactor/.swift", path: Code/Interactor/interactor_input.swift.liquid}
+- {custom_name: {{ customFileName }}InteractorOutput.swift, name: "Interactor/.swift", path: Code/Interactor/interactor_output.swift.liquid}
+- {custom_name: {{ customFileName }}Interactor.swift, name: "Interactor/.swift", path: Code/Interactor/interactor.swift.liquid}
+
+# Router layer
+- {custom_name: {{ customFileName }}RouterInput.swift, name: "Router/.swift", path: Code/Router/router_input.swift.liquid}
+- {custom_name: {{ customFileName }}Router.swift, name: "Router/.swift", path: Code/Router/router.swift.liquid}
+{% endif %}
+
+{% if custom_parameters.hasViewManager == "false" or custom_parameters.hasViewManager == blank %}
+# View
+- {custom_name: {{ customFileName }}View.swift, name: "ViewController/View/.swift",  path: Code/View/contentview.swift.liquid}
+{% endif %}
+
+{% if custom_parameters.hasViewManager == "true" %}
+# ViewManager
+- {custom_name: {{ customFileName }}ViewManager.swift, name: "ViewController/ViewManager/.swift",  path: Code/ViewManager/view_manager.swift.liquid}
+- {custom_name: {{ customFileName }}Cell.swift, name: "ViewController/ViewManager/.swift",  path: Code/ViewManager/cell.swift.liquid}
+{% endif %}
+
+# View layer
+- {custom_name: {{ customFileName }}ViewInputOutput.swift, name: "ViewController/.swift",  path: Code/View/view_input_output.swift.liquid}
+- {custom_name: {{ customFileName }}ViewController.swift, name: "ViewController/.swift", path: Code/View/viewcontroller.swift.liquid}
+- {custom_name: {{ customFileName }}ViewModels.swift, name: "ViewController/.swift", path: Code/View/view_model.swift.liquid}
+
+# The declarations for test files
+test_files:
+
+# Configurators tests
+- {custom_name: {{ customFileName }}AssemblyTests.swift, name: "Assembly/.swift", path: Tests/Assembly/assembly_tests.swift.liquid}
+
+# View tests
+- {custom_name: {{ customFileName }}ViewTests.swift, name: "View/.swift", path: Tests/View/view_tests.swift.liquid}
+
+# Presenter tests
+- {custom_name: {{ customFileName }}PresenterTests.swift, name: "Presenter/.swift", path: Tests/Presenter/presenter_tests.swift.liquid}

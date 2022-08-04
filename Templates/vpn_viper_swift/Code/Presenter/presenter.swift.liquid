@@ -1,0 +1,40 @@
+{% assign moduleType = custom_parameters.type %}{% assign hasPresenterModuleOutput = custom_parameters.hasPresenterModuleOutput %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}private typealias Module = {{ moduleFullName }}
+
+private typealias Presenter = {{ moduleFullName }}.Presenter
+
+extension Module {
+    final class Presenter: ViewOutput {
+
+        // MARK: - Dependencies
+
+        weak var view: ViewInput!{% if moduleType == "VIPER" or moduleType == blank %}
+        var interactor: InteractorInput!
+        var router: RouterInput!{% endif %}{% if hasPresenterModuleOutput == "true" or hasPresenterModuleOutput == blank %}
+        weak var moduleOutput: ModuleOutput!{% endif %}
+
+        // MARK: - Private Properties
+
+        private var configData: ConfigData?
+        
+        // MARK: - ViewOutput methods
+        
+        func didLoad() {
+            guard let configData = configData else { return }
+            view?.display(viewModel: ViewModel())
+        }
+    }
+}
+
+// MARK: - ModuleInput
+
+extension Presenter: Module.ModuleInput {
+	func configure(_ data: {{ moduleFullName }}.ConfigData) {
+        self.configData = data
+    }
+}{% if moduleType == "VIPER" or moduleType == blank %}
+
+// MARK: - InteractorOutput
+
+extension Presenter: Module.InteractorOutput {
+
+}{% endif %}

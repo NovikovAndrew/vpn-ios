@@ -1,0 +1,61 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+    {
+      "hash" : "0823ef6d294c9ee2f4237cfb1b968a445e6de6d61ebfe2d023f03750593a632c",
+      "name" : "YandexMobileMetrica",
+      "container" : "YandexMobileMetrica.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "1de686083d4c1ffd7687953985aed42e2ddb6a8b433fffd3a82d76b784e17cff",
+      "name" : "YandexMobileMetrica",
+      "container" : "YandexMobileMetrica.xcframework",
+      "identifier" : "tvos-arm64"
+    },
+    {
+      "hash" : "dda4936a5c638af7e35932bde663de5104194d4c8d587b054e1ab9a8e587e108",
+      "name" : "YandexMobileMetricaCrashes",
+      "container" : "YandexMobileMetricaCrashes.xcframework",
+      "identifier" : "tvos-arm64_x86_64-simulator"
+    },
+    {
+      "hash" : "f4e2d3b67d5a3346b5e4e6d462fda02da238365053ad940020b205db13b18442",
+      "name" : "YandexMobileMetricaCrashes",
+      "container" : "YandexMobileMetricaCrashes.xcframework",
+      "identifier" : "tvos-arm64"
+    }
+  ],
+  "commitish" : "4.2.0",
+  "iOS" : [
+    {
+      "hash" : "708ceb101943e83ed9b94b610155614e2d563e8d34280b2b6ff253c6fb43a42d",
+      "name" : "YandexMobileMetrica",
+      "container" : "YandexMobileMetrica.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "3059bd87cd2ff74e39adfb5bfd5fff824876db7ed092d235b79ed72fb7f12d1b",
+      "name" : "YandexMobileMetrica",
+      "container" : "YandexMobileMetrica.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    },
+    {
+      "hash" : "1cd75df6e884386233c7393d1fac3513c889985a54e7edcd7499dad0a8d67e20",
+      "name" : "YandexMobileMetricaCrashes",
+      "container" : "YandexMobileMetricaCrashes.xcframework",
+      "identifier" : "ios-arm64_i386_x86_64-simulator"
+    },
+    {
+      "hash" : "e757510afa62c23791588dd091121357cf49d0b411cca803660dcb5a1555defe",
+      "name" : "YandexMobileMetricaCrashes",
+      "container" : "YandexMobileMetricaCrashes.xcframework",
+      "identifier" : "ios-arm64_armv7"
+    }
+  ]
+}

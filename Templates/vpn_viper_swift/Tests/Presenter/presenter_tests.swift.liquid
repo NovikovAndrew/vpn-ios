@@ -1,0 +1,43 @@
+{% assign moduleType = custom_parameters.type %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}import XCTest
+import TestsUtilities
+@testable import {{ module_info.product_module_name }}
+
+private typealias Module = {{ moduleFullName }}
+
+class {{ module_info.name }}PresenterTest: XCTestCase {
+    private var sut: Module.Presenter!
+    private var view: ViewMock!{% if moduleType == "VIPER" or moduleType == blank %}
+    private var interactor: InteractorMock!{% endif %}
+
+    override func setUp() {
+        super.setUp()
+        sut = .init()
+        view = .init(){% if moduleType == "VIPER" or moduleType == blank %}
+        interactor = .init()
+        sut.interactor = interactor{% endif %}
+        sut.view = view
+        
+        sut.configure(.init())
+        sut.didLoad()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testViewModel() {
+        let vm = view.viewModel
+        
+    }
+}
+
+private class ViewMock: BaseViewInputMock, Module.ViewInput {
+    var viewModel: Module.ViewModel?
+    func display(viewModel: Module.ViewModel) {
+        self.viewModel = viewModel
+    }
+}
+{% if moduleType == "VIPER" or moduleType == blank %}
+private class InteractorMock: Module.InteractorInput {
+
+}{% endif %}

@@ -1,0 +1,36 @@
+{% assign moduleType = custom_parameters.type %}{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}import XCTest
+@testable import {{ module_info.product_module_name }}
+
+private typealias Module = {{ moduleFullName }}
+
+class {{ module_info.name }}ModuleAssemblyTests: XCTestCase {
+    func testModuleRegisteredInContainer() {
+        let assembly = injector.inject(Module.ModuleAssemblying.self)
+        XCTAssertNotNil(assembly, "{{ module_info.name }}.Module is registered in Swinject container")
+    }
+    
+    func testConfigureModuleForViewController() {
+        let assembly = Module.ModuleAssembly(injection: injector)
+        
+        let vc = assembly.assemble { _ in 
+            return nil
+        }
+        
+        guard let viewController = vc as? Module.ViewController else {
+            XCTFail("Not a {{ module_info.name }}.ViewController")
+            return
+        }
+
+        XCTAssertNotNil(viewController.output, "{{ module_info.name }}.ViewController is nil after configuration")
+        XCTAssertTrue(viewController.output is Module.Presenter, "output is not {{ module_info.name }}.Presenter")
+
+        let presenter: Module.Presenter? = viewController.output as? Module.Presenter
+        XCTAssertNotNil(presenter?.view, "view in {{ module_info.name }}.Presenter is nil after configuration")
+        {% if moduleType == "VIPER" %}
+        XCTAssertNotNil(presenter?.router, "router in {{ module_info.name }}.Presenter is nil after configuration")
+        XCTAssertTrue(presenter!.router is Module.Router, "router is not {{ module_info.name }}.Router")
+
+        let interactor: Module.Interactor? = presenter?.interactor as? Module.Interactor
+        XCTAssertNotNil(interactor?.output, "output in {{ module_info.name }}.Interactor is nil after configuration"){% endif %}
+    }
+}

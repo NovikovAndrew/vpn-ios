@@ -1,0 +1,11 @@
+{% if custom_parameters.modulePath != blank %}{% assign extensionPrefix = custom_parameters.modulePath | append: "." %}{% endif %}{% assign filePrefix = extensionPrefix | replace: ".", "" %}{% assign moduleFullName = extensionPrefix | append: module_info.name %}{% assign protocolPrefix = filePrefix | append: module_info.name %}private typealias Module = {{ moduleFullName }}
+
+extension Module {
+    final class Interactor: InteractorInput {
+        weak var output: InteractorOutput!
+        
+        required init() {
+        
+        }
+    }
+}
