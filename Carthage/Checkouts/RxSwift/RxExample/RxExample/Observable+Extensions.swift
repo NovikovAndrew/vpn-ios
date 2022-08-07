@@ -23,8 +23,9 @@ extension ObservableType where Element == Any {
      Events are represented by `Event` parameter.
 
      - parameter initialState: Initial state of the system.
-     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
-     - parameter feedback: Feedback loops that produce events depending on current system state.
+     - parameter reduce: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter scheduler: Scheduler on which observable sequence receives elements
+     - parameter scheduledFeedback: Feedback loops that produce events depending on current system state.
      - returns: Current state of the system.
      */
     public static func system<State, Event>(
@@ -44,7 +45,7 @@ extension ObservableType where Element == Any {
             })
                 // This is protection from accidental ignoring of scheduler so
                 // reentracy errors can be avoided
-                .observeOn(CurrentThreadScheduler.instance)
+                .observe(on:CurrentThreadScheduler.instance)
 
             return events.scan(initialState, accumulator: reduce)
                 .do(onNext: { output in
@@ -52,9 +53,9 @@ extension ObservableType where Element == Any {
                 }, onSubscribed: {
                     replaySubject.onNext(initialState)
                 })
-                .subscribeOn(scheduler)
+                .subscribe(on: scheduler)
                 .startWith(initialState)
-                .observeOn(scheduler)
+                .observe(on:scheduler)
         }
     }
 
@@ -64,7 +65,7 @@ extension ObservableType where Element == Any {
         scheduler: ImmediateSchedulerType,
         scheduledFeedback: Feedback<State, Event>...
         ) -> Observable<State> {
-        return system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
+        system(initialState: initialState, reduce: reduce, scheduler: scheduler, scheduledFeedback: scheduledFeedback)
     }
 }
 
@@ -79,7 +80,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
      Events are represented by `Event` parameter.
 
      - parameter initialState: Initial state of the system.
-     - parameter accumulator: Calculates new system state from existing state and a transition event (system integrator, reducer).
+     - parameter reduce: Calculates new system state from existing state and a transition event (system integrator, reducer).
      - parameter feedback: Feedback loops that produce events depending on current system state.
      - returns: Current state of the system.
      */
@@ -109,7 +110,7 @@ extension SharedSequenceConvertibleType where Element == Any, SharingStrategy ==
                 reduce: @escaping (State, Event) -> State,
                 feedback: Feedback<State, Event>...
         ) -> Driver<State> {
-        return system(initialState: initialState, reduce: reduce, feedback: feedback)
+        system(initialState: initialState, reduce: reduce, feedback: feedback)
     }
 }
 
@@ -144,6 +145,6 @@ public struct ObservableSchedulerContext<Element>: ObservableType {
     }
 
     public func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
-        return self.source.subscribe(observer)
+        self.source.subscribe(observer)
     }
 }

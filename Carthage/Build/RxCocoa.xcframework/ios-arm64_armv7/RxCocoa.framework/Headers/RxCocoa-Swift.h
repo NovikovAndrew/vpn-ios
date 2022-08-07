@@ -253,17 +253,6 @@ SWIFT_CLASS("_TtC7RxCocoa13ControlTarget")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 @class UICollectionView;
 @class NSIndexPath;
 @class UICollectionViewCell;
@@ -532,17 +521,6 @@ SWIFT_CLASS("_TtC7RxCocoa13ControlTarget")
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
-
-
-
-
-
-
-
-
-
-
-
 
 
 

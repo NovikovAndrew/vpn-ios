@@ -14,6 +14,13 @@
 		9900A5FF289BA0760050CE26 /* AppImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */; };
 		9900A602289BA0A20050CE26 /* AppColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */; };
 		9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */; };
+		99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B13289FE5E800C9C4E3 /* swiftgen.yml */; };
+		99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */; };
+		99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */; };
+		99A44B1C289FE79D00C9C4E3 /* api_codes_flatkeys.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B1B289FE79D00C9C4E3 /* api_codes_flatkeys.stencil */; };
+		99A44B1E289FE91400C9C4E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B1D289FE91400C9C4E3 /* Localizable.strings */; };
+		99A44B20289FE92F00C9C4E3 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */; };
+		99A44B23289FEE7200C9C4E3 /* ApiLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +42,13 @@
 		9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImageAssets.xcassets; sourceTree = "<group>"; };
 		9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppColorAssets.xcassets; sourceTree = "<group>"; };
 		9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRegistrationPresentable.swift; sourceTree = "<group>"; };
+		99A44B13289FE5E800C9C4E3 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = vpn_assets.stencil; sourceTree = "<group>"; };
+		99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vpn-locale.stencil"; sourceTree = "<group>"; };
+		99A44B1B289FE79D00C9C4E3 /* api_codes_flatkeys.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = api_codes_flatkeys.stencil; sourceTree = "<group>"; };
+		99A44B1D289FE91400C9C4E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = ApiLocalizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,10 +91,11 @@
 		9900A5CE289B98490050CE26 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				99A44B21289FEA9C00C9C4E3 /* Generated */,
+				99A44B0C289ED4DA00C9C4E3 /* VPNColor */,
 				9900A631289BA2220050CE26 /* Injection */,
 				9900A600289BA0870050CE26 /* Extentions */,
-				9900A5FB289BA03E0050CE26 /* XCAssets */,
-				9900A5FA289BA0340050CE26 /* Localization */,
+				99A44B12289FE53900C9C4E3 /* Resources */,
 				9900A5CF289B98490050CE26 /* Utilities.h */,
 				9900A5D0289B98490050CE26 /* Utilities.docc */,
 			);
@@ -93,15 +108,6 @@
 				9900A5DB289B984A0050CE26 /* UtilitiesTests.swift */,
 			);
 			path = UtilitiesTests;
-			sourceTree = "<group>";
-		};
-		9900A5FA289BA0340050CE26 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				9900A604289BA0C20050CE26 /* apiError */,
-				9900A603289BA0BE0050CE26 /* localization */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		9900A5FB289BA03E0050CE26 /* XCAssets */ = {
@@ -123,15 +129,19 @@
 		9900A603289BA0BE0050CE26 /* localization */ = {
 			isa = PBXGroup;
 			children = (
+				99A44B1D289FE91400C9C4E3 /* Localizable.strings */,
+				99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */,
 			);
-			path = localization;
+			name = localization;
+			path = Localization/localization;
 			sourceTree = "<group>";
 		};
-		9900A604289BA0C20050CE26 /* apiError */ = {
+		9900A604289BA0C20050CE26 /* apiErrors */ = {
 			isa = PBXGroup;
 			children = (
+				99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */,
 			);
-			path = apiError;
+			path = apiErrors;
 			sourceTree = "<group>";
 		};
 		9900A631289BA2220050CE26 /* Injection */ = {
@@ -140,6 +150,50 @@
 				9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */,
 			);
 			path = Injection;
+			sourceTree = "<group>";
+		};
+		99A44B0C289ED4DA00C9C4E3 /* VPNColor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VPNColor;
+			sourceTree = "<group>";
+		};
+		99A44B12289FE53900C9C4E3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B15289FE6EE00C9C4E3 /* swiftgen_templates */,
+				9900A5FB289BA03E0050CE26 /* XCAssets */,
+				9900A604289BA0C20050CE26 /* apiErrors */,
+				9900A603289BA0BE0050CE26 /* localization */,
+				99A44B13289FE5E800C9C4E3 /* swiftgen.yml */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		99A44B15289FE6EE00C9C4E3 /* swiftgen_templates */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B16289FE6F900C9C4E3 /* strings */,
+				99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */,
+			);
+			path = swiftgen_templates;
+			sourceTree = "<group>";
+		};
+		99A44B16289FE6F900C9C4E3 /* strings */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */,
+				99A44B1B289FE79D00C9C4E3 /* api_codes_flatkeys.stencil */,
+			);
+			path = strings;
+			sourceTree = "<group>";
+		};
+		99A44B21289FEA9C00C9C4E3 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Generated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +289,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9900A602289BA0A20050CE26 /* AppColorAssets.xcassets in Resources */,
+				99A44B23289FEE7200C9C4E3 /* ApiLocalizable.strings in Resources */,
+				99A44B20289FE92F00C9C4E3 /* Localizable.stringsdict in Resources */,
+				99A44B1E289FE91400C9C4E3 /* Localizable.strings in Resources */,
 				9900A5FF289BA0760050CE26 /* AppImageAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,7 +310,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */,
+				99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */,
+				99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */,
 				9900A5D1289B98490050CE26 /* Utilities.docc in Sources */,
+				99A44B1C289FE79D00C9C4E3 /* api_codes_flatkeys.stencil in Sources */,
 				9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

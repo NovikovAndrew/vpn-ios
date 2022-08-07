@@ -3,22 +3,82 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## 6.5.0
+
+You can now use `await` on `Observable`-conforming objects (as well as `Driver`, `Signal`, `Infallible`, `Single`, `Completable`) using the following syntax:
+
+```swift
+do {
+  for value in try await observable.values {
+      print(value) // Next event
+  }
+  // Completed here
+} catch {
+  // Error event
+  print("An error occurred:", error.localizedDescription)
+}
+
+```
+
+Check out the [full documentation](https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md) for additional information: https://github.com/ReactiveX/RxSwift/blob/main/Documentation/SwiftConcurrency.md
+
+## 6.2.0
+
+**Breaking**
+
+- **Deprecate withUnretained for `Driver`**
+> **Note**: It is extremely rare to ship a breaking change in a patch release, but this is a relatively fresh feature with unusual circumstances. For the full story, see #2290.
+
+**Other changes**
+- Add new `subscribe(with:onNext:onError:onCompleted:onDisposed:)` alternatives to `withUnretained`. This exists for all traits and types: `Observable`, `Driver`, `Signal`, `Infallible`, `Completable`, `Single`, `Maybe` #2290
+- `Reactive` now supports structs and value-types again, with the dynamic look-up specifically dealing with `AnyObject`s #2285
+- Fix xcframework support for `RxCocoa` (Drag in new **RxCocoaRuntime.xcframework** alongside `RxCocoa`)
+- Freeze `MaybeEvent` and `CompletableEvent` #2271 #2272
+- Fix missing **RxCocoaRuntime.h** header in `RxCocoa` podspec #2281
+- Remove invalid **libswiftXCTest.dylib** linking to support Xcode 12.5
+- Print URLRequest body `httpBody`, regardless of HTTP Method #2288
+
+## 6.0.0-rc.2
+
+- Support for XCFrameworks, with binaries now bundled with each release.
+- Updated tests for new `Infallible` trait.
+- Fix an issue building for watchOS.
+- Move `URLSession` logging settings to a more appropriate `URLSession.rx.shouldLogRequest` configurable closure.
+- README, CI, and additional house cleaning.
+
+## 6.0.0-rc.1
+
+**Note 1**: RxSwift 6 and above has a minimum deployment target of iOS 9 and targets Swift 5.1 (Xcode 11) and above
+**Note 2**: Starting with RxSwift 6.x, RxSwift will no longer follow Swift versioning. Meaning, RxSwift can possibly move to v6, v7 or v8 while Swift itself is still in 5.x.
+
+* Minimum Swift version is now 5.1. #2077
+* Minimum deployment target is iOS 9.
+* Remove scoped imports in favor of library evolution. #2103
+* `Reactive` now uses `@dynamicMemberLookup` to provide automatic binders for most properties. #2110
+* Add `ReplayRelay`. #2109
+* `Binder` is now part of RxSwift itself, instead of RxCocoa only. #2110
+* Add `ObservableConvertibleType` conformance to `SharedSequence`. #2019
+* Add `onDisposed` closure argument to `subscribe` on `Maybe`, `Completable` and `Single`. #1977
+* Add `Driver.drive()` and `Signal.emit()` for multiple observers/relays. #1962
+* Added `defaultValue` to `sample` to be returned when no new events occur between sampler ticks. #1457
+* Change return type of `didFinishPickingMediaWithInfo` Reactive Extension.
+* Fix a linking issue when swizzling observer methods. #2209
+* New `decode(type:decoder:)` operator for `Observable<Data>`.
+
 ## Unreleased
 
-* Nothing, yet.
-
-## [5.1.3](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.3)
-
-fix: adjust method signatures for Xcode 12.5 compatibility (#2305)
-
-## [5.1.2](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.2)
-
-Remove invalid libswiftXCTest.dylib linking to support Xcode 12.5
+* Add KVO observation with Key Path.
+* Add `distinctUntilChanged(at:)` for Key Paths.
+* Fix `DelegateProxy` call to `layoutIfNeeded` for an object without a window. #2076
+* Add `ControlEvent` wrappers to `UIApplication` Notifications. #2116
+* `SharingScheduler.mock(scheduler:action:)` can use throwing function for `action`. #2150
 
 ## [5.1.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.1)
 
 * Make `NSTextView` not weak for Swift 5.2 and up.
 * Add `WKWebView` navigation delegate reactive extensions. #2144
+
+**Note**: We no longer guarantee support for Xcode 10.x. Maintaining these is counter-intuitive as they're over a year old and are ridden with bugs. 
 
 ## [5.1.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.1.0)
 
@@ -531,7 +591,7 @@ textField.rx.text.orEmpty  // <- now has type `ControlProperty<String>`
 ```swift
 let text: Observable<String> = Observable.just("")
 
-// Previously `map { $0 }` was needed because of mismatch betweeen sequence `String` type and `String?` type
+// Previously `map { $0 }` was needed because of mismatch between sequence `String` type and `String?` type
 // on binding `rx.text` observer.
 text.bindTo(label.rx.text)  
    .disposed(by: disposeBag)

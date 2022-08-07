@@ -20,8 +20,6 @@ Pull requests are more appreciated to improve Swinject or to fix problems. Any k
 
 ### Getting Started
 
-Framework dependencies of Swinject are managed with [Carthage](https://github.com/Carthage/Carthage/releases). Make sure you have its latest version installed. The latest installer is available at [the Carthage release page](https://github.com/Carthage/Carthage/releases).
-
 To setup a Swinject repository in your local Mac, run `git clone` command in Terminal.
 
 `git clone --recursive git@github.com:Swinject/Swinject.git`
@@ -30,11 +28,11 @@ Move to the Swinject directory.
 
 `cd Swinject`
 
-Then run `carthage` command to build the frameworks that Swinject uses.
-
-`carthage bootstrap`
-
 Now it is ready to open `Swinject.xcodeproj`. Modify the code, run unit tests, and submit your pull request.
+
+### Project Generation
+
+If you need to add / change any project settings or files inside the `Sources` folder, remember to also update the `project.yml`, which keeps our project generation in sync with the `Swinject.xcodeproj`. 
 
 ### Code Style
 
@@ -48,3 +46,9 @@ The installation of SwiftLint to your environment is optional. [Hound CI](https:
 Some Swift source files are generated from ERB files, e.g. `Resolver.swift` is generated from `Resolver.erb`, to easily maintain a set of functions that only differ the number of arguments. The generated source files are located under `GeneratedCode` group in the Xcode project. Do not modify the generated code directly, but instead modify the source ERB code. After modifying the ERB code, run `script/gencode` script to generate the Swift code.
 
 **Thank you for contributing!**
+
+## For Maintainers
+
+### Making a new release version
+
+Our release procedure is described as [Makefile](https://github.com/Swinject/Swinject/blob/master/Makefile). Run `make help` coomand for more info.

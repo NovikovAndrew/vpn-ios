@@ -1,0 +1,19 @@
+{
+  "Mac" : [
+
+  ],
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "commitish" : "7.0.0",
+  "iOS" : [
+    {
+      "name" : "FirebaseABTesting",
+      "hash" : "2293951a97b2348dd1e9a521d8025c203c5c68b553bea5c937655141ca1114ba",
+      "linking" : "dynamic"
+    }
+  ]
+}

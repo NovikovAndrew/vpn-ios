@@ -72,6 +72,7 @@
 		991B4EC1289B948F0086BD03 /* vpn_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpn_iosUITests.swift; sourceTree = "<group>"; };
 		991B4EC3289B948F0086BD03 /* vpn_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpn_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9979D678289BC7D5008BD172 /* Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		99A44B24289FF84900C9C4E3 /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +107,7 @@
 		9900A5E6289B986A0050CE26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99A44B24289FF84900C9C4E3 /* Swinject.xcframework */,
 				9979D678289BC7D5008BD172 /* Auth.framework */,
 				9900A62E289BA1A40050CE26 /* CommonUI.framework */,
 				9900A5EF289B98AE0050CE26 /* Utilities.framework */,

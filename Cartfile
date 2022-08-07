@@ -1,7 +1,16 @@
-binary "https://raw.githubusercontent.com/yandexmobile/metrica-sdk-ios/master/YandexMobileMetrica.json" ~> 4.0.0
-github "Moya/Moya" == 14.0.1
-github "Swinject/Swinject" == 2.7.1
-github "ReactiveX/RxSwift" ~> 5.0
+github "Moya/Moya" ~> 15.0
+github "ReactiveX/RxSwift" "6.5.0"
+github "Swinject/Swinject"
+github "SnapKit/SnapKit" ~> 5.0.0
 github "realm/realm-cocoa" == 10.20.2
-github "SnapKit/SnapKit" ~> 4.0.0
 github "airbnb/lottie-ios" == 3.2.1
+
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseABTestingBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseCrashlyticsBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseDatabaseBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseDynamicLinksBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseMessagingBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseProtobufBinary.json" == 7.0.0
+binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseRemoteConfigBinary.json" == 7.0.0
+binary "https://raw.githubusercontent.com/yandexmobile/metrica-sdk-ios/master/YandexMobileMetrica.json" ~> 4.0.0

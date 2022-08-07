@@ -10,10 +10,7 @@ let package = Package(
             targets: ["Swinject"]
         ),
     ],
-    dependencies: [
-        .package(url: "https://github.com/Quick/Quick", from: "2.1.0"),
-        .package(url: "https://github.com/Quick/Nimble", from: "8.0.1"),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Swinject",
@@ -23,8 +20,6 @@ let package = Package(
         .testTarget(
             name: "SwinjectTests",
             dependencies: [
-                "Quick",
-                "Nimble",
                 "Swinject",
             ]
         ),

@@ -11,6 +11,13 @@
 		9900A61F289BA1710050CE26 /* CommonUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9900A614289BA1710050CE26 /* CommonUI.framework */; };
 		9900A624289BA1710050CE26 /* CommonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A623289BA1710050CE26 /* CommonUITests.swift */; };
 		9900A625289BA1710050CE26 /* CommonUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 9900A617289BA1710050CE26 /* CommonUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		99A44AF9289ECD6100C9C4E3 /* VPNTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44AF8289ECD6100C9C4E3 /* VPNTextField.swift */; };
+		99A44AFC289ECDF500C9C4E3 /* CommonUIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44AFB289ECDF500C9C4E3 /* CommonUIFactory.swift */; };
+		99A44AFE289ED0C900C9C4E3 /* CommonUIPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44AFD289ED0C900C9C4E3 /* CommonUIPresentable.swift */; };
+		99A44B00289ED15000C9C4E3 /* CommonUIFactoryPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44AFF289ED15000C9C4E3 /* CommonUIFactoryPresentable.swift */; };
+		99A44B04289ED1FA00C9C4E3 /* VPNTextFieldPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B03289ED1FA00C9C4E3 /* VPNTextFieldPresentable.swift */; };
+		99A44B06289ED23300C9C4E3 /* VPNTextFieldDefaultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B05289ED23300C9C4E3 /* VPNTextFieldDefaultItem.swift */; };
+		99A44B0B289ED40200C9C4E3 /* CommonUIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B0A289ED40200C9C4E3 /* CommonUIElement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		9900A618289BA1710050CE26 /* CommonUI.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CommonUI.docc; sourceTree = "<group>"; };
 		9900A61E289BA1710050CE26 /* CommonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A623289BA1710050CE26 /* CommonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUITests.swift; sourceTree = "<group>"; };
+		99A44AF8289ECD6100C9C4E3 /* VPNTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNTextField.swift; sourceTree = "<group>"; };
+		99A44AFB289ECDF500C9C4E3 /* CommonUIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUIFactory.swift; sourceTree = "<group>"; };
+		99A44AFD289ED0C900C9C4E3 /* CommonUIPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUIPresentable.swift; sourceTree = "<group>"; };
+		99A44AFF289ED15000C9C4E3 /* CommonUIFactoryPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUIFactoryPresentable.swift; sourceTree = "<group>"; };
+		99A44B03289ED1FA00C9C4E3 /* VPNTextFieldPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNTextFieldPresentable.swift; sourceTree = "<group>"; };
+		99A44B05289ED23300C9C4E3 /* VPNTextFieldDefaultItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNTextFieldDefaultItem.swift; sourceTree = "<group>"; };
+		99A44B0A289ED40200C9C4E3 /* CommonUIElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUIElement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +85,9 @@
 		9900A616289BA1710050CE26 /* CommonUI */ = {
 			isa = PBXGroup;
 			children = (
+				99A44AFA289ECDDF00C9C4E3 /* Factory */,
+				99A44B07289ED25E00C9C4E3 /* VPNButton */,
+				99A44AF7289ECCCD00C9C4E3 /* VPNTetxField */,
 				9900A617289BA1710050CE26 /* CommonUI.h */,
 				9900A618289BA1710050CE26 /* CommonUI.docc */,
 			);
@@ -83,6 +100,66 @@
 				9900A623289BA1710050CE26 /* CommonUITests.swift */,
 			);
 			path = CommonUITests;
+			sourceTree = "<group>";
+		};
+		99A44AF7289ECCCD00C9C4E3 /* VPNTetxField */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B02289ED1E800C9C4E3 /* PresentableItem */,
+				99A44B01289ED1E100C9C4E3 /* View */,
+			);
+			path = VPNTetxField;
+			sourceTree = "<group>";
+		};
+		99A44AFA289ECDDF00C9C4E3 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				99A44AFD289ED0C900C9C4E3 /* CommonUIPresentable.swift */,
+				99A44AFF289ED15000C9C4E3 /* CommonUIFactoryPresentable.swift */,
+				99A44B0A289ED40200C9C4E3 /* CommonUIElement.swift */,
+				99A44AFB289ECDF500C9C4E3 /* CommonUIFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		99A44B01289ED1E100C9C4E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				99A44AF8289ECD6100C9C4E3 /* VPNTextField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		99A44B02289ED1E800C9C4E3 /* PresentableItem */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B03289ED1FA00C9C4E3 /* VPNTextFieldPresentable.swift */,
+				99A44B05289ED23300C9C4E3 /* VPNTextFieldDefaultItem.swift */,
+			);
+			path = PresentableItem;
+			sourceTree = "<group>";
+		};
+		99A44B07289ED25E00C9C4E3 /* VPNButton */ = {
+			isa = PBXGroup;
+			children = (
+				99A44B09289ED27400C9C4E3 /* PresentableItem */,
+				99A44B08289ED26C00C9C4E3 /* View */,
+			);
+			path = VPNButton;
+			sourceTree = "<group>";
+		};
+		99A44B08289ED26C00C9C4E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		99A44B09289ED27400C9C4E3 /* PresentableItem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PresentableItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +271,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A44B04289ED1FA00C9C4E3 /* VPNTextFieldPresentable.swift in Sources */,
+				99A44B0B289ED40200C9C4E3 /* CommonUIElement.swift in Sources */,
+				99A44AFE289ED0C900C9C4E3 /* CommonUIPresentable.swift in Sources */,
+				99A44B00289ED15000C9C4E3 /* CommonUIFactoryPresentable.swift in Sources */,
+				99A44AFC289ECDF500C9C4E3 /* CommonUIFactory.swift in Sources */,
+				99A44AF9289ECD6100C9C4E3 /* VPNTextField.swift in Sources */,
 				9900A619289BA1710050CE26 /* CommonUI.docc in Sources */,
+				99A44B06289ED23300C9C4E3 /* VPNTextFieldDefaultItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +484,7 @@
 		9900A62C289BA1710050CE26 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C7L2AL6Q55;
@@ -416,6 +501,7 @@
 		9900A62D289BA1710050CE26 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C7L2AL6Q55;
