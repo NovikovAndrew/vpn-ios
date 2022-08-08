@@ -65,7 +65,7 @@ class BaseRetryPolicyTestCase: BaseTestCase {
 
     let session = Session(rootQueue: .main, startRequestsImmediately: false)
 
-    let url = Endpoint().url
+    let url = URL(string: "https://api.alamofire.org")!
 
     let connectionLost = URLError(.networkConnectionLost)
     let resourceUnavailable = URLError(.resourceUnavailable)
@@ -76,7 +76,6 @@ class BaseRetryPolicyTestCase: BaseTestCase {
     lazy var unknownError = AFError.sessionTaskFailed(error: unknown)
 
     let retryableStatusCodes: Set<Int> = [408, 500, 502, 503, 504]
-    let statusCodes = Set(100...599)
 
     let retryableErrorCodes: Set<URLError.Code> = [.backgroundSessionInUseByAnotherProcess,
                                                    .backgroundSessionWasDisconnected,
@@ -131,22 +130,6 @@ class BaseRetryPolicyTestCase: BaseTestCase {
     var errorCodes: Set<URLError.Code> {
         retryableErrorCodes.union(nonRetryableErrorCodes)
     }
-
-    // MARK: Test Helpers
-
-    func request(method: HTTPMethod = .get, statusCode: Int? = nil) -> Request {
-        var response: HTTPURLResponse?
-
-        if let statusCode = statusCode {
-            response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)
-        }
-
-        return StubRequest(url, method: method, response: response, session: session)
-    }
-
-    func urlError(with code: URLError.Code) -> URLError {
-        NSError(domain: URLError.errorDomain, code: code.rawValue, userInfo: nil) as! URLError
-    }
 }
 
 // MARK: -
@@ -170,7 +153,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
 
             request.prepareForRetry()
         }
@@ -208,7 +191,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
         }
 
         // Then
@@ -224,6 +207,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
     func testThatRetryPolicyRetriesRequestsWithRetryableStatusCodes() {
         // Given
         let retryPolicy = RetryPolicy()
+        let statusCodes = Set(100...599)
         var results: [Int: RetryResult] = [:]
 
         // When
@@ -236,7 +220,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
         }
 
         // Then
@@ -266,7 +250,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
         }
 
         // Then
@@ -296,7 +280,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
         }
 
         // Then
@@ -330,7 +314,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
         }
 
         // Then
@@ -361,7 +345,7 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
                 expectation.fulfill()
             }
 
-            waitForExpectations(timeout: timeout)
+            waitForExpectations(timeout: timeout, handler: nil)
 
             request.prepareForRetry()
         }
@@ -390,6 +374,22 @@ final class RetryPolicyTestCase: BaseRetryPolicyTestCase {
             XCTAssertNil(results[4]?.delay)
             XCTAssertNil(results[4]?.error)
         }
+    }
+
+    // MARK: Test Helpers
+
+    func request(method: HTTPMethod = .get, statusCode: Int? = nil) -> Request {
+        var response: HTTPURLResponse?
+
+        if let statusCode = statusCode {
+            response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)
+        }
+
+        return StubRequest(url, method: method, response: response, session: session)
+    }
+
+    func urlError(with code: URLError.Code) -> URLError {
+        NSError(domain: URLError.errorDomain, code: code.rawValue, userInfo: nil) as! URLError
     }
 }
 

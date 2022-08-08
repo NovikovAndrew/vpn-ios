@@ -13,6 +13,24 @@
 		9900A5B8289B98100050CE26 /* Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9900A5AA289B98100050CE26 /* Networking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9900A635289BA2C20050CE26 /* NetworkingFrameworkRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A634289BA2C20050CE26 /* NetworkingFrameworkRegistration.swift */; };
 		9900A638289BA32D0050CE26 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9900A637289BA32D0050CE26 /* Utilities.framework */; };
+		991A91D528A116330091AD80 /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91D428A116330091AD80 /* Swinject.xcframework */; };
+		991A91D628A116330091AD80 /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91D428A116330091AD80 /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91DA28A117070091AD80 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 991A91D928A117070091AD80 /* Moya */; };
+		991A91DE28A117B90091AD80 /* AnyTargetConvertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91DD28A117B90091AD80 /* AnyTargetConvertable.swift */; };
+		991A91E028A1182A0091AD80 /* AnyTaget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91DF28A1182A0091AD80 /* AnyTaget.swift */; };
+		991A91E228A118AF0091AD80 /* BaseProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91E128A118AF0091AD80 /* BaseProviderType.swift */; };
+		991A91E928A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91E828A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift */; };
+		991A91F028A127370091AD80 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91EF28A127370091AD80 /* RxSwift.xcframework */; };
+		991A91F128A127380091AD80 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91EF28A127370091AD80 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91F528A127430091AD80 /* RxCocoa.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F228A127430091AD80 /* RxCocoa.xcframework */; };
+		991A91F628A127430091AD80 /* RxCocoa.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F228A127430091AD80 /* RxCocoa.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91F728A127430091AD80 /* RxRelay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F328A127430091AD80 /* RxRelay.xcframework */; };
+		991A91F828A127430091AD80 /* RxRelay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F328A127430091AD80 /* RxRelay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91F928A127430091AD80 /* RxBlocking.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F428A127430091AD80 /* RxBlocking.xcframework */; };
+		991A91FA28A127430091AD80 /* RxBlocking.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91F428A127430091AD80 /* RxBlocking.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91FC28A127490091AD80 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91FB28A127490091AD80 /* Alamofire.xcframework */; };
+		991A91FD28A127490091AD80 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91FB28A127490091AD80 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A920028A128980091AD80 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91FF28A128980091AD80 /* HTTPStatusCode.swift */; };
 		9979D628289BC5FB008BD172 /* NetworkingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D627289BC5FB008BD172 /* NetworkingType.swift */; };
 		9979D62B289BC6A6008BD172 /* AuthTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62A289BC6A6008BD172 /* AuthTarget.swift */; };
 		9979D62D289BC6C6008BD172 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62C289BC6C6008BD172 /* AuthRepository.swift */; };
@@ -31,6 +49,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		991A91D728A116330091AD80 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				991A91FD28A127490091AD80 /* Alamofire.xcframework in Embed Frameworks */,
+				991A91D628A116330091AD80 /* Swinject.xcframework in Embed Frameworks */,
+				991A91F828A127430091AD80 /* RxRelay.xcframework in Embed Frameworks */,
+				991A91F128A127380091AD80 /* RxSwift.xcframework in Embed Frameworks */,
+				991A91FA28A127430091AD80 /* RxBlocking.xcframework in Embed Frameworks */,
+				991A91F628A127430091AD80 /* RxCocoa.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9900A5A7289B98100050CE26 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A5AA289B98100050CE26 /* Networking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
@@ -39,6 +76,17 @@
 		9900A5B6289B98100050CE26 /* NetworkingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingTests.swift; sourceTree = "<group>"; };
 		9900A634289BA2C20050CE26 /* NetworkingFrameworkRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingFrameworkRegistration.swift; sourceTree = "<group>"; };
 		9900A637289BA32D0050CE26 /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		991A91D428A116330091AD80 /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = "/Users/alfauser/Desktop/vpn-ios/Auth/../Carthage/Build/Swinject.xcframework"; sourceTree = "<absolute>"; };
+		991A91DD28A117B90091AD80 /* AnyTargetConvertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTargetConvertable.swift; sourceTree = "<group>"; };
+		991A91DF28A1182A0091AD80 /* AnyTaget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTaget.swift; sourceTree = "<group>"; };
+		991A91E128A118AF0091AD80 /* BaseProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProviderType.swift; sourceTree = "<group>"; };
+		991A91E828A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpHeadersBuilderProtocol.swift; sourceTree = "<group>"; };
+		991A91EF28A127370091AD80 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = ../Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
+		991A91F228A127430091AD80 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = ../Carthage/Build/RxCocoa.xcframework; sourceTree = "<group>"; };
+		991A91F328A127430091AD80 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxRelay.xcframework; path = ../Carthage/Build/RxRelay.xcframework; sourceTree = "<group>"; };
+		991A91F428A127430091AD80 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxBlocking.xcframework; path = ../Carthage/Build/RxBlocking.xcframework; sourceTree = "<group>"; };
+		991A91FB28A127490091AD80 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
+		991A91FF28A128980091AD80 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
 		9979D627289BC5FB008BD172 /* NetworkingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingType.swift; sourceTree = "<group>"; };
 		9979D62A289BC6A6008BD172 /* AuthTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTarget.swift; sourceTree = "<group>"; };
 		9979D62C289BC6C6008BD172 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
@@ -52,7 +100,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				991A91D528A116330091AD80 /* Swinject.xcframework in Frameworks */,
+				991A91F028A127370091AD80 /* RxSwift.xcframework in Frameworks */,
+				991A91F528A127430091AD80 /* RxCocoa.xcframework in Frameworks */,
+				991A91F728A127430091AD80 /* RxRelay.xcframework in Frameworks */,
+				991A91FC28A127490091AD80 /* Alamofire.xcframework in Frameworks */,
 				9900A638289BA32D0050CE26 /* Utilities.framework in Frameworks */,
+				991A91F928A127430091AD80 /* RxBlocking.xcframework in Frameworks */,
+				991A91DA28A117070091AD80 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +144,7 @@
 		9900A5A9289B98100050CE26 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				991A91E728A1219A0091AD80 /* Presentable */,
 				9979D626289BC5EA008BD172 /* Networking */,
 				9900A630289BA1F50050CE26 /* Injection */,
 				9900A605289BA1090050CE26 /* Model */,
@@ -136,6 +192,7 @@
 		9900A609289BA1250050CE26 /* Target */ = {
 			isa = PBXGroup;
 			children = (
+				991A91DC28A117A00091AD80 /* AnyTarget */,
 				9979D62A289BC6A6008BD172 /* AuthTarget.swift */,
 			);
 			path = Target;
@@ -152,6 +209,12 @@
 		9900A636289BA32D0050CE26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				991A91FB28A127490091AD80 /* Alamofire.xcframework */,
+				991A91F428A127430091AD80 /* RxBlocking.xcframework */,
+				991A91F228A127430091AD80 /* RxCocoa.xcframework */,
+				991A91F328A127430091AD80 /* RxRelay.xcframework */,
+				991A91EF28A127370091AD80 /* RxSwift.xcframework */,
+				991A91D428A116330091AD80 /* Swinject.xcframework */,
 				9900A637289BA32D0050CE26 /* Utilities.framework */,
 			);
 			name = Frameworks;
@@ -165,9 +228,36 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		991A91DC28A117A00091AD80 /* AnyTarget */ = {
+			isa = PBXGroup;
+			children = (
+				991A91E128A118AF0091AD80 /* BaseProviderType.swift */,
+				991A91DD28A117B90091AD80 /* AnyTargetConvertable.swift */,
+				991A91DF28A1182A0091AD80 /* AnyTaget.swift */,
+			);
+			path = AnyTarget;
+			sourceTree = "<group>";
+		};
+		991A91E728A1219A0091AD80 /* Presentable */ = {
+			isa = PBXGroup;
+			children = (
+				991A91E828A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift */,
+			);
+			path = Presentable;
+			sourceTree = "<group>";
+		};
+		991A91FE28A1288C0091AD80 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				991A91FF28A128980091AD80 /* HTTPStatusCode.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9979D626289BC5EA008BD172 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				991A91FE28A1288C0091AD80 /* Models */,
 				9979D627289BC5FB008BD172 /* NetworkingType.swift */,
 				9979D62E289BC6F9008BD172 /* Networking.swift */,
 			);
@@ -196,12 +286,16 @@
 				9900A5A3289B98100050CE26 /* Sources */,
 				9900A5A4289B98100050CE26 /* Frameworks */,
 				9900A5A5289B98100050CE26 /* Resources */,
+				991A91D728A116330091AD80 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Networking;
+			packageProductDependencies = (
+				991A91D928A117070091AD80 /* Moya */,
+			);
 			productName = Networking;
 			productReference = 9900A5A7289B98100050CE26 /* Networking.framework */;
 			productType = "com.apple.product-type.framework";
@@ -251,6 +345,9 @@
 				Base,
 			);
 			mainGroup = 9900A59D289B98100050CE26;
+			packageReferences = (
+				991A91D828A117060091AD80 /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = 9900A5A8289B98100050CE26 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -283,11 +380,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				991A91DE28A117B90091AD80 /* AnyTargetConvertable.swift in Sources */,
 				9979D628289BC5FB008BD172 /* NetworkingType.swift in Sources */,
 				9979D62B289BC6A6008BD172 /* AuthTarget.swift in Sources */,
 				9900A5AC289B98100050CE26 /* Networking.docc in Sources */,
 				9979D62F289BC6F9008BD172 /* Networking.swift in Sources */,
+				991A91E228A118AF0091AD80 /* BaseProviderType.swift in Sources */,
+				991A920028A128980091AD80 /* HTTPStatusCode.swift in Sources */,
 				9979D62D289BC6C6008BD172 /* AuthRepository.swift in Sources */,
+				991A91E028A1182A0091AD80 /* AnyTaget.swift in Sources */,
+				991A91E928A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift in Sources */,
 				9979D682289BC96B008BD172 /* AuthRequest.swift in Sources */,
 				9979D684289BC974008BD172 /* RegisterRequest.swift in Sources */,
 				9900A635289BA2C20050CE26 /* NetworkingFrameworkRegistration.swift in Sources */,
@@ -558,6 +660,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		991A91D828A117060091AD80 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		991A91D928A117070091AD80 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 991A91D828A117060091AD80 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9900A59E289B98100050CE26 /* Project object */;
 }

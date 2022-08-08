@@ -1,7 +1,7 @@
 //
 //  RequestTests.swift
 //
-//  Copyright (c) 2014-2020 Alamofire Software Foundation (http://alamofire.org/)
+//  Copyright (c) 2014-2018 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,18 +29,18 @@ import XCTest
 final class RequestResponseTestCase: BaseTestCase {
     func testRequestResponse() {
         // Given
-        let url = Endpoint.get.url
-        let expectation = self.expectation(description: "GET request should succeed: \(url)")
+        let urlString = "https://httpbin.org/get"
+        let expectation = self.expectation(description: "GET request should succeed: \(urlString)")
         var response: DataResponse<Data?, AFError>?
 
         // When
-        AF.request(url, parameters: ["foo": "bar"])
+        AF.request(urlString, parameters: ["foo": "bar"])
             .response { resp in
                 response = resp
                 expectation.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -51,16 +51,16 @@ final class RequestResponseTestCase: BaseTestCase {
 
     func testRequestResponseWithProgress() {
         // Given
-        let byteCount = 50 * 1024
-        let url = Endpoint.bytes(byteCount).url
+        let randomBytes = 1 * 25 * 1024
+        let urlString = "https://httpbin.org/bytes/\(randomBytes)"
 
-        let expectation = self.expectation(description: "Bytes download progress should be reported: \(url)")
+        let expectation = self.expectation(description: "Bytes download progress should be reported: \(urlString)")
 
         var progressValues: [Double] = []
         var response: DataResponse<Data?, AFError>?
 
         // When
-        AF.request(url)
+        AF.request(urlString)
             .downloadProgress { progress in
                 progressValues.append(progress.fractionCompleted)
             }
@@ -69,7 +69,7 @@ final class RequestResponseTestCase: BaseTestCase {
                 expectation.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -93,6 +93,7 @@ final class RequestResponseTestCase: BaseTestCase {
 
     func testPOSTRequestWithUnicodeParameters() {
         // Given
+        let urlString = "https://httpbin.org/post"
         let parameters = ["french": "français",
                           "japanese": "日本語",
                           "arabic": "العربية",
@@ -100,23 +101,23 @@ final class RequestResponseTestCase: BaseTestCase {
 
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<Any, AFError>?
 
         // When
-        AF.request(.method(.post), parameters: parameters)
-            .responseDecodable(of: TestResponse.self) { closureResponse in
+        AF.request(urlString, method: .post, parameters: parameters)
+            .responseJSON { closureResponse in
                 response = closureResponse
                 expectation.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
         XCTAssertNotNil(response?.response)
         XCTAssertNotNil(response?.data)
 
-        if let form = response?.result.success?.form {
+        if let json = response?.result.success as? [String: Any], let form = json["form"] as? [String: String] {
             XCTAssertEqual(form["french"], parameters["french"])
             XCTAssertEqual(form["japanese"], parameters["japanese"])
             XCTAssertEqual(form["arabic"], parameters["arabic"])
@@ -126,18 +127,21 @@ final class RequestResponseTestCase: BaseTestCase {
         }
     }
 
+    #if !SWIFT_PACKAGE
     func testPOSTRequestWithBase64EncodedImages() {
         // Given
+        let urlString = "https://httpbin.org/post"
+
         let pngBase64EncodedString: String = {
-            let fileURL = url(forResource: "unicorn", withExtension: "png")
-            let data = try! Data(contentsOf: fileURL)
+            let URL = url(forResource: "unicorn", withExtension: "png")
+            let data = try! Data(contentsOf: URL)
 
             return data.base64EncodedString(options: .lineLength64Characters)
         }()
 
         let jpegBase64EncodedString: String = {
-            let fileURL = url(forResource: "rainbow", withExtension: "jpg")
-            let data = try! Data(contentsOf: fileURL)
+            let URL = url(forResource: "rainbow", withExtension: "jpg")
+            let data = try! Data(contentsOf: URL)
 
             return data.base64EncodedString(options: .lineLength64Characters)
         }()
@@ -148,16 +152,16 @@ final class RequestResponseTestCase: BaseTestCase {
 
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<Any, AFError>?
 
         // When
-        AF.request(Endpoint.method(.post), method: .post, parameters: parameters)
-            .responseDecodable(of: TestResponse.self) { closureResponse in
+        AF.request(urlString, method: .post, parameters: parameters)
+            .responseJSON { closureResponse in
                 response = closureResponse
                 expectation.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -165,7 +169,7 @@ final class RequestResponseTestCase: BaseTestCase {
         XCTAssertNotNil(response?.data)
         XCTAssertEqual(response?.result.isSuccess, true)
 
-        if let form = response?.result.success?.form {
+        if let json = response?.result.success as? [String: Any], let form = json["form"] as? [String: String] {
             XCTAssertEqual(form["email"], parameters["email"])
             XCTAssertEqual(form["png_image"], parameters["png_image"])
             XCTAssertEqual(form["jpeg_image"], parameters["jpeg_image"])
@@ -173,6 +177,7 @@ final class RequestResponseTestCase: BaseTestCase {
             XCTFail("form parameter in JSON should not be nil")
         }
     }
+    #endif
 
     // MARK: Queues
 
@@ -181,81 +186,56 @@ final class RequestResponseTestCase: BaseTestCase {
         let queue = DispatchQueue(label: "org.alamofire.testSerializationQueue")
         let manager = Session(serializationQueue: queue)
         let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<Any, AFError>?
 
         // When
-        manager.request(.get).responseDecodable(of: TestResponse.self) { resp in
+        manager.request("https://httpbin.org/get").responseJSON { resp in
             response = resp
             expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertEqual(response?.result.isSuccess, true)
-    }
-
-    func testThatRequestsWorksWithRequestAndSerializationQueues() {
-        // Given
-        let requestQueue = DispatchQueue(label: "org.alamofire.testRequestQueue")
-        let serializationQueue = DispatchQueue(label: "org.alamofire.testSerializationQueue")
-        let manager = Session(requestQueue: requestQueue, serializationQueue: serializationQueue)
-        let expectation = self.expectation(description: "request should complete")
-        var response: DataResponse<TestResponse, AFError>?
-
-        // When
-        manager.request(.get).responseDecodable(of: TestResponse.self) { resp in
-            response = resp
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertEqual(response?.result.isSuccess, true)
-    }
-
-    func testThatRequestsWorksWithConcurrentRequestAndSerializationQueues() {
-        // Given
-        let requestQueue = DispatchQueue(label: "org.alamofire.testRequestQueue", attributes: .concurrent)
-        let serializationQueue = DispatchQueue(label: "org.alamofire.testSerializationQueue", attributes: .concurrent)
-        let session = Session(requestQueue: requestQueue, serializationQueue: serializationQueue)
-        let count = 10
-        let expectation = self.expectation(description: "request should complete")
-        expectation.expectedFulfillmentCount = count
-        var responses: [DataResponse<TestResponse, AFError>] = []
-
-        // When
-        DispatchQueue.concurrentPerform(iterations: count) { _ in
-            session.request(.default).responseDecodable(of: TestResponse.self) { resp in
-                responses.append(resp)
-                expectation.fulfill()
-            }
         }
 
         waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
-        XCTAssertEqual(responses.count, count)
-        XCTAssertTrue(responses.allSatisfy(\.result.isSuccess))
+        XCTAssertEqual(response?.result.isSuccess, true)
+    }
+
+    func testThatRequestsWorksWithRequestAndSerializationQueue() {
+        // Given
+        let requestQueue = DispatchQueue(label: "org.alamofire.testRequestQueue")
+        let serializationQueue = DispatchQueue(label: "org.alamofire.testSerializationQueue")
+        let manager = Session(requestQueue: requestQueue, serializationQueue: serializationQueue)
+        let expectation = self.expectation(description: "request should complete")
+        var response: DataResponse<Any, AFError>?
+
+        // When
+        manager.request("https://httpbin.org/get").responseJSON { resp in
+            response = resp
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: timeout, handler: nil)
+
+        // Then
+        XCTAssertEqual(response?.result.isSuccess, true)
     }
 
     // MARK: Encodable Parameters
 
     func testThatRequestsCanPassEncodableParametersAsJSONBodyData() {
         // Given
-        let parameters = TestParameters(property: "one")
+        let parameters = HTTPBinParameters(property: "one")
         let expect = expectation(description: "request should complete")
-        var receivedResponse: DataResponse<TestResponse, AFError>?
+        var receivedResponse: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(.method(.post), parameters: parameters, encoder: JSONParameterEncoder.default)
-            .responseDecodable(of: TestResponse.self) { response in
+        AF.request("https://httpbin.org/post", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
+            .responseDecodable(of: HTTPBinResponse.self) { response in
                 receivedResponse = response
                 expect.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(receivedResponse?.result.success?.data, "{\"property\":\"one\"}")
@@ -263,18 +243,18 @@ final class RequestResponseTestCase: BaseTestCase {
 
     func testThatRequestsCanPassEncodableParametersAsAURLQuery() {
         // Given
-        let parameters = TestParameters(property: "one")
+        let parameters = HTTPBinParameters(property: "one")
         let expect = expectation(description: "request should complete")
-        var receivedResponse: DataResponse<TestResponse, AFError>?
+        var receivedResponse: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(.method(.get), parameters: parameters)
-            .responseDecodable(of: TestResponse.self) { response in
+        AF.request("https://httpbin.org/get", method: .get, parameters: parameters)
+            .responseDecodable(of: HTTPBinResponse.self) { response in
                 receivedResponse = response
                 expect.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(receivedResponse?.result.success?.args, ["property": "one"])
@@ -282,18 +262,18 @@ final class RequestResponseTestCase: BaseTestCase {
 
     func testThatRequestsCanPassEncodableParametersAsURLEncodedBodyData() {
         // Given
-        let parameters = TestParameters(property: "one")
+        let parameters = HTTPBinParameters(property: "one")
         let expect = expectation(description: "request should complete")
-        var receivedResponse: DataResponse<TestResponse, AFError>?
+        var receivedResponse: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(.method(.post), parameters: parameters)
-            .responseDecodable(of: TestResponse.self) { response in
+        AF.request("https://httpbin.org/post", method: .post, parameters: parameters)
+            .responseDecodable(of: HTTPBinResponse.self) { response in
                 receivedResponse = response
                 expect.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(receivedResponse?.result.success?.form, ["property": "one"])
@@ -319,9 +299,9 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default).response { _ in expect.fulfill() }
+        let request = session.request(URLRequest.makeHTTPBinRequest()).response { _ in expect.fulfill() }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .finished)
@@ -345,12 +325,12 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default).response { _ in expect.fulfill() }
+        let request = session.request(URLRequest.makeHTTPBinRequest()).response { _ in expect.fulfill() }
         for _ in 0..<100 {
             request.resume()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .finished)
@@ -374,12 +354,12 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
         for _ in 0..<100 {
             request.resume()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .finished)
@@ -403,12 +383,12 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default).response { _ in expect.fulfill() }
+        let request = session.request(URLRequest.makeHTTPBinRequest()).response { _ in expect.fulfill() }
         for _ in 0..<100 {
             request.resume()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .finished)
@@ -429,12 +409,12 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
         for _ in 0..<100 {
             request.suspend()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .suspended)
@@ -457,12 +437,12 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
         for _ in 0..<100 {
             request.suspend()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .suspended)
@@ -483,15 +463,15 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidSuspendTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
         // Cancellation stops task creation, so don't cancel the request until the task has been created.
-        eventMonitor.requestDidCreateTask = { [unowned request] _, _ in
+        eventMonitor.requestDidCreateTask = { _, _ in
             for _ in 0..<100 {
                 request.cancel()
             }
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .cancelled)
@@ -514,15 +494,15 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidSuspendTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
         // Cancellation stops task creation, so don't cancel the request until the task has been created.
-        eventMonitor.requestDidCreateTask = { [unowned request] _, _ in
+        eventMonitor.requestDidCreateTask = { _, _ in
             for _ in 0..<100 {
                 request.cancel()
             }
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .cancelled)
@@ -545,9 +525,9 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidSuspendTask = { _, _ in expect.fulfill() }
 
         // When
-        let request = session.request(.delay(5)).response { _ in expect.fulfill() }
+        let request = session.request(URLRequest.makeHTTPBinRequest(path: "delay/5")).response { _ in expect.fulfill() }
         // Cancellation stops task creation, so don't cancel the request until the task has been created.
-        eventMonitor.requestDidCreateTask = { [unowned request] _, _ in
+        eventMonitor.requestDidCreateTask = { _, _ in
             DispatchQueue.concurrentPerform(iterations: 100) { i in
                 request.cancel()
 
@@ -555,7 +535,7 @@ final class RequestResponseTestCase: BaseTestCase {
             }
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .cancelled)
@@ -566,8 +546,7 @@ final class RequestResponseTestCase: BaseTestCase {
         let eventMonitor = ClosureEventMonitor()
         let session = Session(eventMonitors: [eventMonitor])
 
-        // Disable event test until Firewalk support HTTPS.
-        //  let didReceiveChallenge = expectation(description: "didReceiveChallenge should fire")
+        let didReceiveChallenge = expectation(description: "didReceiveChallenge should fire")
         let taskDidFinishCollecting = expectation(description: "taskDidFinishCollecting should fire")
         let didReceiveData = expectation(description: "didReceiveData should fire")
         let willCacheResponse = expectation(description: "willCacheResponse should fire")
@@ -583,8 +562,7 @@ final class RequestResponseTestCase: BaseTestCase {
 
         var dataReceived = false
 
-        // Disable event test until Firewalk supports HTTPS.
-        //  eventMonitor.taskDidReceiveChallenge = { _, _, _ in didReceiveChallenge.fulfill() }
+        eventMonitor.taskDidReceiveChallenge = { _, _, _ in didReceiveChallenge.fulfill() }
         eventMonitor.taskDidFinishCollectingMetrics = { _, _, _ in taskDidFinishCollecting.fulfill() }
         eventMonitor.dataTaskDidReceiveData = { _, _, _ in
             guard !dataReceived else { return }
@@ -603,11 +581,11 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidParseResponse = { _, _ in didParseResponse.fulfill() }
 
         // When
-        let request = session.request(.default).response { _ in
+        let request = session.request(URLRequest.makeHTTPBinRequest()).response { _ in
             responseHandler.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .finished)
@@ -643,18 +621,18 @@ final class RequestResponseTestCase: BaseTestCase {
         eventMonitor.requestDidCancelTask = { _, _ in didCancelTask.fulfill() }
 
         // When
-        let request = session.request(.delay(5)).response { _ in
+        let request = session.request(URLRequest.makeHTTPBinRequest(path: "delay/5")).response { _ in
             responseHandler.fulfill()
         }
 
-        eventMonitor.requestDidResumeTask = { [unowned request] _, _ in
+        eventMonitor.requestDidResumeTask = { _, _ in
             request.cancel()
             didResumeTask.fulfill()
         }
 
         request.resume()
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(request.state, .cancelled)
@@ -664,20 +642,20 @@ final class RequestResponseTestCase: BaseTestCase {
         // Given
         let session = Session()
 
-        var response1: DataResponse<TestResponse, AFError>?
-        var response2: DataResponse<TestResponse, AFError>?
+        var response1: DataResponse<Any, AFError>?
+        var response2: DataResponse<Any, AFError>?
 
         let expect = expectation(description: "both response serializer completions should be called")
         expect.expectedFulfillmentCount = 2
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
 
-        request.responseDecodable(of: TestResponse.self) { resp in
+        request.responseJSON { resp in
             response1 = resp
             expect.fulfill()
 
-            request.responseDecodable(of: TestResponse.self) { resp in
+            request.responseJSON { resp in
                 response2 = resp
                 expect.fulfill()
             }
@@ -685,7 +663,7 @@ final class RequestResponseTestCase: BaseTestCase {
 
         request.cancel()
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response1?.error?.isExplicitlyCancelledError, true)
@@ -696,32 +674,32 @@ final class RequestResponseTestCase: BaseTestCase {
         // Given
         let session = Session()
 
-        var response1: DataResponse<TestResponse, AFError>?
-        var response2: DataResponse<TestResponse, AFError>?
-        var response3: DataResponse<TestResponse, AFError>?
+        var response1: DataResponse<Any, AFError>?
+        var response2: DataResponse<Any, AFError>?
+        var response3: DataResponse<Any, AFError>?
 
         let expect = expectation(description: "all response serializer completions should be called")
         expect.expectedFulfillmentCount = 3
 
         // When
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
 
-        request.responseDecodable(of: TestResponse.self) { resp in
+        request.responseJSON { resp in
             response1 = resp
             expect.fulfill()
 
-            request.responseDecodable(of: TestResponse.self) { resp in
+            request.responseJSON { resp in
                 response2 = resp
                 expect.fulfill()
 
-                request.responseDecodable(of: TestResponse.self) { resp in
+                request.responseJSON { resp in
                     response3 = resp
                     expect.fulfill()
                 }
             }
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response1?.value)
@@ -732,24 +710,24 @@ final class RequestResponseTestCase: BaseTestCase {
     func testThatAppendingResponseSerializerToCompletedRequestOutsideCompletionResumesRequest() {
         // Given
         let session = Session()
-        let request = session.request(.default)
+        let request = session.request(URLRequest.makeHTTPBinRequest())
 
-        var response1: DataResponse<TestResponse, AFError>?
-        var response2: DataResponse<TestResponse, AFError>?
-        var response3: DataResponse<TestResponse, AFError>?
+        var response1: DataResponse<Any, AFError>?
+        var response2: DataResponse<Any, AFError>?
+        var response3: DataResponse<Any, AFError>?
 
         // When
         let expect1 = expectation(description: "response serializer 1 completion should be called")
-        request.responseDecodable(of: TestResponse.self) { response1 = $0; expect1.fulfill() }
-        waitForExpectations(timeout: timeout)
+        request.responseJSON { response1 = $0; expect1.fulfill() }
+        waitForExpectations(timeout: timeout, handler: nil)
 
         let expect2 = expectation(description: "response serializer 2 completion should be called")
-        request.responseDecodable(of: TestResponse.self) { response2 = $0; expect2.fulfill() }
-        waitForExpectations(timeout: timeout)
+        request.responseJSON { response2 = $0; expect2.fulfill() }
+        waitForExpectations(timeout: timeout, handler: nil)
 
         let expect3 = expectation(description: "response serializer 3 completion should be called")
-        request.responseDecodable(of: TestResponse.self) { response3 = $0; expect3.fulfill() }
-        waitForExpectations(timeout: timeout)
+        request.responseJSON { response3 = $0; expect3.fulfill() }
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response1?.value)
@@ -760,14 +738,14 @@ final class RequestResponseTestCase: BaseTestCase {
 
 // MARK: -
 
-final class RequestDescriptionTestCase: BaseTestCase {
+class RequestDescriptionTestCase: BaseTestCase {
     func testRequestDescription() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let manager = Session(startRequestsImmediately: false)
-        let request = manager.request(url)
+        let request = manager.request(urlString)
 
-        let expectation = self.expectation(description: "Request description should update: \(url)")
+        let expectation = self.expectation(description: "Request description should update: \(urlString)")
 
         var response: HTTPURLResponse?
 
@@ -778,10 +756,10 @@ final class RequestDescriptionTestCase: BaseTestCase {
             expectation.fulfill()
         }.resume()
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
-        XCTAssertEqual(request.description, "GET \(url) (\(response?.statusCode ?? -1))")
+        XCTAssertEqual(request.description, "GET https://httpbin.org/get (\(response?.statusCode ?? -1))")
     }
 }
 
@@ -790,13 +768,13 @@ final class RequestDescriptionTestCase: BaseTestCase {
 final class RequestCURLDescriptionTestCase: BaseTestCase {
     // MARK: Properties
 
-    let session: Session = {
+    let manager: Session = {
         let manager = Session()
 
         return manager
     }()
 
-    let sessionWithAcceptLanguageHeader: Session = {
+    let managerWithAcceptLanguageHeader: Session = {
         var headers = HTTPHeaders.default
         headers["Accept-Language"] = "en-US"
 
@@ -808,7 +786,7 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
         return manager
     }()
 
-    let sessionWithContentTypeHeader: Session = {
+    let managerWithContentTypeHeader: Session = {
         var headers = HTTPHeaders.default
         headers["Content-Type"] = "application/json"
 
@@ -820,14 +798,14 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
         return manager
     }()
 
-    func sessionWithCookie(_ cookie: HTTPCookie) -> Session {
+    func managerWithCookie(_ cookie: HTTPCookie) -> Session {
         let configuration = URLSessionConfiguration.af.default
         configuration.httpCookieStorage?.setCookie(cookie)
 
         return Session(configuration: configuration)
     }
 
-    let sessionDisallowingCookies: Session = {
+    let managerDisallowingCookies: Session = {
         let configuration = URLSessionConfiguration.af.default
         configuration.httpShouldSetCookies = false
 
@@ -840,80 +818,65 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
 
     func testGETRequestCURLDescription() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
 
         // When
-        session.request(url).cURLDescription {
+        manager.request(urlString).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
-        XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
-    }
-
-    func testGETRequestCURLDescriptionOnMainQueue() {
-        // Given
-        let url = Endpoint().url
-        let expectation = self.expectation(description: "request should complete")
-        var isMainThread = false
-        var components: [String]?
-
-        // When
-        session.request(url).cURLDescription(on: .main) {
-            components = self.cURLCommandComponents(from: $0)
-            isMainThread = Thread.isMainThread
             expectation.fulfill()
         }
 
         waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
-        XCTAssertTrue(isMainThread)
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
     }
 
     func testGETRequestCURLDescriptionSynchronous() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
         var syncComponents: [String]?
 
         // When
-        let request = session.request(url)
+        let request = manager.request(urlString)
         request.cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             syncComponents = self.cURLCommandComponents(from: request.cURLDescription())
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
         XCTAssertEqual(components?.sorted(), syncComponents?.sorted())
     }
 
     func testGETRequestCURLDescriptionCanBeRequestedManyTimes() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
         var secondComponents: [String]?
 
         // When
-        let request = session.request(url)
+        let request = manager.request(urlString)
+        request.cURLDescription {
+            components = self.cURLCommandComponents(from: $0)
+            request.cURLDescription {
+                secondComponents = self.cURLCommandComponents(from: $0)
+                expectation.fulfill()
+            }
+        }
+        // Trigger the overwrite behavior.
         request.cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             request.cURLDescription {
@@ -922,29 +885,29 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
             }
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
         XCTAssertEqual(components?.sorted(), secondComponents?.sorted())
     }
 
     func testGETRequestWithCustomHeaderCURLDescription() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should complete")
         var cURLDescription: String?
 
         // When
         let headers: HTTPHeaders = ["X-Custom-Header": "{\"key\": \"value\"}"]
-        session.request(url, headers: headers).cURLDescription {
+        manager.request(urlString, headers: headers).cURLDescription {
             cURLDescription = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(cURLDescription?.range(of: "-H \"X-Custom-Header: {\\\"key\\\": \\\"value\\\"}\""))
@@ -952,25 +915,25 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
 
     func testGETRequestWithDuplicateHeadersDebugDescription() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should complete")
         var cURLDescription: String?
         var components: [String]?
 
         // When
         let headers: HTTPHeaders = ["Accept-Language": "en-GB"]
-        sessionWithAcceptLanguageHeader.request(url, headers: headers).cURLDescription {
+        managerWithAcceptLanguageHeader.request(urlString, headers: headers).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             cURLDescription = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
 
         let acceptLanguageCount = components?.filter { $0.contains("Accept-Language") }.count
         XCTAssertEqual(acceptLanguageCount, 1, "command should contain a single Accept-Language header")
@@ -980,27 +943,27 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
 
     func testPOSTRequestCURLDescription() {
         // Given
-        let url = Endpoint.method(.post).url
+        let urlString = "https://httpbin.org/post"
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
 
         // When
-        session.request(url, method: .post).cURLDescription {
+        manager.request(urlString, method: .post).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertEqual(components?[3..<5], ["-X", "POST"])
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
     }
 
     func testPOSTRequestWithJSONParametersCURLDescription() {
         // Given
-        let url = Endpoint.method(.post).url
+        let urlString = "https://httpbin.org/post"
         let expectation = self.expectation(description: "request should complete")
         var cURLDescription: String?
         var components: [String]?
@@ -1010,13 +973,13 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
                           "f'oo": "ba'r"]
 
         // When
-        session.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).cURLDescription {
+        manager.request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             cURLDescription = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
@@ -1028,55 +991,59 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
         XCTAssertNotNil(cURLDescription?.range(of: "\\\"fo\\\\\\\"o\\\":\\\"b\\\\\\\"ar\\\""))
         XCTAssertNotNil(cURLDescription?.range(of: "\\\"foo\\\":\\\"bar\\"))
 
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
     }
 
     func testPOSTRequestWithCookieCURLDescription() {
         // Given
-        let url = Endpoint.method(.post).url
+        let urlString = "https://httpbin.org/post"
 
-        let cookie = HTTPCookie(properties: [.domain: url.host as Any,
-                                             .path: url.path,
-                                             .name: "foo",
-                                             .value: "bar"])!
-        let cookieManager = sessionWithCookie(cookie)
+        let properties = [HTTPCookiePropertyKey.domain: "httpbin.org",
+                          HTTPCookiePropertyKey.path: "/post",
+                          HTTPCookiePropertyKey.name: "foo",
+                          HTTPCookiePropertyKey.value: "bar"]
+
+        let cookie = HTTPCookie(properties: properties)!
+        let cookieManager = managerWithCookie(cookie)
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
 
         // When
-        cookieManager.request(url, method: .post).cURLDescription {
+        cookieManager.request(urlString, method: .post).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertEqual(components?[3..<5], ["-X", "POST"])
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
         XCTAssertEqual(components?[5..<6], ["-b"])
     }
 
     func testPOSTRequestWithCookiesDisabledCURLDescriptionHasNoCookies() {
         // Given
-        let url = Endpoint.method(.post).url
+        let urlString = "https://httpbin.org/post"
 
-        let cookie = HTTPCookie(properties: [.domain: url.host as Any,
-                                             .path: url.path,
-                                             .name: "foo",
-                                             .value: "bar"])!
-        sessionDisallowingCookies.session.configuration.httpCookieStorage?.setCookie(cookie)
+        let properties = [HTTPCookiePropertyKey.domain: "httpbin.org",
+                          HTTPCookiePropertyKey.path: "/post",
+                          HTTPCookiePropertyKey.name: "foo",
+                          HTTPCookiePropertyKey.value: "bar"]
+
+        let cookie = HTTPCookie(properties: properties)!
+        managerDisallowingCookies.session.configuration.httpCookieStorage?.setCookie(cookie)
         let expectation = self.expectation(description: "request should complete")
         var components: [String]?
 
         // When
-        sessionDisallowingCookies.request(url, method: .post).cURLDescription {
+        managerDisallowingCookies.request(urlString, method: .post).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         let cookieComponents = components?.filter { $0 == "-b" }
@@ -1085,27 +1052,27 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
 
     func testMultipartFormDataRequestWithDuplicateHeadersCURLDescriptionHasOneContentTypeHeader() {
         // Given
-        let url = Endpoint.method(.post).url
+        let urlString = "https://httpbin.org/post"
         let japaneseData = Data("日本語".utf8)
         let expectation = self.expectation(description: "multipart form data encoding should succeed")
         var cURLDescription: String?
         var components: [String]?
 
         // When
-        sessionWithContentTypeHeader.upload(multipartFormData: { data in
+        managerWithContentTypeHeader.upload(multipartFormData: { data in
             data.append(japaneseData, withName: "japanese")
-        }, to: url).cURLDescription {
+        }, to: urlString).cURLDescription {
             components = self.cURLCommandComponents(from: $0)
             cURLDescription = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(components?[0..<3], ["$", "curl", "-v"])
         XCTAssertTrue(components?.contains("-X") == true)
-        XCTAssertEqual(components?.last, "\"\(url)\"")
+        XCTAssertEqual(components?.last, "\"\(urlString)\"")
 
         let contentTypeCount = components?.filter { $0.contains("Content-Type") }.count
         XCTAssertEqual(contentTypeCount, 1, "command should contain a single Content-Type header")
@@ -1120,12 +1087,12 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
         var cURLDescription: String?
 
         // When
-        session.request(urlString).cURLDescription {
+        manager.request(urlString).cURLDescription {
             cURLDescription = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(cURLDescription, "debugDescription should not crash")
@@ -1136,104 +1103,5 @@ final class RequestCURLDescriptionTestCase: BaseTestCase {
     private func cURLCommandComponents(from cURLString: String) -> [String] {
         cURLString.components(separatedBy: .whitespacesAndNewlines)
             .filter { $0 != "" && $0 != "\\" }
-    }
-}
-
-final class RequestLifetimeTests: BaseTestCase {
-    func testThatRequestProvidesURLRequestWhenCreated() {
-        // Given
-        let didReceiveRequest = expectation(description: "did receive task")
-        let didComplete = expectation(description: "request did complete")
-        var request: URLRequest?
-
-        // When
-        AF.request(.default)
-            .onURLRequestCreation { request = $0; didReceiveRequest.fulfill() }
-            .responseDecodable(of: TestResponse.self) { _ in didComplete.fulfill() }
-
-        wait(for: [didReceiveRequest, didComplete], timeout: timeout, enforceOrder: true)
-
-        // Then
-        XCTAssertNotNil(request)
-    }
-
-    func testThatRequestProvidesTaskWhenCreated() {
-        // Given
-        let didReceiveTask = expectation(description: "did receive task")
-        let didComplete = expectation(description: "request did complete")
-        var task: URLSessionTask?
-
-        // When
-        AF.request(.default)
-            .onURLSessionTaskCreation { task = $0; didReceiveTask.fulfill() }
-            .responseDecodable(of: TestResponse.self) { _ in didComplete.fulfill() }
-
-        wait(for: [didReceiveTask, didComplete], timeout: timeout, enforceOrder: true)
-
-        // Then
-        XCTAssertNotNil(task)
-    }
-}
-
-// MARK: -
-
-final class RequestInvalidURLTestCase: BaseTestCase {
-    func testThatDataRequestWithFileURLThrowsError() {
-        // Given
-        let fileURL = url(forResource: "valid_data", withExtension: "json")
-        let expectation = self.expectation(description: "Request should succeed.")
-        var response: DataResponse<Data?, AFError>?
-
-        // When
-        AF.request(fileURL)
-            .response { resp in
-                response = resp
-                expectation.fulfill()
-            }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertEqual(response?.result.isSuccess, true)
-    }
-
-    func testThatDownloadRequestWithFileURLThrowsError() {
-        // Given
-        let fileURL = url(forResource: "valid_data", withExtension: "json")
-        let expectation = self.expectation(description: "Request should succeed.")
-        var response: DownloadResponse<URL?, AFError>?
-
-        // When
-        AF.download(fileURL)
-            .response { resp in
-                response = resp
-                expectation.fulfill()
-            }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertEqual(response?.result.isSuccess, true)
-    }
-
-    func testThatDataStreamRequestWithFileURLThrowsError() {
-        // Given
-        let fileURL = url(forResource: "valid_data", withExtension: "json")
-        let expectation = self.expectation(description: "Request should succeed.")
-        var response: DataStreamRequest.Completion?
-
-        // When
-        AF.streamRequest(fileURL)
-            .responseStream { stream in
-                guard case let .complete(completion) = stream.event else { return }
-
-                response = completion
-                expectation.fulfill()
-            }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertNil(response?.response)
     }
 }

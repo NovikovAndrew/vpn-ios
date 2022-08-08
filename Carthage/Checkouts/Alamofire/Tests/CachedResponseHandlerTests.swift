@@ -27,6 +27,10 @@ import Foundation
 import XCTest
 
 final class CachedResponseHandlerTestCase: BaseTestCase {
+    // MARK: Properties
+
+    private let urlString = "https://httpbin.org/get"
+
     // MARK: Tests - Per Request
 
     func testThatRequestCachedResponseHandlerCanCacheResponse() {
@@ -37,12 +41,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should cache response")
 
         // When
-        let request = session.request(.default).cacheResponse(using: ResponseCacher.cache).response { resp in
+        let request = session.request(urlString).cacheResponse(using: ResponseCacher.cache).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -57,12 +61,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should not cache response")
 
         // When
-        let request = session.request(.default).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
+        let request = session.request(urlString).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -84,12 +88,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
                               storagePolicy: .allowed)
         })
 
-        let request = session.request(.default).cacheResponse(using: cacher).response { resp in
+        let request = session.request(urlString).cacheResponse(using: cacher).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -107,12 +111,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should cache response")
 
         // When
-        let request = session.request(.default).response { resp in
+        let request = session.request(urlString).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -127,12 +131,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should not cache response")
 
         // When
-        let request = session.request(.default).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
+        let request = session.request(urlString).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -154,12 +158,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should cache response")
 
         // When
-        let request = session.request(.default).cacheResponse(using: cacher).response { resp in
+        let request = session.request(urlString).cacheResponse(using: cacher).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -177,12 +181,12 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let expectation = self.expectation(description: "Request should cache response")
 
         // When
-        let request = session.request(.default).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
+        let request = session.request(urlString).cacheResponse(using: ResponseCacher.doNotCache).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(response?.result.isSuccess, true)
@@ -199,37 +203,13 @@ final class CachedResponseHandlerTestCase: BaseTestCase {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         cache = URLCache(memoryCapacity: capacity, diskCapacity: capacity, directory: directory)
         #else
-        let directory = (NSTemporaryDirectory() as NSString).appendingPathComponent(UUID().uuidString)
-        cache = URLCache(memoryCapacity: capacity, diskCapacity: capacity, diskPath: directory)
+        cache = URLCache(memoryCapacity: capacity, diskCapacity: capacity, diskPath: UUID().uuidString)
         #endif
         configuration.urlCache = cache
 
         return Session(configuration: configuration, cachedResponseHandler: handler)
     }
 }
-
-#if swift(>=5.5)
-final class StaticCachedResponseHandlerTests: BaseTestCase {
-    func takeCachedResponseHandler(_ handler: CachedResponseHandler) {
-        _ = handler
-    }
-
-    func testThatCacheResponseCacherCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        takeCachedResponseHandler(.cache)
-    }
-
-    func testThatDoNotCacheResponseCacherCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        takeCachedResponseHandler(.doNotCache)
-    }
-
-    func testThatModifyResponseCacherCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        takeCachedResponseHandler(.modify { _, _ in nil })
-    }
-}
-#endif
 
 // MARK: -
 

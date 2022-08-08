@@ -1,9 +1,10 @@
-github "Moya/Moya" ~> 15.0
-github "ReactiveX/RxSwift" "6.5.0"
 github "Swinject/Swinject"
 github "SnapKit/SnapKit" ~> 5.0.0
 github "realm/realm-cocoa" == 10.20.2
 github "airbnb/lottie-ios" == 3.2.1
+github "Alamofire/Alamofire" "5.1.0"
+github "ReactiveX/RxSwift" "6.5.0"
+
 
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseABTestingBinary.json" == 7.0.0
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" == 7.0.0

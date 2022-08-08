@@ -223,7 +223,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 
 
-
 /// Class which implements the various <code>URLSessionDelegate</code> methods to connect various Alamofire features.
 SWIFT_CLASS("_TtC9Alamofire15SessionDelegate")
 @interface SessionDelegate : NSObject
@@ -505,7 +504,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 
 
-
 /// Class which implements the various <code>URLSessionDelegate</code> methods to connect various Alamofire features.
 SWIFT_CLASS("_TtC9Alamofire15SessionDelegate")
 @interface SessionDelegate : NSObject
@@ -779,7 +777,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 # pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="Alamofire",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
-
 
 
 

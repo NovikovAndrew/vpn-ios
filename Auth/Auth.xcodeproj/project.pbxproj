@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99662E0B28A0E530001F087A /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0A28A0E530001F087A /* Swinject.xcframework */; };
+		99662E0C28A0E531001F087A /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0A28A0E530001F087A /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9979D663289BC7B9008BD172 /* Auth.docc in Sources */ = {isa = PBXBuildFile; fileRef = 9979D662289BC7B9008BD172 /* Auth.docc */; };
 		9979D669289BC7B9008BD172 /* Auth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9979D65E289BC7B9008BD172 /* Auth.framework */; };
 		9979D66E289BC7B9008BD172 /* AuthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D66D289BC7B9008BD172 /* AuthTests.swift */; };
@@ -25,7 +27,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		99662E0D28A0E531001F087A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99662E0C28A0E531001F087A /* Swinject.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		99662E0A28A0E530001F087A /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = ../Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		9979D65E289BC7B9008BD172 /* Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9979D661289BC7B9008BD172 /* Auth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Auth.h; sourceTree = "<group>"; };
 		9979D662289BC7B9008BD172 /* Auth.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Auth.docc; sourceTree = "<group>"; };
@@ -40,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99662E0B28A0E530001F087A /* Swinject.xcframework in Frameworks */,
 				9979D680289BC84F008BD172 /* Utilities.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +129,7 @@
 		9979D67E289BC84F008BD172 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				99662E0A28A0E530001F087A /* Swinject.xcframework */,
 				9979D67F289BC84F008BD172 /* Utilities.framework */,
 			);
 			name = Frameworks;
@@ -138,6 +157,7 @@
 				9979D65A289BC7B9008BD172 /* Sources */,
 				9979D65B289BC7B9008BD172 /* Frameworks */,
 				9979D65C289BC7B9008BD172 /* Resources */,
+				99662E0D28A0E531001F087A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

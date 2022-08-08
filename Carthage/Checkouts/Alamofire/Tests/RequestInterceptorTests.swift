@@ -80,7 +80,7 @@ final class RetryResultTestCase: BaseTestCase {
 final class AdapterTestCase: BaseTestCase {
     func testThatAdapterCallsAdaptHandler() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
         var adapted = false
 
@@ -99,52 +99,11 @@ final class AdapterTestCase: BaseTestCase {
         XCTAssertTrue(result.isSuccess)
     }
 
-    func testThatAdapterCallsAdaptHandlerWithStateAPI() {
-        // Given
-        class StateCaptureAdapter: Adapter {
-            private(set) var urlRequest: URLRequest?
-            private(set) var state: RequestAdapterState?
-
-            override func adapt(_ urlRequest: URLRequest,
-                                using state: RequestAdapterState,
-                                completion: @escaping (Result<URLRequest, Error>) -> Void) {
-                self.urlRequest = urlRequest
-                self.state = state
-
-                super.adapt(urlRequest, using: state, completion: completion)
-            }
-        }
-
-        let urlRequest = Endpoint().urlRequest
-        let session = Session()
-        let requestID = UUID()
-
-        var adapted = false
-
-        let adapter = StateCaptureAdapter { urlRequest, _, completion in
-            adapted = true
-            completion(.success(urlRequest))
-        }
-
-        let state = RequestAdapterState(requestID: requestID, session: session)
-
-        var result: Result<URLRequest, Error>!
-
-        // When
-        adapter.adapt(urlRequest, using: state) { result = $0 }
-
-        // Then
-        XCTAssertTrue(adapted)
-        XCTAssertTrue(result.isSuccess)
-        XCTAssertEqual(adapter.urlRequest, urlRequest)
-        XCTAssertEqual(adapter.state?.requestID, requestID)
-        XCTAssertEqual(adapter.state?.session.session, session.session)
-    }
-
     func testThatAdapterCallsRequestRetrierDefaultImplementationInProtocolExtension() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         let adapter = Adapter { request, _, completion in
             completion(.success(request))
@@ -161,7 +120,7 @@ final class AdapterTestCase: BaseTestCase {
 
     func testThatAdapterCanBeImplementedAsynchronously() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
         var adapted = false
 
@@ -195,8 +154,9 @@ final class AdapterTestCase: BaseTestCase {
 final class RetrierTestCase: BaseTestCase {
     func testThatRetrierCallsRetryHandler() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
         var retried = false
 
         let retrier = Retrier { _, _, _, completion in
@@ -216,7 +176,7 @@ final class RetrierTestCase: BaseTestCase {
 
     func testThatRetrierCallsRequestAdapterDefaultImplementationInProtocolExtension() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
 
         let retrier = Retrier { _, _, _, completion in
@@ -234,8 +194,9 @@ final class RetrierTestCase: BaseTestCase {
 
     func testThatRetrierCanBeImplementedAsynchronously() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
         var retried = false
 
         let retrier = Retrier { _, _, _, completion in
@@ -265,7 +226,7 @@ final class RetrierTestCase: BaseTestCase {
 
 // MARK: -
 
-final class InterceptorTests: BaseTestCase {
+final class InterceptorTestCase: BaseTestCase {
     func testAdaptHandlerAndRetryHandlerDefaultInitializer() {
         // Given
         let adaptHandler: AdaptHandler = { urlRequest, _, completion in completion(.success(urlRequest)) }
@@ -305,23 +266,9 @@ final class InterceptorTests: BaseTestCase {
         XCTAssertEqual(interceptor.retriers.count, 2)
     }
 
-    func testThatInterceptorCanBeComposedOfMultipleRequestInterceptors() {
-        // Given
-        let adapter = Adapter { request, _, completion in completion(.success(request)) }
-        let retrier = Retrier { _, _, _, completion in completion(.doNotRetry) }
-        let inner = Interceptor(adapter: adapter, retrier: retrier)
-
-        // When
-        let interceptor = Interceptor(interceptors: [inner])
-
-        // Then
-        XCTAssertEqual(interceptor.adapters.count, 1)
-        XCTAssertEqual(interceptor.retriers.count, 1)
-    }
-
     func testThatInterceptorCanAdaptRequestWithNoAdapters() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
         let interceptor = Interceptor()
 
@@ -337,7 +284,7 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanAdaptRequestWithOneAdapter() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
 
         let adapter = Adapter { _, _, completion in completion(.failure(MockError())) }
@@ -355,7 +302,7 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanAdaptRequestWithMultipleAdapters() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
 
         let adapter1 = Adapter { urlRequest, _, completion in completion(.success(urlRequest)) }
@@ -372,29 +319,9 @@ final class InterceptorTests: BaseTestCase {
         XCTAssertTrue(result.failure is MockError)
     }
 
-    func testThatInterceptorCanAdaptRequestWithMultipleAdaptersUsingStateAPI() {
-        // Given
-        let urlRequest = Endpoint().urlRequest
-        let session = Session()
-
-        let adapter1 = Adapter { urlRequest, _, completion in completion(.success(urlRequest)) }
-        let adapter2 = Adapter { _, _, completion in completion(.failure(MockError())) }
-        let interceptor = Interceptor(adapters: [adapter1, adapter2])
-        let state = RequestAdapterState(requestID: UUID(), session: session)
-
-        var result: Result<URLRequest, Error>!
-
-        // When
-        interceptor.adapt(urlRequest, using: state) { result = $0 }
-
-        // Then
-        XCTAssertTrue(result.isFailure)
-        XCTAssertTrue(result.failure is MockError)
-    }
-
     func testThatInterceptorCanAdaptRequestAsynchronously() {
         // Given
-        let urlRequest = Endpoint().urlRequest
+        let urlRequest = URLRequest(url: URL(string: "https://httpbin.org/get")!)
         let session = Session()
 
         let adapter = Adapter { _, _, completion in
@@ -423,8 +350,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanRetryRequestWithNoRetriers() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         let interceptor = Interceptor()
 
@@ -439,8 +367,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanRetryRequestWithOneRetrier() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         let retrier = Retrier { _, _, _, completion in completion(.retry) }
         let interceptor = Interceptor(retriers: [retrier])
@@ -456,8 +385,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanRetryRequestWithMultipleRetriers() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         let retrier1 = Retrier { _, _, _, completion in completion(.doNotRetry) }
         let retrier2 = Retrier { _, _, _, completion in completion(.retry) }
@@ -474,8 +404,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorCanRetryRequestAsynchronously() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         let retrier = Retrier { _, _, _, completion in
             DispatchQueue.main.async {
@@ -502,8 +433,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorStopsIteratingThroughPendingRetriersWithRetryResult() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         var retrier2Called = false
 
@@ -523,8 +455,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorStopsIteratingThroughPendingRetriersWithRetryWithDelayResult() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         var retrier2Called = false
 
@@ -545,8 +478,9 @@ final class InterceptorTests: BaseTestCase {
 
     func testThatInterceptorStopsIteratingThroughPendingRetriersWithDoNotRetryResult() {
         // Given
+        let url = URL(string: "https://httpbin.org/get")!
         let session = Session(startRequestsImmediately: false)
-        let request = session.request(.default)
+        let request = session.request(url)
 
         var retrier2Called = false
 
@@ -572,7 +506,7 @@ final class InterceptorRequestTests: BaseTestCase {
     func testThatRetryPolicyRetriesRequestTimeout() {
         // Given
         let interceptor = InspectorInterceptor(RetryPolicy(retryLimit: 1, exponentialBackoffScale: 0.1))
-        let urlRequest = Endpoint.delay(1).modifying(\.timeout, to: 0.01)
+        let urlRequest = URLRequest.makeHTTPBinRequest(path: "delay/1", timeout: 0.01)
         let expect = expectation(description: "request completed")
 
         // When
@@ -588,49 +522,6 @@ final class InterceptorRequestTests: BaseTestCase {
         XCTAssertEqual(interceptor.retries, [.retryWithDelay(0.1), .doNotRetry], "RetryResults should retryWithDelay, doNotRetry")
     }
 }
-
-// MARK: - Static Accessors
-
-#if swift(>=5.5)
-final class StaticAccessorTests: BaseTestCase {
-    func consumeRequestAdapter(_ requestAdapter: RequestAdapter) {
-        _ = requestAdapter
-    }
-
-    func consumeRequestRetrier(_ requestRetrier: RequestRetrier) {
-        _ = requestRetrier
-    }
-
-    func consumeRequestInterceptor(_ requestInterceptor: RequestInterceptor) {
-        _ = requestInterceptor
-    }
-
-    func testThatAdapterCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeRequestAdapter(.adapter { request, _, completion in completion(.success(request)) })
-    }
-
-    func testThatRetrierCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeRequestRetrier(.retrier { _, _, _, completion in completion(.doNotRetry) })
-    }
-
-    func testThatInterceptorCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeRequestInterceptor(.interceptor())
-    }
-
-    func testThatRetryPolicyCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeRequestInterceptor(.retryPolicy())
-    }
-
-    func testThatConnectionLostRetryPolicyCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeRequestInterceptor(.connectionLostRetryPolicy())
-    }
-}
-#endif
 
 // MARK: - Helpers
 
@@ -674,11 +565,10 @@ final class SingleRetrier: RequestInterceptor {
 
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         if hasRetried {
-            let method = urlRequest.method ?? .get
-            let endpoint = Endpoint(path: .method(method),
-                                    method: method,
-                                    headers: urlRequest.headers)
-            completion(.success(endpoint.urlRequest))
+            var request = URLRequest.makeHTTPBinRequest(path: "\(urlRequest.httpMethod?.lowercased() ?? "get")")
+            request.method = urlRequest.method
+            request.headers = urlRequest.headers
+            completion(.success(request))
         } else {
             completion(.success(urlRequest))
         }

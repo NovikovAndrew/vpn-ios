@@ -5,9 +5,13 @@
 //  Created by Alfauser on 04.08.2022.
 //
 
-import Foundation
 import Utilities
+import Swinject
 
-public class NetworkingFrameworkRegistration {
+public class NetworkingFrameworkRegistration: FrameworkRegistrationPresentable {
+    public func register(container: Container) {
+        
+    }
+    
     public init() {}
 }

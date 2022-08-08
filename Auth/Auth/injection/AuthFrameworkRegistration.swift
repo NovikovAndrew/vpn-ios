@@ -6,7 +6,10 @@
 //
 
 import Utilities
+import Swinject
 
 public class AuthFrameworkRegistration: FrameworkRegistrationPresentable {
-    
+    public func register(container: Container) {
+        
+    }
 }

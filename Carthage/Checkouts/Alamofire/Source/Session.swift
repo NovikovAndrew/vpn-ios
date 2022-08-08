@@ -33,10 +33,6 @@ open class Session {
 
     /// Underlying `URLSession` used to create `URLSessionTasks` for this instance, and for which this instance's
     /// `delegate` handles `URLSessionDelegate` callbacks.
-    ///
-    /// - Note: This instance should **NOT** be used to interact with the underlying `URLSessionTask`s. Doing so will
-    ///         break internal Alamofire logic that tracks those tasks.
-    ///
     public let session: URLSession
     /// Instance's `SessionDelegate`, which handles the `URLSessionDelegate` methods and `Request` interaction.
     public let delegate: SessionDelegate
@@ -183,15 +179,12 @@ open class Session {
                             eventMonitors: [EventMonitor] = []) {
         precondition(configuration.identifier == nil, "Alamofire does not support background URLSessionConfigurations.")
 
-        // Retarget the incoming rootQueue for safety, unless it's the main queue, which we know is safe.
-        let serialRootQueue = (rootQueue === DispatchQueue.main) ? rootQueue : DispatchQueue(label: rootQueue.label,
-                                                                                             target: rootQueue)
-        let delegateQueue = OperationQueue(maxConcurrentOperationCount: 1, underlyingQueue: serialRootQueue, name: "\(serialRootQueue.label).sessionDelegate")
+        let delegateQueue = OperationQueue(maxConcurrentOperationCount: 1, underlyingQueue: rootQueue, name: "org.alamofire.session.sessionDelegateQueue")
         let session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: delegateQueue)
 
         self.init(session: session,
                   delegate: delegate,
-                  rootQueue: serialRootQueue,
+                  rootQueue: rootQueue,
                   startRequestsImmediately: startRequestsImmediately,
                   requestQueue: requestQueue,
                   serializationQueue: serializationQueue,
@@ -207,22 +200,7 @@ open class Session {
         session.invalidateAndCancel()
     }
 
-    // MARK: - All Requests API
-
-    /// Perform an action on all active `Request`s.
-    ///
-    /// - Note: The provided `action` closure is performed asynchronously, meaning that some `Request`s may complete and
-    ///         be unavailable by time it runs. Additionally, this action is performed on the instances's `rootQueue`,
-    ///         so care should be taken that actions are fast. Once the work on the `Request`s is complete, any
-    ///         additional work should be performed on another queue.
-    ///
-    /// - Parameters:
-    ///   - action:     Closure to perform with all `Request`s.
-    public func withAllRequests(perform action: @escaping (Set<Request>) -> Void) {
-        rootQueue.async {
-            action(self.activeRequests)
-        }
-    }
+    // MARK: - Cancellation
 
     /// Cancel all active `Request`s, optionally calling a completion handler when complete.
     ///
@@ -234,11 +212,9 @@ open class Session {
     ///   - queue:      `DispatchQueue` on which the completion handler is run. `.main` by default.
     ///   - completion: Closure to be called when all `Request`s have been cancelled.
     public func cancelAllRequests(completingOnQueue queue: DispatchQueue = .main, completion: (() -> Void)? = nil) {
-        withAllRequests { requests in
-            requests.forEach { $0.cancel() }
-            queue.async {
-                completion?()
-            }
+        rootQueue.async {
+            self.activeRequests.forEach { $0.cancel() }
+            queue.async { completion?() }
         }
     }
 
@@ -315,17 +291,15 @@ open class Session {
     /// `RequestInterceptor`.
     ///
     /// - Parameters:
-    ///   - convertible:     `URLConvertible` value to be used as the `URLRequest`'s `URL`.
-    ///   - method:          `HTTPMethod` for the `URLRequest`. `.get` by default.
-    ///   - parameters:      `Encodable` value to be encoded into the `URLRequest`. `nil` by default.
-    ///   - encoder:         `ParameterEncoder` to be used to encode the `parameters` value into the `URLRequest`.
-    ///                      `URLEncodedFormParameterEncoder.default` by default.
-    ///   - headers:         `HTTPHeaders` value to be added to the `URLRequest`. `nil` by default.
-    ///   - interceptor:     `RequestInterceptor` value to be used by the returned `DataRequest`. `nil` by default.
-    ///   - requestModifier: `RequestModifier` which will be applied to the `URLRequest` created from
-    ///                      the provided parameters. `nil` by default.
+    ///   - convertible: `URLConvertible` value to be used as the `URLRequest`'s `URL`.
+    ///   - method:      `HTTPMethod` for the `URLRequest`. `.get` by default.
+    ///   - parameters:  `Encodable` value to be encoded into the `URLRequest`. `nil` by default.
+    ///   - encoder:     `ParameterEncoder` to be used to encode the `parameters` value into the `URLRequest`.
+    ///                  `URLEncodedFormParameterEncoder.default` by default.
+    ///   - headers:     `HTTPHeaders` value to be added to the `URLRequest`. `nil` by default.
+    ///   - interceptor: `RequestInterceptor` value to be used by the returned `DataRequest`. `nil` by default.
     ///
-    /// - Returns:           The created `DataRequest`.
+    /// - Returns:       The created `DataRequest`.
     open func request<Parameters: Encodable>(_ convertible: URLConvertible,
                                              method: HTTPMethod = .get,
                                              parameters: Parameters? = nil,
@@ -425,7 +399,7 @@ open class Session {
                             requestModifier: RequestModifier? = nil) -> DataStreamRequest {
         let convertible = RequestEncodableConvertible(url: convertible,
                                                       method: method,
-                                                      parameters: Empty?.none,
+                                                      parameters: Optional<Empty>.none,
                                                       encoder: URLEncodedFormParameterEncoder.default,
                                                       headers: headers,
                                                       requestModifier: requestModifier)
@@ -789,8 +763,8 @@ open class Session {
     /// technique was used.
     ///
     /// - Parameters:
-    ///   - multipartFormData:      `MultipartFormData` building closure.
-    ///   - url:                    `URLConvertible` value to be used as the `URLRequest`'s `URL`.
+    ///   - multipartFormData:       `MultipartFormData` building closure.
+    ///   - convertible:             `URLConvertible` value to be used as the `URLRequest`'s `URL`.
     ///   - encodingMemoryThreshold: Byte threshold used to determine whether the form data is encoded into memory or
     ///                              onto disk before being uploaded. `MultipartFormData.encodingMemoryThreshold` by
     ///                              default.
@@ -912,7 +886,8 @@ open class Session {
                                                           headers: headers,
                                                           requestModifier: requestModifier)
 
-        let multipartUpload = MultipartUpload(encodingMemoryThreshold: encodingMemoryThreshold,
+        let multipartUpload = MultipartUpload(isInBackgroundSession: session.configuration.identifier != nil,
+                                              encodingMemoryThreshold: encodingMemoryThreshold,
                                               request: convertible,
                                               multipartFormData: multipartFormData)
 
@@ -951,7 +926,8 @@ open class Session {
                      usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold,
                      interceptor: RequestInterceptor? = nil,
                      fileManager: FileManager = .default) -> UploadRequest {
-        let multipartUpload = MultipartUpload(encodingMemoryThreshold: encodingMemoryThreshold,
+        let multipartUpload = MultipartUpload(isInBackgroundSession: session.configuration.identifier != nil,
+                                              encodingMemoryThreshold: encodingMemoryThreshold,
                                               request: request,
                                               multipartFormData: multipartFormData)
 
@@ -987,71 +963,75 @@ open class Session {
 
     // MARK: Perform
 
-    /// Starts performing the provided `Request`.
+    /// Perform `Request`.
+    ///
+    /// - Note: Called during retry.
     ///
     /// - Parameter request: The `Request` to perform.
     func perform(_ request: Request) {
-        rootQueue.async {
+        // Leaf types must come first, otherwise they will cast as their superclass.
+        switch request {
+        case let r as UploadRequest: perform(r) // UploadRequest must come before DataRequest due to subtype relationship.
+        case let r as DataRequest: perform(r)
+        case let r as DownloadRequest: perform(r)
+        case let r as DataStreamRequest: perform(r)
+        default: fatalError("Attempted to perform unsupported Request subclass: \(type(of: request))")
+        }
+    }
+
+    func perform(_ request: DataRequest) {
+        requestQueue.async {
             guard !request.isCancelled else { return }
 
             self.activeRequests.insert(request)
 
-            self.requestQueue.async {
-                // Leaf types must come first, otherwise they will cast as their superclass.
-                switch request {
-                case let r as UploadRequest: self.performUploadRequest(r) // UploadRequest must come before DataRequest due to subtype relationship.
-                case let r as DataRequest: self.performDataRequest(r)
-                case let r as DownloadRequest: self.performDownloadRequest(r)
-                case let r as DataStreamRequest: self.performDataStreamRequest(r)
-                default: fatalError("Attempted to perform unsupported Request subclass: \(type(of: request))")
-                }
-            }
+            self.performSetupOperations(for: request, convertible: request.convertible)
         }
     }
 
-    func performDataRequest(_ request: DataRequest) {
-        dispatchPrecondition(condition: .onQueue(requestQueue))
+    func perform(_ request: DataStreamRequest) {
+        requestQueue.async {
+            guard !request.isCancelled else { return }
 
-        performSetupOperations(for: request, convertible: request.convertible)
+            self.activeRequests.insert(request)
+
+            self.performSetupOperations(for: request, convertible: request.convertible)
+        }
     }
 
-    func performDataStreamRequest(_ request: DataStreamRequest) {
-        dispatchPrecondition(condition: .onQueue(requestQueue))
+    func perform(_ request: UploadRequest) {
+        requestQueue.async {
+            guard !request.isCancelled else { return }
 
-        performSetupOperations(for: request, convertible: request.convertible)
-    }
+            self.activeRequests.insert(request)
 
-    func performUploadRequest(_ request: UploadRequest) {
-        dispatchPrecondition(condition: .onQueue(requestQueue))
-
-        performSetupOperations(for: request, convertible: request.convertible) {
             do {
                 let uploadable = try request.upload.createUploadable()
                 self.rootQueue.async { request.didCreateUploadable(uploadable) }
-                return true
+
+                self.performSetupOperations(for: request, convertible: request.convertible)
             } catch {
                 self.rootQueue.async { request.didFailToCreateUploadable(with: error.asAFError(or: .createUploadableFailed(error: error))) }
-                return false
             }
         }
     }
 
-    func performDownloadRequest(_ request: DownloadRequest) {
-        dispatchPrecondition(condition: .onQueue(requestQueue))
+    func perform(_ request: DownloadRequest) {
+        requestQueue.async {
+            guard !request.isCancelled else { return }
 
-        switch request.downloadable {
-        case let .request(convertible):
-            performSetupOperations(for: request, convertible: convertible)
-        case let .resumeData(resumeData):
-            rootQueue.async { self.didReceiveResumeData(resumeData, for: request) }
+            self.activeRequests.insert(request)
+
+            switch request.downloadable {
+            case let .request(convertible):
+                self.performSetupOperations(for: request, convertible: convertible)
+            case let .resumeData(resumeData):
+                self.rootQueue.async { self.didReceiveResumeData(resumeData, for: request) }
+            }
         }
     }
 
-    func performSetupOperations(for request: Request,
-                                convertible: URLRequestConvertible,
-                                shouldCreateTask: @escaping () -> Bool = { true }) {
-        dispatchPrecondition(condition: .onQueue(requestQueue))
-
+    func performSetupOperations(for request: Request, convertible: URLRequestConvertible) {
         let initialRequest: URLRequest
 
         do {
@@ -1067,23 +1047,19 @@ open class Session {
         guard !request.isCancelled else { return }
 
         guard let adapter = adapter(for: request) else {
-            guard shouldCreateTask() else { return }
             rootQueue.async { self.didCreateURLRequest(initialRequest, for: request) }
             return
         }
 
-        let adapterState = RequestAdapterState(requestID: request.id, session: self)
-
-        adapter.adapt(initialRequest, using: adapterState) { result in
+        adapter.adapt(initialRequest, for: self) { result in
             do {
                 let adaptedRequest = try result.get()
                 try adaptedRequest.validate()
 
-                self.rootQueue.async { request.didAdaptInitialRequest(initialRequest, to: adaptedRequest) }
-
-                guard shouldCreateTask() else { return }
-
-                self.rootQueue.async { self.didCreateURLRequest(adaptedRequest, for: request) }
+                self.rootQueue.async {
+                    request.didAdaptInitialRequest(initialRequest, to: adaptedRequest)
+                    self.didCreateURLRequest(adaptedRequest, for: request)
+                }
             } catch {
                 self.rootQueue.async { request.didFailToAdaptURLRequest(initialRequest, withError: .requestAdaptationFailed(error: error)) }
             }
@@ -1093,8 +1069,6 @@ open class Session {
     // MARK: - Task Handling
 
     func didCreateURLRequest(_ urlRequest: URLRequest, for request: Request) {
-        dispatchPrecondition(condition: .onQueue(rootQueue))
-
         request.didCreateURLRequest(urlRequest)
 
         guard !request.isCancelled else { return }
@@ -1107,8 +1081,6 @@ open class Session {
     }
 
     func didReceiveResumeData(_ data: Data, for request: DownloadRequest) {
-        dispatchPrecondition(condition: .onQueue(rootQueue))
-
         guard !request.isCancelled else { return }
 
         let task = request.task(forResumeData: data, using: session)
@@ -1119,8 +1091,6 @@ open class Session {
     }
 
     func updateStatesForTask(_ task: URLSessionTask, request: Request) {
-        dispatchPrecondition(condition: .onQueue(rootQueue))
-
         request.withState { state in
             switch state {
             case .initialized, .finished:

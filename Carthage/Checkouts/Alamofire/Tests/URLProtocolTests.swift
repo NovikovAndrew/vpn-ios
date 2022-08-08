@@ -29,7 +29,7 @@ import XCTest
 class ProxyURLProtocol: URLProtocol {
     // MARK: Properties
 
-    enum PropertyKeys {
+    struct PropertyKeys {
         static let handledByForwarderURLProtocol = "HandledByProxyURLProtocol"
     }
 
@@ -41,12 +41,12 @@ class ProxyURLProtocol: URLProtocol {
             return configuration
         }()
 
-        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+        let session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
 
         return session
     }()
 
-    weak var activeTask: URLSessionTask?
+    var activeTask: URLSessionTask?
 
     // MARK: Class Request Methods
 
@@ -134,20 +134,25 @@ class URLProtocolTestCase: BaseTestCase {
 
     func testThatURLProtocolReceivesRequestHeadersAndSessionConfigurationHeaders() {
         // Given
-        let endpoint = Endpoint.responseHeaders.modifying(\.headers, to: ["Request-Header": "foobar"])
+        let urlString = "https://httpbin.org/response-headers"
+        let url = URL(string: urlString)!
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.method = .get
+        urlRequest.headers["Request-Header"] = "foobar"
 
         let expectation = self.expectation(description: "GET request should succeed")
 
         var response: DataResponse<Data?, AFError>?
 
         // When
-        manager.request(endpoint)
+        manager.request(urlRequest)
             .response { resp in
                 response = resp
                 expectation.fulfill()
             }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)

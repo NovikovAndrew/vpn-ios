@@ -30,12 +30,13 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDataRequestsCanHaveCustomTimeoutValueSet() {
         // Given
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let completed = expectation(description: "request completed")
         let modified = expectation(description: "request should be modified")
         var response: AFDataResponse<Data?>?
 
         // When
-        AF.request(.delay(1)) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        AF.request(url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .response { response = $0; completed.fulfill() }
 
         waitForExpectations(timeout: timeout)
@@ -46,6 +47,7 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDataRequestsCallRequestModifiersOnRetry() {
         // Given
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let inspector = InspectorInterceptor(RetryPolicy(retryLimit: 1, exponentialBackoffScale: 0))
         let session = Session(interceptor: inspector)
         let completed = expectation(description: "request completed")
@@ -54,7 +56,7 @@ final class RequestModifierTests: BaseTestCase {
         var response: AFDataResponse<Data?>?
 
         // When
-        session.request(.delay(1)) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        session.request(url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .response { response = $0; completed.fulfill() }
 
         waitForExpectations(timeout: timeout)
@@ -68,14 +70,14 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatUploadRequestsCanHaveCustomTimeoutValueSet() {
         // Given
-        let endpoint = Endpoint.delay(1).modifying(\.method, to: .post)
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let data = Data("data".utf8)
         let completed = expectation(description: "request completed")
         let modified = expectation(description: "request should be modified")
         var response: AFDataResponse<Data?>?
 
         // When
-        AF.upload(data, to: endpoint) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        AF.upload(data, to: url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .response { response = $0; completed.fulfill() }
 
         waitForExpectations(timeout: timeout)
@@ -86,7 +88,7 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatUploadRequestsCallRequestModifiersOnRetry() {
         // Given
-        let endpoint = Endpoint.delay(1).modifying(\.method, to: .post)
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let data = Data("data".utf8)
         let policy = RetryPolicy(retryLimit: 1, exponentialBackoffScale: 0, retryableHTTPMethods: [.post])
         let inspector = InspectorInterceptor(policy)
@@ -97,7 +99,7 @@ final class RequestModifierTests: BaseTestCase {
         var response: AFDataResponse<Data?>?
 
         // When
-        session.upload(data, to: endpoint) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        session.upload(data, to: url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .response { response = $0; completed.fulfill() }
 
         waitForExpectations(timeout: timeout)
@@ -111,7 +113,7 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDownloadRequestsCanHaveCustomTimeoutValueSet() {
         // Given
-        let url = Endpoint.delay(1).url
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let completed = expectation(description: "request completed")
         let modified = expectation(description: "request should be modified")
         var response: AFDownloadResponse<URL?>?
@@ -128,6 +130,7 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDownloadRequestsCallRequestModifiersOnRetry() {
         // Given
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let inspector = InspectorInterceptor(RetryPolicy(retryLimit: 1, exponentialBackoffScale: 0))
         let session = Session(interceptor: inspector)
         let completed = expectation(description: "request completed")
@@ -136,7 +139,7 @@ final class RequestModifierTests: BaseTestCase {
         var response: AFDownloadResponse<URL?>?
 
         // When
-        session.download(.delay(1), requestModifier: { $0.timeoutInterval = 0.01; modified.fulfill() })
+        session.download(url, requestModifier: { $0.timeoutInterval = 0.01; modified.fulfill() })
             .response { response = $0; completed.fulfill() }
 
         waitForExpectations(timeout: timeout)
@@ -150,12 +153,13 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDataStreamRequestsCanHaveCustomTimeoutValueSet() {
         // Given
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let completed = expectation(description: "request completed")
         let modified = expectation(description: "request should be modified")
         var response: DataStreamRequest.Completion?
 
         // When
-        AF.streamRequest(.delay(1)) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        AF.streamRequest(url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .responseStream { stream in
                 guard case let .complete(completion) = stream.event else { return }
 
@@ -171,6 +175,7 @@ final class RequestModifierTests: BaseTestCase {
 
     func testThatDataStreamRequestsCallRequestModifiersOnRetry() {
         // Given
+        let url = URL.makeHTTPBinURL(path: "delay/1")
         let inspector = InspectorInterceptor(RetryPolicy(retryLimit: 1, exponentialBackoffScale: 0))
         let session = Session(interceptor: inspector)
         let completed = expectation(description: "request completed")
@@ -179,7 +184,7 @@ final class RequestModifierTests: BaseTestCase {
         var response: DataStreamRequest.Completion?
 
         // When
-        session.streamRequest(.delay(1)) { $0.timeoutInterval = 0.01; modified.fulfill() }
+        session.streamRequest(url) { $0.timeoutInterval = 0.01; modified.fulfill() }
             .responseStream { stream in
                 guard case let .complete(completion) = stream.event else { return }
 

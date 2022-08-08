@@ -93,19 +93,16 @@ public struct HTTPHeaders {
         headers.remove(at: index)
     }
 
-    /// Sort the current instance by header name, case insensitively.
+    /// Sort the current instance by header name.
     public mutating func sort() {
-        headers.sort { $0.name.lowercased() < $1.name.lowercased() }
+        headers.sort { $0.name < $1.name }
     }
 
     /// Returns an instance sorted by header name.
     ///
     /// - Returns: A copy of the current instance sorted by name.
     public func sorted() -> HTTPHeaders {
-        var headers = self
-        headers.sort()
-
-        return headers
+        HTTPHeaders(headers.sorted { $0.name < $1.name })
     }
 
     /// Case-insensitively find a header's value by name.
@@ -183,7 +180,7 @@ extension HTTPHeaders: Collection {
 
 extension HTTPHeaders: CustomStringConvertible {
     public var description: String {
-        headers.map(\.description)
+        headers.map { $0.description }
             .joined(separator: "\n")
     }
 }
@@ -332,12 +329,12 @@ extension Array where Element == HTTPHeader {
 
 // MARK: - Defaults
 
-extension HTTPHeaders {
+public extension HTTPHeaders {
     /// The default set of `HTTPHeaders` used by Alamofire. Includes `Accept-Encoding`, `Accept-Language`, and
     /// `User-Agent`.
-    public static let `default`: HTTPHeaders = [.defaultAcceptEncoding,
-                                                .defaultAcceptLanguage,
-                                                .defaultUserAgent]
+    static let `default`: HTTPHeaders = [.defaultAcceptEncoding,
+                                         .defaultAcceptLanguage,
+                                         .defaultUserAgent]
 }
 
 extension HTTPHeader {
@@ -360,7 +357,9 @@ extension HTTPHeader {
     /// `preferredLanguages`.
     ///
     /// See the [Accept-Language HTTP header documentation](https://tools.ietf.org/html/rfc7231#section-5.3.5).
-    public static let defaultAcceptLanguage: HTTPHeader = .acceptLanguage(Locale.preferredLanguages.prefix(6).qualityEncoded())
+    public static let defaultAcceptLanguage: HTTPHeader = {
+        .acceptLanguage(Locale.preferredLanguages.prefix(6).qualityEncoded())
+    }()
 
     /// Returns Alamofire's default `User-Agent` header.
     ///
@@ -369,23 +368,19 @@ extension HTTPHeader {
     /// Example: `iOS Example/1.0 (org.alamofire.iOS-Example; build:1; iOS 13.0.0) Alamofire/5.0.0`
     public static let defaultUserAgent: HTTPHeader = {
         let info = Bundle.main.infoDictionary
-        let executable = (info?["CFBundleExecutable"] as? String) ??
+        let executable = (info?[kCFBundleExecutableKey as String] as? String) ??
             (ProcessInfo.processInfo.arguments.first?.split(separator: "/").last.map(String.init)) ??
             "Unknown"
-        let bundle = info?["CFBundleIdentifier"] as? String ?? "Unknown"
+        let bundle = info?[kCFBundleIdentifierKey as String] as? String ?? "Unknown"
         let appVersion = info?["CFBundleShortVersionString"] as? String ?? "Unknown"
-        let appBuild = info?["CFBundleVersion"] as? String ?? "Unknown"
+        let appBuild = info?[kCFBundleVersionKey as String] as? String ?? "Unknown"
 
         let osNameVersion: String = {
             let version = ProcessInfo.processInfo.operatingSystemVersion
             let versionString = "\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)"
             let osName: String = {
                 #if os(iOS)
-                #if targetEnvironment(macCatalyst)
-                return "macOS(Catalyst)"
-                #else
                 return "iOS"
-                #endif
                 #elseif os(watchOS)
                 return "watchOS"
                 #elseif os(tvOS)
@@ -438,9 +433,9 @@ extension HTTPURLResponse {
     }
 }
 
-extension URLSessionConfiguration {
+public extension URLSessionConfiguration {
     /// Returns `httpAdditionalHeaders` as `HTTPHeaders`.
-    public var headers: HTTPHeaders {
+    var headers: HTTPHeaders {
         get { (httpAdditionalHeaders as? [String: String]).map(HTTPHeaders.init) ?? HTTPHeaders() }
         set { httpAdditionalHeaders = newValue.dictionary }
     }

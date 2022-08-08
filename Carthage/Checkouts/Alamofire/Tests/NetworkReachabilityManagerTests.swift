@@ -22,8 +22,6 @@
 //  THE SOFTWARE.
 //
 
-#if canImport(SytemConfiguration)
-
 @testable import Alamofire
 import Foundation
 import SystemConfiguration
@@ -129,40 +127,24 @@ final class NetworkReachabilityManagerTestCase: BaseTestCase {
 
     func testThatHostManagerCanBeDeinitialized() {
         // Given
-        let expect = expectation(description: "reachability queue should clear")
         var manager: NetworkReachabilityManager? = NetworkReachabilityManager(host: "localhost")
-        weak var weakManager = manager
 
         // When
-        manager?.startListening(onUpdatePerforming: { _ in })
-        manager?.stopListening()
-        manager?.reachabilityQueue.async { expect.fulfill() }
         manager = nil
 
-        waitForExpectations(timeout: timeout)
-
         // Then
-        XCTAssertNil(manager, "strong reference should be nil")
-        XCTAssertNil(weakManager, "weak reference should be nil")
+        XCTAssertNil(manager)
     }
 
     func testThatAddressManagerCanBeDeinitialized() {
         // Given
-        let expect = expectation(description: "reachability queue should clear")
         var manager: NetworkReachabilityManager? = NetworkReachabilityManager()
-        weak var weakManager = manager
 
         // When
-        manager?.startListening(onUpdatePerforming: { _ in })
-        manager?.stopListening()
-        manager?.reachabilityQueue.async { expect.fulfill() }
         manager = nil
 
-        waitForExpectations(timeout: timeout)
-
         // Then
-        XCTAssertNil(manager, "strong reference should be nil")
-        XCTAssertNil(weakManager, "weak reference should be nil")
+        XCTAssertNil(manager)
     }
 
     // MARK: - Listener
@@ -183,7 +165,7 @@ final class NetworkReachabilityManagerTestCase: BaseTestCase {
             networkReachabilityStatus = status
             expectation.fulfill()
         }
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(networkReachabilityStatus, .reachable(.ethernetOrWiFi))
@@ -201,7 +183,7 @@ final class NetworkReachabilityManagerTestCase: BaseTestCase {
             networkReachabilityStatus = status
             expectation.fulfill()
         }
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertEqual(networkReachabilityStatus, .reachable(.ethernetOrWiFi))
@@ -299,5 +281,3 @@ final class NetworkReachabilityManagerTestCase: BaseTestCase {
     }
     #endif
 }
-
-#endif

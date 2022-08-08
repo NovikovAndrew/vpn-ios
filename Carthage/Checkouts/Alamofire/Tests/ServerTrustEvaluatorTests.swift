@@ -22,13 +22,12 @@
 //  THE SOFTWARE.
 //
 
-#if !(os(Linux) || os(Windows))
-
 import Alamofire
 import Foundation
 import XCTest
 
-private enum TestCertificates {
+#if !SWIFT_PACKAGE
+private struct TestCertificates {
     // Root Certificates
     static let rootCA = TestCertificates.certificate(filename: "alamofire-root-ca")
 
@@ -50,7 +49,8 @@ private enum TestCertificates {
     static let leafValidURI = TestCertificates.certificate(filename: "valid-uri")
 
     static func certificate(filename: String) -> SecCertificate {
-        let filePath = Bundle.test.path(forResource: filename, ofType: "cer")!
+        class Locator {}
+        let filePath = Bundle(for: Locator.self).path(forResource: filename, ofType: "cer")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
         let certificate = SecCertificateCreateWithData(nil, data as CFData)!
 
@@ -1309,7 +1309,7 @@ class ServerTrustPolicyDisableEvaluationTestCase: ServerTrustPolicyTestCase {
         // Given
         let host = "test.alamofire.org"
         let serverTrust = TestTrusts.leafValidDNSNameMissingIntermediate.trust
-        let serverTrustPolicy = DisabledTrustEvaluator()
+        let serverTrustPolicy = DisabledEvaluator()
 
         // When
         let result = Result { try serverTrustPolicy.evaluate(serverTrust, forHost: host) }
@@ -1322,7 +1322,7 @@ class ServerTrustPolicyDisableEvaluationTestCase: ServerTrustPolicyTestCase {
         // Given
         let host = "test.alamofire.org"
         let serverTrust = TestTrusts.leafExpired.trust
-        let serverTrustPolicy = DisabledTrustEvaluator()
+        let serverTrustPolicy = DisabledEvaluator()
 
         // When
         let result = Result { try serverTrustPolicy.evaluate(serverTrust, forHost: host) }
@@ -1386,7 +1386,7 @@ class ServerTrustPolicyCompositeTestCase: ServerTrustPolicyTestCase {
 
 // MARK: -
 
-final class ServerTrustPolicyCertificatesInBundleTestCase: ServerTrustPolicyTestCase {
+class ServerTrustPolicyCertificatesInBundleTestCase: ServerTrustPolicyTestCase {
     func testOnlyValidCertificatesAreDetected() {
         // Given
         // Files present in bundle in the form of type+encoding+extension [key|cert][DER|PEM].[cer|crt|der|key|pem]
@@ -1398,7 +1398,7 @@ final class ServerTrustPolicyCertificatesInBundleTestCase: ServerTrustPolicyTest
         // keyDER.der: DER-encoded key, not a certificate, should fail
 
         // When
-        let certificates = Bundle.test.af.certificates
+        let certificates = Bundle(for: ServerTrustPolicyCertificatesInBundleTestCase.self).af.certificates
 
         // Then
         // Expectation: 19 well-formed certificates in the test bundle plus 4 invalid certificates.
@@ -1415,28 +1415,4 @@ final class ServerTrustPolicyCertificatesInBundleTestCase: ServerTrustPolicyTest
         #endif
     }
 }
-
-#if swift(>=5.5)
-final class StaticServerTrustAccessorTests: ServerTrustPolicyTestCase {
-    func consumeServerTrustEvaluator(_ evaluator: ServerTrustEvaluating) {
-        _ = evaluator
-    }
-
-    func testThatRevocationEvaluatorCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeServerTrustEvaluator(.revocationChecking())
-    }
-
-    func testThatPinnedCertificatesEvaluatorCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeServerTrustEvaluator(.pinnedCertificates())
-    }
-
-    func testThatPublicKeysEvaluatorCanBeCreatedStaticallyFromProtocol() {
-        // Given, When, Then
-        consumeServerTrustEvaluator(.publicKeys())
-    }
-}
-#endif
-
 #endif

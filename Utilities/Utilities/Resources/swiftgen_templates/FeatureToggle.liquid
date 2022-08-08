@@ -1,0 +1,13 @@
+/*
+  This fle was generated using Liquid Template engine.
+  If you intend to modify this file or change its file location,
+  then please refer to ruby script convertFeatureToEnum.rb and make appropriate changes.
+ */
+
+import Foundation
+/// Enumeration representing a pool of new vpn-ios features
+public enum VPNFeatureId: String {
+    {% for keyVal in data %}/// {{ keyVal[1].title }}
+    case {{ keyVal[0] }}
+    {% endfor %}
+}

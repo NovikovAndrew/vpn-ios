@@ -14,6 +14,15 @@
 		9900A5FF289BA0760050CE26 /* AppImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */; };
 		9900A602289BA0A20050CE26 /* AppColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */; };
 		9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */; };
+		9905B57528A0DE6E004839D1 /* FeatureToggle.liquid in Sources */ = {isa = PBXBuildFile; fileRef = 9905B57428A0DE6E004839D1 /* FeatureToggle.liquid */; };
+		9905B57B28A0E23F004839D1 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9905B57A28A0E23F004839D1 /* Alamofire.xcframework */; };
+		9905B57C28A0E23F004839D1 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9905B57A28A0E23F004839D1 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		991A91E428A11D230091AD80 /* injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91E328A11D230091AD80 /* injector.swift */; };
+		991A91E628A11D340091AD80 /* ModuleInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91E528A11D340091AD80 /* ModuleInjection.swift */; };
+		991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */; };
+		991A91EE28A122960091AD80 /* VPNConfigKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91ED28A122960091AD80 /* VPNConfigKey.swift */; };
+		99662E0728A0E4A6001F087A /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; };
+		99662E0828A0E4A6001F087A /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B13289FE5E800C9C4E3 /* swiftgen.yml */; };
 		99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */; };
 		99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */; };
@@ -33,6 +42,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9905B57D28A0E23F004839D1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99662E0828A0E4A6001F087A /* Swinject.xcframework in Embed Frameworks */,
+				9905B57C28A0E23F004839D1 /* Alamofire.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9900A5CC289B98490050CE26 /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A5CF289B98490050CE26 /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -42,6 +66,13 @@
 		9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImageAssets.xcassets; sourceTree = "<group>"; };
 		9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppColorAssets.xcassets; sourceTree = "<group>"; };
 		9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRegistrationPresentable.swift; sourceTree = "<group>"; };
+		9905B57428A0DE6E004839D1 /* FeatureToggle.liquid */ = {isa = PBXFileReference; lastKnownFileType = text; path = FeatureToggle.liquid; sourceTree = "<group>"; };
+		9905B57A28A0E23F004839D1 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
+		991A91E328A11D230091AD80 /* injector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = injector.swift; sourceTree = "<group>"; };
+		991A91E528A11D340091AD80 /* ModuleInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleInjection.swift; sourceTree = "<group>"; };
+		991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigTypes.swift; sourceTree = "<group>"; };
+		991A91ED28A122960091AD80 /* VPNConfigKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigKey.swift; sourceTree = "<group>"; };
+		99662E0628A0E4A6001F087A /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = ../Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		99A44B13289FE5E800C9C4E3 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = vpn_assets.stencil; sourceTree = "<group>"; };
 		99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vpn-locale.stencil"; sourceTree = "<group>"; };
@@ -56,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99662E0728A0E4A6001F087A /* Swinject.xcframework in Frameworks */,
+				9905B57B28A0E23F004839D1 /* Alamofire.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +109,7 @@
 				9900A5CE289B98490050CE26 /* Utilities */,
 				9900A5DA289B984A0050CE26 /* UtilitiesTests */,
 				9900A5CD289B98490050CE26 /* Products */,
+				9905B57928A0E23F004839D1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +125,7 @@
 		9900A5CE289B98490050CE26 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				991A91EA28A121FB0091AD80 /* Config */,
 				99A44B21289FEA9C00C9C4E3 /* Generated */,
 				99A44B0C289ED4DA00C9C4E3 /* VPNColor */,
 				9900A631289BA2220050CE26 /* Injection */,
@@ -147,9 +182,29 @@
 		9900A631289BA2220050CE26 /* Injection */ = {
 			isa = PBXGroup;
 			children = (
+				991A91E528A11D340091AD80 /* ModuleInjection.swift */,
+				991A91E328A11D230091AD80 /* injector.swift */,
 				9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */,
 			);
 			path = Injection;
+			sourceTree = "<group>";
+		};
+		9905B57928A0E23F004839D1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99662E0628A0E4A6001F087A /* Swinject.xcframework */,
+				9905B57A28A0E23F004839D1 /* Alamofire.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		991A91EA28A121FB0091AD80 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */,
+				991A91ED28A122960091AD80 /* VPNConfigKey.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		99A44B0C289ED4DA00C9C4E3 /* VPNColor */ = {
@@ -176,6 +231,7 @@
 			children = (
 				99A44B16289FE6F900C9C4E3 /* strings */,
 				99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */,
+				9905B57428A0DE6E004839D1 /* FeatureToggle.liquid */,
 			);
 			path = swiftgen_templates;
 			sourceTree = "<group>";
@@ -218,6 +274,7 @@
 				9900A5C8289B98490050CE26 /* Sources */,
 				9900A5C9289B98490050CE26 /* Frameworks */,
 				9900A5CA289B98490050CE26 /* Resources */,
+				9905B57D28A0E23F004839D1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -310,12 +367,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9905B57528A0DE6E004839D1 /* FeatureToggle.liquid in Sources */,
 				99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */,
 				99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */,
 				99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */,
+				991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */,
+				991A91E628A11D340091AD80 /* ModuleInjection.swift in Sources */,
 				9900A5D1289B98490050CE26 /* Utilities.docc in Sources */,
 				99A44B1C289FE79D00C9C4E3 /* api_codes_flatkeys.stencil in Sources */,
+				991A91EE28A122960091AD80 /* VPNConfigKey.swift in Sources */,
 				9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */,
+				991A91E428A11D230091AD80 /* injector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

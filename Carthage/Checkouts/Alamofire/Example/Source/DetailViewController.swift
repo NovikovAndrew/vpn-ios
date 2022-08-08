@@ -35,10 +35,6 @@ class DetailViewController: UITableViewController {
             oldValue?.cancel()
 
             title = request?.description
-            request?.onURLRequestCreation { [weak self] _ in
-                self?.title = self?.request?.description
-            }
-
             refreshControl?.endRefreshing()
             headers.removeAll()
             body = nil
@@ -76,7 +72,6 @@ class DetailViewController: UITableViewController {
             return
         }
 
-        refreshControl?.isHidden = false
         refreshControl?.beginRefreshing()
 
         let start = CACurrentMediaTime()
@@ -156,7 +151,7 @@ extension DetailViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch Sections(rawValue: indexPath.section)! {
+        switch Sections(rawValue: (indexPath as NSIndexPath).section)! {
         case .headers:
             let cell = tableView.dequeueReusableCell(withIdentifier: "Header")!
             let field = headers.keys.sorted(by: <)[indexPath.row]
@@ -196,7 +191,7 @@ extension DetailViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch Sections(rawValue: indexPath.section)! {
+        switch Sections(rawValue: (indexPath as NSIndexPath).section)! {
         case .body:
             return 300
         default:

@@ -29,17 +29,18 @@ import XCTest
 final class ResponseTestCase: BaseTestCase {
     func testThatResponseReturnsSuccessResultWithValidData() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Data?, AFError>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).response { resp in
+        AF.request(urlString, parameters: ["foo": "bar"]).response { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -51,8 +52,8 @@ final class ResponseTestCase: BaseTestCase {
 
     func testThatResponseReturnsFailureResultWithOptionalDataAndError() {
         // Given
-        let urlString = String.invalidURL
-        let expectation = self.expectation(description: "request should fail with invalid URL error")
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
+        let expectation = self.expectation(description: "request should fail with invalid hostname error")
 
         var response: DataResponse<Data?, AFError>?
 
@@ -62,7 +63,7 @@ final class ResponseTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -70,6 +71,7 @@ final class ResponseTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertNotNil(response?.error)
         XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
@@ -79,17 +81,18 @@ final class ResponseTestCase: BaseTestCase {
 final class ResponseDataTestCase: BaseTestCase {
     func testThatResponseDataReturnsSuccessResultWithValidData() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Data, AFError>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseData { resp in
+        AF.request(urlString, parameters: ["foo": "bar"]).responseData { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -102,8 +105,8 @@ final class ResponseDataTestCase: BaseTestCase {
 
     func testThatResponseDataReturnsFailureResultWithOptionalDataAndError() {
         // Given
-        let urlString = String.invalidURL
-        let expectation = self.expectation(description: "request should fail with invalid URL error")
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
+        let expectation = self.expectation(description: "request should fail with 404")
 
         var response: DataResponse<Data, AFError>?
 
@@ -113,7 +116,7 @@ final class ResponseDataTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -121,6 +124,7 @@ final class ResponseDataTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
         XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
@@ -130,31 +134,8 @@ final class ResponseDataTestCase: BaseTestCase {
 final class ResponseStringTestCase: BaseTestCase {
     func testThatResponseStringReturnsSuccessResultWithValidString() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
-
-        var response: DataResponse<String, AFError>?
-
-        // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseString { resp in
-            response = resp
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertNotNil(response?.request)
-        XCTAssertNotNil(response?.response)
-        XCTAssertNotNil(response?.data)
-        XCTAssertNotNil(response?.data)
-        XCTAssertEqual(response?.result.isSuccess, true)
-        XCTAssertNotNil(response?.metrics)
-    }
-
-    func testThatResponseStringReturnsFailureResultWithOptionalDataAndError() {
-        // Given
-        let urlString = String.invalidURL
-        let expectation = self.expectation(description: "request should fail with invalid URL error")
 
         var response: DataResponse<String, AFError>?
 
@@ -164,35 +145,7 @@ final class ResponseStringTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
-
-        // Then
-        XCTAssertNotNil(response?.request)
-        XCTAssertNil(response?.response)
-        XCTAssertNil(response?.data)
-        XCTAssertEqual(response?.result.isFailure, true)
-        XCTAssertEqual(response?.error?.isSessionTaskError, true)
-        XCTAssertNotNil(response?.metrics)
-    }
-}
-
-// MARK: -
-
-@available(*, deprecated)
-final class ResponseJSONTestCase: BaseTestCase {
-    func testThatResponseJSONReturnsSuccessResultWithValidJSON() {
-        // Given
-        let expectation = self.expectation(description: "request should succeed")
-
-        var response: DataResponse<Any, AFError>?
-
-        // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseJSON { resp in
-            response = resp
-            expectation.fulfill()
-        }
-
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -205,7 +158,60 @@ final class ResponseJSONTestCase: BaseTestCase {
 
     func testThatResponseStringReturnsFailureResultWithOptionalDataAndError() {
         // Given
-        let urlString = String.invalidURL
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
+        let expectation = self.expectation(description: "request should fail with 404")
+
+        var response: DataResponse<String, AFError>?
+
+        // When
+        AF.request(urlString, parameters: ["foo": "bar"]).responseString { resp in
+            response = resp
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: timeout, handler: nil)
+
+        // Then
+        XCTAssertNotNil(response?.request)
+        XCTAssertNil(response?.response)
+        XCTAssertNil(response?.data)
+        XCTAssertEqual(response?.result.isFailure, true)
+        XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
+        XCTAssertNotNil(response?.metrics)
+    }
+}
+
+// MARK: -
+
+final class ResponseJSONTestCase: BaseTestCase {
+    func testThatResponseJSONReturnsSuccessResultWithValidJSON() {
+        // Given
+        let urlString = "https://httpbin.org/get"
+        let expectation = self.expectation(description: "request should succeed")
+
+        var response: DataResponse<Any, AFError>?
+
+        // When
+        AF.request(urlString, parameters: ["foo": "bar"]).responseJSON { resp in
+            response = resp
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: timeout, handler: nil)
+
+        // Then
+        XCTAssertNotNil(response?.request)
+        XCTAssertNotNil(response?.response)
+        XCTAssertNotNil(response?.data)
+        XCTAssertNotNil(response?.data)
+        XCTAssertEqual(response?.result.isSuccess, true)
+        XCTAssertNotNil(response?.metrics)
+    }
+
+    func testThatResponseStringReturnsFailureResultWithOptionalDataAndError() {
+        // Given
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
         let expectation = self.expectation(description: "request should fail")
 
         var response: DataResponse<Any, AFError>?
@@ -216,7 +222,7 @@ final class ResponseJSONTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -224,22 +230,24 @@ final class ResponseJSONTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
         XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 
     func testThatResponseJSONReturnsSuccessResultForGETRequest() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Any, AFError>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseJSON { resp in
+        AF.request(urlString, parameters: ["foo": "bar"]).responseJSON { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -260,17 +268,18 @@ final class ResponseJSONTestCase: BaseTestCase {
 
     func testThatResponseJSONReturnsSuccessResultForPOSTRequest() {
         // Given
+        let urlString = "https://httpbin.org/post"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Any, AFError>?
 
         // When
-        AF.request(.method(.post), parameters: ["foo": "bar"]).responseJSON { resp in
+        AF.request(urlString, method: .post, parameters: ["foo": "bar"]).responseJSON { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -293,66 +302,66 @@ final class ResponseJSONTestCase: BaseTestCase {
 final class ResponseJSONDecodableTestCase: BaseTestCase {
     func testThatResponseDecodableReturnsSuccessResultWithValidJSON() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(url, parameters: [:]).responseDecodable(of: TestResponse.self) { resp in
+        AF.request(urlString, parameters: [:]).responseDecodable(of: HTTPBinResponse.self) { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
         XCTAssertNotNil(response?.response)
         XCTAssertNotNil(response?.data)
         XCTAssertEqual(response?.result.isSuccess, true)
-        XCTAssertEqual(response?.result.success?.url, url.absoluteString)
+        XCTAssertEqual(response?.result.success?.url, "https://httpbin.org/get")
         XCTAssertNotNil(response?.metrics)
     }
 
     func testThatResponseDecodableWithPassedTypeReturnsSuccessResultWithValidJSON() {
         // Given
-        let url = Endpoint().url
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(url, parameters: [:]).responseDecodable(of: TestResponse.self) {
+        AF.request(urlString, parameters: [:]).responseDecodable(of: HTTPBinResponse.self) {
             response = $0
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
         XCTAssertNotNil(response?.response)
         XCTAssertNotNil(response?.data)
         XCTAssertEqual(response?.result.isSuccess, true)
-        XCTAssertEqual(response?.result.success?.url, url.absoluteString)
+        XCTAssertEqual(response?.result.success?.url, "https://httpbin.org/get")
         XCTAssertNotNil(response?.metrics)
     }
 
     func testThatResponseStringReturnsFailureResultWithOptionalDataAndError() {
         // Given
-        let urlString = String.invalidURL
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
         let expectation = self.expectation(description: "request should fail")
 
-        var response: DataResponse<TestResponse, AFError>?
+        var response: DataResponse<HTTPBinResponse, AFError>?
 
         // When
-        AF.request(urlString, parameters: [:]).responseDecodable(of: TestResponse.self) { resp in
+        AF.request(urlString, parameters: [:]).responseDecodable(of: HTTPBinResponse.self) { resp in
             response = resp
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -360,6 +369,7 @@ final class ResponseJSONDecodableTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
         XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
@@ -369,20 +379,22 @@ final class ResponseJSONDecodableTestCase: BaseTestCase {
 final class ResponseMapTestCase: BaseTestCase {
     func testThatMapTransformsSuccessValue() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<String, AFError>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseDecodable(of: TestResponse.self) { resp in
-            response = resp.map { response in
-                response.args?["foo"] ?? "invalid"
+        AF.request(urlString, parameters: ["foo": "bar"]).responseJSON { resp in
+            response = resp.map { json in
+                // json["args"]["foo"] is "bar": use this invariant to test the map function
+                ((json as? [String: Any])?["args"] as? [String: Any])?["foo"] as? String ?? "invalid"
             }
 
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -395,8 +407,8 @@ final class ResponseMapTestCase: BaseTestCase {
 
     func testThatMapPreservesFailureError() {
         // Given
-        let urlString = String.invalidURL
-        let expectation = self.expectation(description: "request should fail with invalid URL error")
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
+        let expectation = self.expectation(description: "request should fail with 404")
 
         var response: DataResponse<String, AFError>?
 
@@ -406,7 +418,7 @@ final class ResponseMapTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -414,6 +426,7 @@ final class ResponseMapTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
         XCTAssertEqual(response?.error?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
@@ -423,20 +436,22 @@ final class ResponseMapTestCase: BaseTestCase {
 final class ResponseTryMapTestCase: BaseTestCase {
     func testThatTryMapTransformsSuccessValue() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<String, Error>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseDecodable(of: TestResponse.self) { resp in
-            response = resp.tryMap { response in
-                response.args?["foo"] ?? "invalid"
+        AF.request(urlString, parameters: ["foo": "bar"]).responseJSON { resp in
+            response = resp.tryMap { json in
+                // json["args"]["foo"] is "bar": use this invariant to test the tryMap function
+                ((json as? [String: Any])?["args"] as? [String: Any])?["foo"] as? String ?? "invalid"
             }
 
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -451,12 +466,13 @@ final class ResponseTryMapTestCase: BaseTestCase {
         // Given
         struct TransformError: Error {}
 
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<String, Error>?
 
         // When
-        AF.request(.default, parameters: ["foo": "bar"]).responseData { resp in
+        AF.request(urlString, parameters: ["foo": "bar"]).responseData { resp in
             response = resp.tryMap { _ in
                 throw TransformError()
             }
@@ -464,7 +480,7 @@ final class ResponseTryMapTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -483,8 +499,8 @@ final class ResponseTryMapTestCase: BaseTestCase {
 
     func testThatTryMapPreservesFailureError() {
         // Given
-        let urlString = String.invalidURL
-        let expectation = self.expectation(description: "request should fail with invalid URL error")
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
+        let expectation = self.expectation(description: "request should fail with 404")
 
         var response: DataResponse<String, Error>?
 
@@ -494,7 +510,7 @@ final class ResponseTryMapTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -502,6 +518,7 @@ final class ResponseTryMapTestCase: BaseTestCase {
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
         XCTAssertEqual(response?.error?.asAFError?.isSessionTaskError, true)
+        XCTAssertEqual(response?.error?.asAFError?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
@@ -523,13 +540,13 @@ enum TransformationError: Error {
 final class ResponseMapErrorTestCase: BaseTestCase {
     func testThatMapErrorTransformsFailureValue() {
         // Given
-        let urlString = String.invalidURL
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
         let expectation = self.expectation(description: "request should not succeed")
 
-        var response: DataResponse<TestResponse, TestError>?
+        var response: DataResponse<Any, TestError>?
 
         // When
-        AF.request(urlString).responseDecodable(of: TestResponse.self) { resp in
+        AF.request(urlString).responseJSON { resp in
             response = resp.mapError { error in
                 TestError.error(error: error)
             }
@@ -537,7 +554,7 @@ final class ResponseMapErrorTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -551,17 +568,18 @@ final class ResponseMapErrorTestCase: BaseTestCase {
 
     func testThatMapErrorPreservesSuccessValue() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Data, TestError>?
 
         // When
-        AF.request(.default).responseData { resp in
+        AF.request(urlString).responseData { resp in
             response = resp.mapError { TestError.error(error: $0) }
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -577,17 +595,18 @@ final class ResponseMapErrorTestCase: BaseTestCase {
 final class ResponseTryMapErrorTestCase: BaseTestCase {
     func testThatTryMapErrorPreservesSuccessValue() {
         // Given
+        let urlString = "https://httpbin.org/get"
         let expectation = self.expectation(description: "request should succeed")
 
         var response: DataResponse<Data, Error>?
 
         // When
-        AF.request(.default).responseData { resp in
+        AF.request(urlString).responseData { resp in
             response = resp.tryMapError { TestError.error(error: $0) }
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -599,7 +618,7 @@ final class ResponseTryMapErrorTestCase: BaseTestCase {
 
     func testThatTryMapErrorCatchesTransformationError() {
         // Given
-        let urlString = String.invalidURL
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
         let expectation = self.expectation(description: "request should fail")
 
         var response: DataResponse<Data, Error>?
@@ -610,7 +629,7 @@ final class ResponseTryMapErrorTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
@@ -629,7 +648,7 @@ final class ResponseTryMapErrorTestCase: BaseTestCase {
 
     func testThatTryMapErrorTransformsError() {
         // Given
-        let urlString = String.invalidURL
+        let urlString = "https://invalid-url-here.org/this/does/not/exist"
         let expectation = self.expectation(description: "request should fail")
 
         var response: DataResponse<Data, Error>?
@@ -640,13 +659,20 @@ final class ResponseTryMapErrorTestCase: BaseTestCase {
             expectation.fulfill()
         }
 
-        waitForExpectations(timeout: timeout)
+        waitForExpectations(timeout: timeout, handler: nil)
 
         // Then
         XCTAssertNotNil(response?.request)
         XCTAssertNil(response?.response)
         XCTAssertNil(response?.data)
         XCTAssertEqual(response?.result.isFailure, true)
+
+        guard let error = response?.error as? TestError,
+            case let .error(underlyingError) = error
+        else { XCTFail(); return }
+
+        XCTAssertEqual(underlyingError.asAFError?.isSessionTaskError, true)
+        XCTAssertEqual(underlyingError.asAFError?.isHostURLError, true)
         XCTAssertNotNil(response?.metrics)
     }
 }
