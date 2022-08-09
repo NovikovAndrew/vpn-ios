@@ -8,6 +8,8 @@
 
 - [Commit style](#commit-style)
 
+- [Localization texts workflow](#localization-texts-workflow)
+
 
 ### Project bootstrap
 
@@ -96,3 +98,20 @@ After running `git add`, run `git cz` instead of regular commit command. You wil
 * [Commitizen docs](http://commitizen.github.io/cz-cli)
 *  [Extensive article in russian](https://anvilabs.co/blog/writing-practical-commit-messages/)
 *  [Another article russian](https://habr.com/company/yandex/blog/431432/)
+
+
+### Localization texts workflow
+
+##### First setup
+
+For localization we use [phrase](https://phrase.com/)
+[Here](https://help.phrase.com/help/phrase-in-your-terminal) you can install phrase cli
+You can see the config file here https://help.phrase.com/help/configuration
+
+##### Contribution
+
+There is no default values, so it is required to add values for languages/ in vpn app
+
+to get new keys from phrase, just run 
+`phraseapp pull`
+
