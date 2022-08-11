@@ -118,7 +118,7 @@ to get new keys from phrase, just run
 `phraseapp pull`
 
 
-##### Modules
+### Modules
 
 Application will be divided into 5 macro-modules:
 
