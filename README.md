@@ -10,6 +10,8 @@
 
 - [Localization texts workflow](#localization-texts-workflow)
 
+- [Modules](#modules)
+
 
 ### Project bootstrap
 
@@ -114,4 +116,15 @@ There is no default values, so it is required to add values for languages/ in vp
 
 to get new keys from phrase, just run 
 `phraseapp pull`
+
+
+##### Modules
+
+Application will be divided into 5 macro-modules:
+
+- `Auth`
+- `Main`
+- `Utilities`
+- `Networking`
+- `VPN-IOS`
 
