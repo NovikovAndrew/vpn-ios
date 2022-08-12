@@ -10,10 +10,6 @@ import Alamofire
 import RxSwift
 import Moya
 
-public enum ApiResult<DataType> {
-    
-}
-
 public protocol NetworkingType: AnyObject {
     /// Method for networking request with provided Moya target and response object Generic type
     ///

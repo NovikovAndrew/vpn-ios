@@ -37,6 +37,7 @@
 		9979D62F289BC6F9008BD172 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62E289BC6F9008BD172 /* Networking.swift */; };
 		9979D682289BC96B008BD172 /* AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D681289BC96B008BD172 /* AuthRequest.swift */; };
 		9979D684289BC974008BD172 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D683289BC974008BD172 /* RegisterRequest.swift */; };
+		99F7090F28A665B900C3BE8F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7090E28A665B900C3BE8F /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		9979D62E289BC6F9008BD172 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		9979D681289BC96B008BD172 /* AuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequest.swift; sourceTree = "<group>"; };
 		9979D683289BC974008BD172 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		99F7090E28A665B900C3BE8F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				991A91FF28A128980091AD80 /* HTTPStatusCode.swift */,
+				99F7090E28A665B900C3BE8F /* Result.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				9979D628289BC5FB008BD172 /* NetworkingType.swift in Sources */,
 				9979D62B289BC6A6008BD172 /* AuthTarget.swift in Sources */,
 				9900A5AC289B98100050CE26 /* Networking.docc in Sources */,
+				99F7090F28A665B900C3BE8F /* Result.swift in Sources */,
 				9979D62F289BC6F9008BD172 /* Networking.swift in Sources */,
 				991A91E228A118AF0091AD80 /* BaseProviderType.swift in Sources */,
 				991A920028A128980091AD80 /* HTTPStatusCode.swift in Sources */,

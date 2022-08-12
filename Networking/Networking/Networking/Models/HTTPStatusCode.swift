@@ -275,9 +275,6 @@ public enum HTTPStatusCode: Int, Error {
             
         default:
             return .undefined
-            
         }
-        
     }
-    
 }
