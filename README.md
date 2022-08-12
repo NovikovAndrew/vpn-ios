@@ -4,6 +4,14 @@
 
 - [Generamba module generation](#generamba-module-generation)
 
+- [Swinject DI workflow](#swinject-di-workflow)
+
+- [Commit style](#commit-style)
+
+- [Localization texts workflow](#localization-texts-workflow)
+
+- [Modules](#modules)
+
 
 ### Project bootstrap
 
@@ -53,3 +61,70 @@ Script consists from 2 files:
  * `findTarget.rb` - script for analyzing project and find out all separate targets;
 
 Example:
+
+
+### Swinject DI workflow
+
+See `VPNInject` classes and `SwitchUserNumber` assembly class for details/examples.
+
+
+### Commit style
+
+As we stated in a badge above, our project is commitizen-friendly. All of our commits follow the [`commitizen format`](https://gist.github.com/stephenparish/9941e89d80e2bc58a153#format-of-the-commit-message):
+
+```
+<type>(<optional_scope>): <subject>
+<BLANK LINE>
+<optional_body>
+```
+
+Example:
+
+```
+fix(transfers): fixed rerouting bug for cash by code transfer operation
+
+Please see files cash.ts and cash.service.ts and take a look at new private methods. Make sure you understand new rerouting algorithm.
+```
+
+```
+feat: implemented new authorization logic for trusted users
+```
+
+Note that `<scope>` is optional, but we highly encourage to include JIRA ticket ID, for example `STR-777`.
+
+* Make sure you run `npm install` at the beginning
+
+Please use [`commitizen`](http://commitizen.github.io/cz-cli/) command-line tool for generating commit messages if you feel uncomfortable manually writing all these strongly-formatted messages (we all do).
+After running `git add`, run `git cz` instead of regular commit command. You will be taken through message building steps.
+
+* [Commitizen docs](http://commitizen.github.io/cz-cli)
+*  [Extensive article in russian](https://anvilabs.co/blog/writing-practical-commit-messages/)
+*  [Another article russian](https://habr.com/company/yandex/blog/431432/)
+
+
+### Localization texts workflow
+
+##### First setup
+
+For localization we use [phrase](https://phrase.com/)
+[Here](https://help.phrase.com/help/phrase-in-your-terminal) you can install phrase cli
+You can see the config file here https://help.phrase.com/help/configuration
+
+##### Contribution
+
+There is no default values, so it is required to add values for languages/ in vpn app
+
+to get new keys from phrase, just run 
+`phraseapp pull`
+
+
+### Modules
+
+Application will be divided into 5 macro-modules:
+
+- `Auth`
+- `Main`
+- `Utilities`
+- `Networking`
+- `VPN-IOS`
+
