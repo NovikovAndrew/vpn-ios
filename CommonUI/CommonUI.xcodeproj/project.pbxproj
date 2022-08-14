@@ -85,6 +85,7 @@
 		9900A616289BA1710050CE26 /* CommonUI */ = {
 			isa = PBXGroup;
 			children = (
+				99999EE328A923A900FE19C9 /* View */,
 				99A44AFA289ECDDF00C9C4E3 /* Factory */,
 				99A44B07289ED25E00C9C4E3 /* VPNButton */,
 				99A44AF7289ECCCD00C9C4E3 /* VPNTetxField */,
@@ -100,6 +101,13 @@
 				9900A623289BA1710050CE26 /* CommonUITests.swift */,
 			);
 			path = CommonUITests;
+			sourceTree = "<group>";
+		};
+		99999EE328A923A900FE19C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		99A44AF7289ECCCD00C9C4E3 /* VPNTetxField */ = {

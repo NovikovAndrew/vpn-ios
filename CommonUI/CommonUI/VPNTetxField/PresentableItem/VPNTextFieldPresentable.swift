@@ -8,10 +8,10 @@
 import UIKit
 
 public protocol VPNTextFieldPresentable: CommonUIPresentable {
-    var berderColor: UIColor { get set }
-    var borderWidth: CGFloat { get set }
-    var backgroundColor: UIColor { get set }
-    var textColor: UIColor { get set }
-    var textFont: UIFont { get set }
-    var textInsets: UIEdgeInsets { get set }
+    var berderColor: UIColor { get }
+    var borderWidth: CGFloat { get }
+    var backgroundColor: UIColor { get }
+    var textColor: UIColor { get }
+    var textFont: UIFont { get }
+    var textInsets: UIEdgeInsets { get }
 }
