@@ -12,6 +12,8 @@
 
 - [Modules](#modules)
 
+- [Firebase workflow](#firebase-workflow)
+
 
 ### Project bootstrap
 
@@ -127,4 +129,15 @@ Application will be divided into 5 macro-modules:
 - `Utilities`
 - `Networking`
 - `VPN-IOS`
+
+### Firebase workflow
+
+All Firebase analytics events are added to project through `alfa_analytics_generator` project. 
+
+Events are created in json files and then codegenerated into Swift and kotlin enums. `Events` is the name of swift enumeration, which is 1-to-1 namespaced according to provided JSON files. Analytics events are recorded using Facade interface provided by analytics generator:  `AnalyticsFacade`. See its public methods for details. 
+
+Tips: 
+* All new features should be developed along with their corresponding analytics events
+* Analytics events are usually recorded in Presenter layer inside each module.
+* Use dependency injection to incorporate `AnalyticsFacade` in your class
 
