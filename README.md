@@ -10,9 +10,9 @@
 
 - [Localization texts workflow](#localization-texts-workflow)
 
-- [Modules](#modules)
-
 - [Firebase workflow](#firebase-workflow)
+
+- [Design migration AB testing](#design-migration-ab-testing)
 
 
 ### Project bootstrap
@@ -119,17 +119,6 @@ There is no default values, so it is required to add values for languages/ in vp
 to get new keys from phrase, just run 
 `phraseapp pull`
 
-
-### Modules
-
-Application will be divided into 5 macro-modules:
-
-- `Auth`
-- `Main`
-- `Utilities`
-- `Networking`
-- `VPN-IOS`
-
 ### Firebase workflow
 
 All Firebase analytics events are added to project through `alfa_analytics_generator` project. 
@@ -140,4 +129,50 @@ Tips:
 * All new features should be developed along with their corresponding analytics events
 * Analytics events are usually recorded in Presenter layer inside each module.
 * Use dependency injection to incorporate `AnalyticsFacade` in your class
+
+### --- DESIGN MIGRATION AB TESTING ---
+
+##### Intro:
+Project will enter into Redesign migration development stage, during which a majority of existing app modules will be changed according to new app design. Team has decided to manage design migration incrementally, using A/B testing capabilities of Firebase. Specific modules will be transformed into new design and shown to user depending on which A/B experiment group he belongs to. 
+
+##### Modules
+
+Application will be divided into 5 macro-modules:
+
+- `Auth`
+- `Main`
+- `Utilities`
+- `Networking`
+- `VPN-IOS`
+
+##### RemoteConfig
+
+RemoteConfig entry for a specific audience may look like this:
+
+```json
+{
+    "main": {
+        "experimentGroup": "redesign"
+    },
+    "auth": {
+        "experimentGroup": "redesign"
+    }
+}
+
+// this means that this user will experience redesigned modules in 
+// - payments macromodule (utilities, history etc) 
+// - and banking macro-module (statements, loans, cards etc)
+```
+
+##### In code
+
+**Rule of thumb**: In application code, experimentable Macro-module will have its own *AB GroupFactory*. Each *AB GroupFactory* has *AB Factory Closure* for all/some of AB Experiment Groups (be default has only one *AB GroupFactory* for `redesign` AB Experiment Group).
+
+| Name               | Class/alias name  |Description  |
+|:----------------- |:-------------|:-------------|
+| Macro-module   | DesignMigrationMacroModuleFlagId | One of application's main business modules, which contains a number of different regular modules. Redesign migration can be conducted along each macro-module separately    | 
+| AB experiment group   | DesignMigrationExperimentGroup | Firebase experiment group to which user will belong during his session. For each experiment group there might be a distinct AB Factory Closure (or might not)  | 
+| AB GroupFactory   |  SingleModuleGroupABFactory | Factory containing alternative implementation closures for various app services&modules for each AB experiment group, they will be injected into main dependency container and served to user at runtime. By default, there will only be an implementation closure for `redesign` experiment group  | 
+| AB Factory Closure   | SingleModuleABFactoryClosure | Swift closure which prepares implementations for specific service abstractions and registers them in Swinject dependency container passed to this closure. During Swinject dependency container assemble, alternative implementations registered in this factory closures will be served to user (cosmetic changes, UX changes etc) | 
+
 
