@@ -130,7 +130,7 @@ Tips:
 * Analytics events are usually recorded in Presenter layer inside each module.
 * Use dependency injection to incorporate `AnalyticsFacade` in your class
 
-### --- DESIGN MIGRATION AB TESTING ---
+### Design migration AB testing
 
 ##### Intro:
 Project will enter into Redesign migration development stage, during which a majority of existing app modules will be changed according to new app design. Team has decided to manage design migration incrementally, using A/B testing capabilities of Firebase. Specific modules will be transformed into new design and shown to user depending on which A/B experiment group he belongs to. 
@@ -160,8 +160,8 @@ RemoteConfig entry for a specific audience may look like this:
 }
 
 // this means that this user will experience redesigned modules in 
-// - payments macromodule (utilities, history etc) 
-// - and banking macro-module (statements, loans, cards etc)
+// - main macromodule
+// - and auth macro-module
 ```
 
 ##### In code
