@@ -16,6 +16,8 @@
 
 - [UI Documentation](#ui-documentation)
 
+- [Local test build upload](#local-upload)
+
 
 ### Project bootstrap
 
