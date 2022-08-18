@@ -18,6 +18,7 @@
 
 - [Local test build upload](#local-upload)
 
+- [Other scripts](#other-automation-scripts)
 
 ### Project bootstrap
 
@@ -125,7 +126,7 @@ to get new keys from phrase, just run
 
 ### Firebase workflow
 
-All Firebase analytics events are added to project through `alfa_analytics_generator` project. 
+All Firebase analytics events are added to project through `vpn_analytics_generator` project. 
 
 Events are created in json files and then codegenerated into Swift and kotlin enums. `Events` is the name of swift enumeration, which is 1-to-1 namespaced according to provided JSON files. Analytics events are recorded using Facade interface provided by analytics generator:  `AnalyticsFacade`. See its public methods for details. 
 
@@ -185,4 +186,59 @@ https://confluence
 
 Документация по использованию цветов и иконок:
 https://confluence
+
+#### Other scripts
+##### Setting up generamba for a separate framework
+
+Setting up generamba for a separate framework is kind of hacky, so there is a script for that. It copies existing Rambafile to the new framework, edits it to replace framework names and creates a link to the Templates folder. Also it suggests to commit the changes.
+
+`./setup_generamba.sh FRAMEWORK_NAME`
+
+##### Generate module script for a separate framework
+
+This script simplifies module generation for a framework. It goes to the framework folder, and runs the generamba command(` generamba gen Something vpn_viper_swift `). Then it goes out of the folder and suggests to commit the changes.
+The first argument is the framework name, the second is the module name, and the rest is custom parameters for generamba.
+
+Example:
+
+`./generate_module.sh FRAMEWORK_NAME MODULE_NAME hasViewManager:true modulePath:Example type:MVP`
+
+Simpler example:
+
+`./generate_module.sh FRAMEWORK_NAME MODULE_NAME`
+
+which is essentially the same as:
+
+`./generate_module.sh FRAMEWORK_NAME MODULE_NAME hasViewManager:false modulePath: type:VIPER`
+
+##### Generation in main module
+
+If you want to create a `VIPER` module "Something", then use:
+
+` generamba gen Something vpn_viper_swift ` - for VIPER module
+
+This will create a number of source+test files and add them automatically to `Source/Modules/`and `AlfaBankTests/` folders respectively.
+
+There are available few custom paramters for module generation. Example:
+
+` generamba gen Something vpn_viper_swift --custom-parameters=hasViewManager:true modulePath:Example type:MVP `
+
+It will generate an ` MVP ` module with a ` view manager ` and every entity will start with ` Example.Something. ` namespace prefix.
+
+Custom parameters:
+
+| **Parameter name** | **Description** | **Values** |
+|-|-|-|
+| hasPresenterModuleOutput | Determines wether or not to create a `ModuleOutput` instance for presenter dependency | true(default), false |
+| hasViewManager | Determines wether or not to create a `ViewManager` | true, false(default) |
+| modulePath | Describes from where should the created module be nested.<br>For example if we have a big module ``(which is a structure in code)<br>which should contain a new `VIPER` module `MonthlyPayment`<br>we should write <br>`generamba gen MonthlyPayment vpn_viper_swift --custom-parameters=modulePath:Example` | Any string representing where the<br>created module is nested,<br>for example `BigModule.SubModule`.<br>Default is empty |
+| type | Determines the architecture to be used. `MVP` has no `Interactor` nor `Router`. Viper has both. | MVP, VIPER(default) |
+
+* We highly recommend reading this [book on VIPER architecture](https://github.com/strongself/The-Book-of-VIPER)
+* [Generamba repo page](https://github.com/rambler-digital-solutions/Generamba)
+
+#### Generating a module for a framework
+
+Generating a module for a framework is possible with a separate Rambafile which is generated through [setup_generamba script](#setup-generamba). There is an inconvenience that you have to `cd` into the project folder to create a module. For simplifying that you can use the [generate_module script](#generate-module-script).
+
 
