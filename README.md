@@ -184,7 +184,7 @@ RemoteConfig entry for a specific audience may look like this:
 link:
 https://confluence
 
-Документация по использованию цветов и иконок:
+Documentation for using colors and icons:
 https://confluence
 
 #### Other scripts
