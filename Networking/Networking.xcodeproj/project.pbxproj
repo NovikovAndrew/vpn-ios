@@ -31,9 +31,14 @@
 		991A91FC28A127490091AD80 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91FB28A127490091AD80 /* Alamofire.xcframework */; };
 		991A91FD28A127490091AD80 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 991A91FB28A127490091AD80 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		991A920028A128980091AD80 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91FF28A128980091AD80 /* HTTPStatusCode.swift */; };
+		992AD98928BF1DAE00FBB20C /* PreRequestResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD98828BF1DAE00FBB20C /* PreRequestResolver.swift */; };
+		992AD98F28BF333B00FBB20C /* AuthRepositoryPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD98E28BF333B00FBB20C /* AuthRepositoryPresentable.swift */; };
+		992AD99128BF334F00FBB20C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD99028BF334F00FBB20C /* AuthRepository.swift */; };
+		992AD99428BF34DE00FBB20C /* AuthTokenRepoPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD99328BF34DE00FBB20C /* AuthTokenRepoPresentable.swift */; };
+		992AD99628BF368C00FBB20C /* AuthTokenRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD99528BF368C00FBB20C /* AuthTokenRepo.swift */; };
+		992AD99928BF37AA00FBB20C /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 992AD99828BF37AA00FBB20C /* SwiftKeychainWrapper */; };
 		9979D628289BC5FB008BD172 /* NetworkingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D627289BC5FB008BD172 /* NetworkingType.swift */; };
 		9979D62B289BC6A6008BD172 /* AuthTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62A289BC6A6008BD172 /* AuthTarget.swift */; };
-		9979D62D289BC6C6008BD172 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62C289BC6C6008BD172 /* AuthRepository.swift */; };
 		9979D62F289BC6F9008BD172 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D62E289BC6F9008BD172 /* Networking.swift */; };
 		9979D682289BC96B008BD172 /* AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D681289BC96B008BD172 /* AuthRequest.swift */; };
 		9979D684289BC974008BD172 /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D683289BC974008BD172 /* RegisterRequest.swift */; };
@@ -88,9 +93,13 @@
 		991A91F428A127430091AD80 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxBlocking.xcframework; path = ../Carthage/Build/RxBlocking.xcframework; sourceTree = "<group>"; };
 		991A91FB28A127490091AD80 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		991A91FF28A128980091AD80 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
+		992AD98828BF1DAE00FBB20C /* PreRequestResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreRequestResolver.swift; sourceTree = "<group>"; };
+		992AD98E28BF333B00FBB20C /* AuthRepositoryPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepositoryPresentable.swift; sourceTree = "<group>"; };
+		992AD99028BF334F00FBB20C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		992AD99328BF34DE00FBB20C /* AuthTokenRepoPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenRepoPresentable.swift; sourceTree = "<group>"; };
+		992AD99528BF368C00FBB20C /* AuthTokenRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenRepo.swift; sourceTree = "<group>"; };
 		9979D627289BC5FB008BD172 /* NetworkingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingType.swift; sourceTree = "<group>"; };
 		9979D62A289BC6A6008BD172 /* AuthTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTarget.swift; sourceTree = "<group>"; };
-		9979D62C289BC6C6008BD172 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		9979D62E289BC6F9008BD172 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		9979D681289BC96B008BD172 /* AuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRequest.swift; sourceTree = "<group>"; };
 		9979D683289BC974008BD172 /* RegisterRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
@@ -110,6 +119,7 @@
 				9900A638289BA32D0050CE26 /* Utilities.framework in Frameworks */,
 				991A91F928A127430091AD80 /* RxBlocking.xcframework in Frameworks */,
 				991A91DA28A117070091AD80 /* Moya in Frameworks */,
+				992AD99928BF37AA00FBB20C /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +235,8 @@
 		9900A639289BA3C80050CE26 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				9979D62C289BC6C6008BD172 /* AuthRepository.swift */,
+				992AD99228BF34C800FBB20C /* AuthToken */,
+				992AD98D28BF332E00FBB20C /* AuthRepo */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -257,9 +268,36 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		992AD98728BF1D9700FBB20C /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				992AD98828BF1DAE00FBB20C /* PreRequestResolver.swift */,
+			);
+			path = Plugins;
+			sourceTree = "<group>";
+		};
+		992AD98D28BF332E00FBB20C /* AuthRepo */ = {
+			isa = PBXGroup;
+			children = (
+				992AD98E28BF333B00FBB20C /* AuthRepositoryPresentable.swift */,
+				992AD99028BF334F00FBB20C /* AuthRepository.swift */,
+			);
+			path = AuthRepo;
+			sourceTree = "<group>";
+		};
+		992AD99228BF34C800FBB20C /* AuthToken */ = {
+			isa = PBXGroup;
+			children = (
+				992AD99328BF34DE00FBB20C /* AuthTokenRepoPresentable.swift */,
+				992AD99528BF368C00FBB20C /* AuthTokenRepo.swift */,
+			);
+			path = AuthToken;
+			sourceTree = "<group>";
+		};
 		9979D626289BC5EA008BD172 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				992AD98728BF1D9700FBB20C /* Plugins */,
 				991A91FE28A1288C0091AD80 /* Models */,
 				9979D627289BC5FB008BD172 /* NetworkingType.swift */,
 				9979D62E289BC6F9008BD172 /* Networking.swift */,
@@ -298,6 +336,7 @@
 			name = Networking;
 			packageProductDependencies = (
 				991A91D928A117070091AD80 /* Moya */,
+				992AD99828BF37AA00FBB20C /* SwiftKeychainWrapper */,
 			);
 			productName = Networking;
 			productReference = 9900A5A7289B98100050CE26 /* Networking.framework */;
@@ -350,6 +389,7 @@
 			mainGroup = 9900A59D289B98100050CE26;
 			packageReferences = (
 				991A91D828A117060091AD80 /* XCRemoteSwiftPackageReference "Moya" */,
+				992AD99728BF37AA00FBB20C /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			productRefGroup = 9900A5A8289B98100050CE26 /* Products */;
 			projectDirPath = "";
@@ -384,16 +424,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				991A91DE28A117B90091AD80 /* AnyTargetConvertable.swift in Sources */,
+				992AD99628BF368C00FBB20C /* AuthTokenRepo.swift in Sources */,
+				992AD98F28BF333B00FBB20C /* AuthRepositoryPresentable.swift in Sources */,
 				9979D628289BC5FB008BD172 /* NetworkingType.swift in Sources */,
+				992AD99428BF34DE00FBB20C /* AuthTokenRepoPresentable.swift in Sources */,
 				9979D62B289BC6A6008BD172 /* AuthTarget.swift in Sources */,
 				9900A5AC289B98100050CE26 /* Networking.docc in Sources */,
 				99F7090F28A665B900C3BE8F /* Result.swift in Sources */,
 				9979D62F289BC6F9008BD172 /* Networking.swift in Sources */,
 				991A91E228A118AF0091AD80 /* BaseProviderType.swift in Sources */,
 				991A920028A128980091AD80 /* HTTPStatusCode.swift in Sources */,
-				9979D62D289BC6C6008BD172 /* AuthRepository.swift in Sources */,
+				992AD98928BF1DAE00FBB20C /* PreRequestResolver.swift in Sources */,
 				991A91E028A1182A0091AD80 /* AnyTaget.swift in Sources */,
 				991A91E928A121BB0091AD80 /* HttpHeadersBuilderProtocol.swift in Sources */,
+				992AD99128BF334F00FBB20C /* AuthRepository.swift in Sources */,
 				9979D682289BC96B008BD172 /* AuthRequest.swift in Sources */,
 				9979D684289BC974008BD172 /* RegisterRequest.swift in Sources */,
 				9900A635289BA2C20050CE26 /* NetworkingFrameworkRegistration.swift in Sources */,
@@ -674,6 +718,14 @@
 				kind = branch;
 			};
 		};
+		992AD99728BF37AA00FBB20C /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -681,6 +733,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 991A91D828A117060091AD80 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		992AD99828BF37AA00FBB20C /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 992AD99728BF37AA00FBB20C /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

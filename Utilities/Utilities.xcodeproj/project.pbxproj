@@ -21,6 +21,7 @@
 		991A91E628A11D340091AD80 /* ModuleInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91E528A11D340091AD80 /* ModuleInjection.swift */; };
 		991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */; };
 		991A91EE28A122960091AD80 /* VPNConfigKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91ED28A122960091AD80 /* VPNConfigKey.swift */; };
+		992AD98C28BF302D00FBB20C /* printDEBUG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD98B28BF302D00FBB20C /* printDEBUG.swift */; };
 		99662E0728A0E4A6001F087A /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; };
 		99662E0828A0E4A6001F087A /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B13289FE5E800C9C4E3 /* swiftgen.yml */; };
@@ -72,6 +73,7 @@
 		991A91E528A11D340091AD80 /* ModuleInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleInjection.swift; sourceTree = "<group>"; };
 		991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigTypes.swift; sourceTree = "<group>"; };
 		991A91ED28A122960091AD80 /* VPNConfigKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigKey.swift; sourceTree = "<group>"; };
+		992AD98B28BF302D00FBB20C /* printDEBUG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = printDEBUG.swift; sourceTree = "<group>"; };
 		99662E0628A0E4A6001F087A /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = ../Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		99A44B13289FE5E800C9C4E3 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = vpn_assets.stencil; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		9900A5CE289B98490050CE26 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				992AD98A28BF301E00FBB20C /* Utils */,
 				991A91EA28A121FB0091AD80 /* Config */,
 				99A44B21289FEA9C00C9C4E3 /* Generated */,
 				99A44B0C289ED4DA00C9C4E3 /* VPNColor */,
@@ -205,6 +208,14 @@
 				991A91ED28A122960091AD80 /* VPNConfigKey.swift */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		992AD98A28BF301E00FBB20C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				992AD98B28BF302D00FBB20C /* printDEBUG.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		99A44B0C289ED4DA00C9C4E3 /* VPNColor */ = {
@@ -374,6 +385,7 @@
 				991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */,
 				991A91E628A11D340091AD80 /* ModuleInjection.swift in Sources */,
 				9900A5D1289B98490050CE26 /* Utilities.docc in Sources */,
+				992AD98C28BF302D00FBB20C /* printDEBUG.swift in Sources */,
 				99A44B1C289FE79D00C9C4E3 /* api_codes_flatkeys.stencil in Sources */,
 				991A91EE28A122960091AD80 /* VPNConfigKey.swift in Sources */,
 				9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */,

@@ -8,4 +8,5 @@
 public enum ApiResult<DataType> {
     case success(DataType)
     case error(Error)
+    case failure(String)
 }
