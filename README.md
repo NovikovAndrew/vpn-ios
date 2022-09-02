@@ -69,6 +69,8 @@ Script consists from 2 files:
 
 Example:
 
+`ruby generamba.rb`
+
 
 ### Swinject DI workflow
 
