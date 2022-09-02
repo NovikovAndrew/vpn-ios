@@ -125,7 +125,7 @@ open class Networking: NetworkingType {
                     completion(.success(jsonData))
                 } catch {
                     printDEBUG(error)
-                    // VPNLocalce.Common.Error.any
+                    // FIXME: VPNLocalce.Common.Error.any
                     completion(.failure("Error"))
                 }
             case .failure(let error):
@@ -136,79 +136,108 @@ open class Networking: NetworkingType {
         }
     }
     
-    //
-    //    public func load<DataType>(target: AnyTargetConvertible, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func load<DataType>(target: AnyTargetConvertible, cancelIfNoInternet: Bool, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func loadCompletable(target: AnyTargetConvertible, completion: @escaping (ApiResult<Void>) -> Void) {
-    //
-    //    }
-    //
-    //    public func loadCompletableCheckStatusCode(target: AnyTargetConvertible, statusCode: HTTPStatusCode, completion: @escaping (ApiResult<Void>) -> Void) {
-    //
-    //    }
-    //
-    //    public func loadPayment(target: AnyTargetConvertible, completion: @escaping (ApiResult<[String : Any]>) -> Void) {
-    //
-    //    }
-    //
-    //    public func loadDataRespModel<DataType>(target: AnyTargetConvertible, completion: @escaping (ApiResult<DataType>) -> Void) {
-    //
-    //    }
-    //
+    public func load<DataType: Decodable>(target: AnyTargetConvertible, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? {
+        fatalError()
+    }
     
-    //    public func loadArray<DataType>(target: AnyTargetConvertible, completion: @escaping (ApiResult<[DataType]>) -> Void) where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func loadString(target: AnyTargetConvertible, completion: @escaping (ApiResult<String>) -> Void) {
-    //
-    //    }
-    //
-    //    public func loadDict(target: AnyTargetConvertible, completion: @escaping (ApiResult<[String : Any]>) -> Void) {
-    //
-    //    }
-    //
-    //    public func load<Response>(target: AnyTargetConvertible) -> Observable<Response> where Response : Decodable {
-    //
-    //    }
-    //
-    //    public func load(target: AnyTargetConvertible) -> Observable<Void> {
-    //
-    //    }
-    //
-    //
-    //    public func loadCodableWithCustomError<DataType>(target: AnyTargetConvertible, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func loadCodableWithCheckStatusCode<DataType>(
-    //        target: AnyTargetConvertible,
-    //        statusCode: HTTPStatusCode,
-    //        completion: @escaping (ApiResult<DataType>) -> Void
-    //    ) -> Cancellable? where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func loadCodableWithCustomError<DataType>(
-    //        target: AnyTargetConvertible,
-    //        convertToSnakeCase: Bool,
-    //        completion: @escaping (ApiResult<DataType>) -> Void)
-    //    -> Cancellable? where DataType : Decodable {
-    //
-    //    }
-    //
-    //    public func loadCodableWithCustomError<DataType: Decodable>(
-    //        target: AnyTargetConvertible, convertToSnakeCase: Bool,
-    //        cancelIfNoInternet: Bool,
-    //        completion: @escaping (ApiResult<DataType>
-    //        ) -> Void) -> Cancellable? {
-    //
+    public func load<DataType>(target: AnyTargetConvertible, cancelIfNoInternet: Bool, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? where DataType : Decodable {
+        fatalError()
+    }
+    
+    public func loadCompletable(target: AnyTargetConvertible, completion: @escaping (ApiResult<Void>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadCompletableCheckStatusCode(target: AnyTargetConvertible, statusCode: HTTPStatusCode, completion: @escaping (ApiResult<Void>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadPayment(target: AnyTargetConvertible, completion: @escaping (ApiResult<[String : Any]>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadDataRespModel<DataType>(target: AnyTargetConvertible, completion: @escaping (ApiResult<DataType>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadArray<DataType: Decodable>(target: AnyTargetConvertible, completion: @escaping (ApiResult<[DataType]>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadString(target: AnyTargetConvertible, completion: @escaping (ApiResult<String>) -> Void) {
+        fatalError()
+    }
+    
+    public func loadDict(target: AnyTargetConvertible, completion: @escaping (ApiResult<[String : Any]>) -> Void) {
+        fatalError()
+    }
+    
+    public func load<Response: Decodable>(target: AnyTargetConvertible) -> Observable<Response> {
+        fatalError()
+    }
+    
+    public func load(target: AnyTargetConvertible) -> Observable<Void> {
+        fatalError()
+    }
+
+    public func loadCodableWithCheckStatusCode<DataType: Decodable>(target: AnyTargetConvertible, statusCode: HTTPStatusCode, completion: @escaping (ApiResult<DataType>) -> Void) -> Cancellable? {
+        fatalError()
+    }
+    
+    public func loadCodableWithCustomError<DataType: Decodable>(
+        target: AnyTargetConvertible,
+        completion: @escaping (ApiResult<DataType>
+        ) -> Void) -> Cancellable? {
+        loadCodableWithCustomError(target: target, convertToSnakeCase: false, completion: completion)
+    }
+    
+    public func loadCodableWithCustomError<DataType: Decodable>(
+        target: AnyTargetConvertible,
+        convertToSnakeCase: Bool,
+        completion: @escaping (ApiResult<DataType>) -> Void
+    ) -> Cancellable? {
+        loadCodableWithCustomError(target: target,
+                                   convertToSnakeCase: convertToSnakeCase,
+                                   cancelIfNoInternet: true,
+                                   completion: completion)
+    }
+    
+    public func loadCodableWithCustomError<DataType: Decodable>(
+        target: AnyTargetConvertible,
+        convertToSnakeCase: Bool,
+        cancelIfNoInternet: Bool,
+        completion: @escaping (ApiResult<DataType>) -> Void
+    ) -> Cancellable? {
+        
+        let decoder = JSONDecoder()
+        if convertToSnakeCase {
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+        }
+
+        return moyaProvider.request(target.any) { result in
+            switch result {
+            case .success(let response):
+                let httpStatus = HTTPStatusCode(rawValue: response.statusCode) ?? HTTPStatusCode.internalServerError
+                switch httpStatus.responseType {
+                case .success:
+                    do {
+                        let jsonData = try decoder.decode(DataType.self, from: response.data)
+                        completion(.success(jsonData))
+                    } catch {
+                        printDEBUG(error)
+                        // FIXME: VPNLocalce.Common.Error.any
+                        completion(.failure("Error"))
+                    }
+
+                default: break
+                }
+            case .failure(let error):
+                if let errorText = Networking.buildErrorText(moyaError: error) {
+                    completion(.failure(errorText))
+                }
+            }
+        }
+    }
 }
 
 

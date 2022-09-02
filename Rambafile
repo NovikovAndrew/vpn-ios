@@ -8,7 +8,7 @@ xcodeproj_path: vpn-ios.xcodeproj
 
 ### Code generation settings section
 # The main project target name
-project_target: [vpn-ios]
+project_targets: [vpn-ios, CommonUI]
 
 # The file path for new modules
 project_file_path: vpn-ios/Sources/Modules/
@@ -16,19 +16,15 @@ project_file_path: vpn-ios/Sources/Modules/
 # The Xcode group path to new modules
 project_group_path: vpn-ios/Sources/Modules
 
-# The Xcode group path to new tests
-test_group_path: VPN-IOS-Tests/
-
-# The file path for new tests
-test_file_path: VPN-IOS-Tests/
-
-
 ### Tests generation settings section
 # The tests target name
 test_target: vpn-ios
 
+# The file path for new tests
+test_file_path: VPN-IOS-Tests/
 
-
+# The Xcode group path to new tests
+test_group_path: VPN-IOS-Tests/
 
 ### Dependencies settings section
 

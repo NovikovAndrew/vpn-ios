@@ -21,7 +21,8 @@ public class PreRequestResolver {
             closure(.failure(MoyaError.requestMapping("")))
             return
         }
-    
+        
+        
         
     }
 }

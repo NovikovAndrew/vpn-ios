@@ -7,5 +7,6 @@
 
 import Foundation
 
-public protocol AuthRepositoryPresentable {    
+public protocol AuthRepositoryPresentable {
+    
 }
