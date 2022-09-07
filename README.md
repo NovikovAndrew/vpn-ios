@@ -177,7 +177,7 @@ You can see the config file here https://help.phrase.com/help/configuration
 
 ##### Contribution
 
-There is no default values, so it is required to add values for languages/ in vpn app
+There is no default values, so it is required to add values for ru, en languages/
 
 to get new keys from phrase, just run 
 `phraseapp pull`
