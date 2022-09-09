@@ -85,6 +85,7 @@
 		9900A616289BA1710050CE26 /* CommonUI */ = {
 			isa = PBXGroup;
 			children = (
+				993A1CDF28CB44470009B14E /* Modules */,
 				99999EE328A923A900FE19C9 /* View */,
 				99A44AFA289ECDDF00C9C4E3 /* Factory */,
 				99A44B07289ED25E00C9C4E3 /* VPNButton */,
@@ -98,9 +99,24 @@
 		9900A622289BA1710050CE26 /* CommonUITests */ = {
 			isa = PBXGroup;
 			children = (
+				993A1CE028CB44F80009B14E /* Modules */,
 				9900A623289BA1710050CE26 /* CommonUITests.swift */,
 			);
 			path = CommonUITests;
+			sourceTree = "<group>";
+		};
+		993A1CDF28CB44470009B14E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		993A1CE028CB44F80009B14E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		99999EE328A923A900FE19C9 /* View */ = {

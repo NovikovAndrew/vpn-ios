@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E2AF76C639DFC5991E83703 /* TestViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8085F17C9BA742D58BD4640 /* TestViewTests.swift */; };
-		25B593A2AFB0D1CE4ED68663 /* Test1PresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9636DD3222B3C1BB410F6A3 /* Test1PresenterTests.swift */; };
-		31D050F121C3B2A2AC097EC6 /* Test1ViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47F0C47A878556693B3CEE9 /* Test1ViewTests.swift */; };
-		49DEECF95F309145FE6919C2 /* TestPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54057A9B2212D9AC166AD0BB /* TestPresenterTests.swift */; };
-		55E4D1F1CE508BB2F3D76094 /* TestAssemblyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E70ECDE9FE69E629DBBAD4 /* TestAssemblyTests.swift */; };
-		794DE1B4D8F4298E778AA57B /* Test1AssemblyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3919696485F9132DABE081C5 /* Test1AssemblyTests.swift */; };
 		9900A5EC289B98AA0050CE26 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9900A5EB289B98AA0050CE26 /* Networking.framework */; };
 		9900A5ED289B98AA0050CE26 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9900A5EB289B98AA0050CE26 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9900A5F0289B98AE0050CE26 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9900A5EF289B98AE0050CE26 /* Utilities.framework */; };
@@ -61,9 +55,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3919696485F9132DABE081C5 /* Test1AssemblyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Test1AssemblyTests.swift; sourceTree = "<group>"; };
-		54057A9B2212D9AC166AD0BB /* TestPresenterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestPresenterTests.swift; sourceTree = "<group>"; };
-		78E70ECDE9FE69E629DBBAD4 /* TestAssemblyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestAssemblyTests.swift; sourceTree = "<group>"; };
 		9900A5E7289B986A0050CE26 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A5E9289B986A0050CE26 /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A5EB289B98AA0050CE26 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,9 +73,6 @@
 		991B4EC3289B948F0086BD03 /* vpn_iosUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vpn_iosUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9979D678289BC7D5008BD172 /* Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99A44B24289FF84900C9C4E3 /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
-		C8085F17C9BA742D58BD4640 /* TestViewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestViewTests.swift; sourceTree = "<group>"; };
-		E47F0C47A878556693B3CEE9 /* Test1ViewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Test1ViewTests.swift; sourceTree = "<group>"; };
-		F9636DD3222B3C1BB410F6A3 /* Test1PresenterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Test1PresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,40 +104,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27BDF8459ABB34C11F2E8C3E /* Test1 */ = {
-			isa = PBXGroup;
-			children = (
-				753D8175B31359878DF7DB9D /* Assembly */,
-				E9172A009D193F7E76C2E86B /* View */,
-				49689801C1E49365069B043A /* Presenter */,
-			);
-			path = Test1;
-			sourceTree = "<group>";
-		};
-		49689801C1E49365069B043A /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				F9636DD3222B3C1BB410F6A3 /* Test1PresenterTests.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		753D8175B31359878DF7DB9D /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				3919696485F9132DABE081C5 /* Test1AssemblyTests.swift */,
-			);
-			path = Assembly;
-			sourceTree = "<group>";
-		};
-		7B33F7EA5AF862023578CE35 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				54057A9B2212D9AC166AD0BB /* TestPresenterTests.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
 		9900A5E6289B986A0050CE26 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,45 +193,9 @@
 			path = "VPN-IOS-Tests";
 			sourceTree = "<group>";
 		};
-		AC8E42F61C03AB566B81FA0A /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				C74C622D94F474DAFBB4ED76 /* Assembly */,
-				C486CC38556D2DDEB933044F /* View */,
-				7B33F7EA5AF862023578CE35 /* Presenter */,
-			);
-			path = Test;
-			sourceTree = "<group>";
-		};
-		C486CC38556D2DDEB933044F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C8085F17C9BA742D58BD4640 /* TestViewTests.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C74C622D94F474DAFBB4ED76 /* Assembly */ = {
-			isa = PBXGroup;
-			children = (
-				78E70ECDE9FE69E629DBBAD4 /* TestAssemblyTests.swift */,
-			);
-			path = Assembly;
-			sourceTree = "<group>";
-		};
-		E9172A009D193F7E76C2E86B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E47F0C47A878556693B3CEE9 /* Test1ViewTests.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		EC328943E063A68D16409700 /* VPN-IOS-Tests */ = {
 			isa = PBXGroup;
 			children = (
-				AC8E42F61C03AB566B81FA0A /* Test */,
-				27BDF8459ABB34C11F2E8C3E /* Test1 */,
 			);
 			path = "VPN-IOS-Tests";
 			sourceTree = "<group>";
@@ -415,12 +333,6 @@
 				991B4EA5289B948B0086BD03 /* ViewController.swift in Sources */,
 				991B4EA1289B948B0086BD03 /* AppDelegate.swift in Sources */,
 				991B4EA3289B948B0086BD03 /* SceneDelegate.swift in Sources */,
-				55E4D1F1CE508BB2F3D76094 /* TestAssemblyTests.swift in Sources */,
-				0E2AF76C639DFC5991E83703 /* TestViewTests.swift in Sources */,
-				49DEECF95F309145FE6919C2 /* TestPresenterTests.swift in Sources */,
-				794DE1B4D8F4298E778AA57B /* Test1AssemblyTests.swift in Sources */,
-				31D050F121C3B2A2AC097EC6 /* Test1ViewTests.swift in Sources */,
-				25B593A2AFB0D1CE4ED68663 /* Test1PresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,31 +4,27 @@ company: vpn-ios
 ### Xcode project settings
 project_name: vpn-ios
 product_module_name: vpn-ios
-xcodeproj_path: vpn-ios.xcodeproj
+xcodeproj_path: Utilities.xcodeproj
 
 ### Code generation settings section
 # The main project target name
-project_targets: [vpn-ios]
+project_targets: [Utilities]
 
 # The file path for new modules
-project_file_path: vpn-ios/Sources/Modules/
+project_file_path: Utilities/Modules/
 
 # The Xcode group path to new modules
-project_group_path: vpn-ios/Sources/Modules
+project_file_path: Utilities/Modules/
 
 ### Tests generation settings section
 # The tests target name
-test_target: vpn-ios
+test_target: UtilitiesTests
 
 # The file path for new tests
-test_file_path: VPN-IOS-Tests/
+test_file_path: UtilitiesTests/Modules
 
 # The Xcode group path to new tests
-test_group_path: VPN-IOS-Tests/
-
-### Dependencies settings section
-
-cartfile_path: Cartfile
+test_file_path: UtilitiesTests/Modules
 
 ### Templates
 templates:
@@ -36,4 +32,3 @@ templates:
 - {name: mvvm_controller}
 - {name: swifty_viper}
 - {name: vpn_viper_swift}
-

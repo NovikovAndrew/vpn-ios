@@ -73,6 +73,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		993A1CDE28CB3FDF0009B14E /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		9979D654289BC7B9008BD172 = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +113,7 @@
 		9979D66C289BC7B9008BD172 /* AuthTests */ = {
 			isa = PBXGroup;
 			children = (
+				993A1CDE28CB3FDF0009B14E /* Modules */,
 				9979D66D289BC7B9008BD172 /* AuthTests.swift */,
 			);
 			path = AuthTests;

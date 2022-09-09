@@ -12,5 +12,5 @@ then
 fi
 
 cd $frameworkName
-generamba gen $moduleName alfa_viper_swift $customParameters
+generamba gen $moduleName vpn_viper_swift $customParameters
 cd ..
