@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EB5EB7B87BF9742E4074799 /* UI1ViewInputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41DD85F695595F2F4287FD9E /* UI1ViewInputOutput.swift */; };
+		2C0029E4B8B9EE2E63FE370C /* UI1Assemblying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6078A284942F772451E80E8F /* UI1Assemblying.swift */; };
+		57605E653E8DDF9FA74EAE2C /* UI1Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F6BB8EAD8EE2A0E9C0BDCB /* UI1Interactor.swift */; };
+		599F863560CE558A8F35284D /* UI1AssemblyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9063F60DEC52735B07E26A /* UI1AssemblyTests.swift */; };
+		615E9B639F39C976AF0B2FE4 /* UI1Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5D379C08F87F5DC151A6F9 /* UI1Presenter.swift */; };
+		82C859272AF764825DE4B265 /* UI1Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671945911FA705C6404FD0 /* UI1Router.swift */; };
+		8E265592A26D1824E868887A /* UI1Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED2F0323B1E9B290F304ABA /* UI1Assembly.swift */; };
 		99662E0B28A0E530001F087A /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0A28A0E530001F087A /* Swinject.xcframework */; };
 		99662E0C28A0E531001F087A /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0A28A0E530001F087A /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9979D663289BC7B9008BD172 /* Auth.docc in Sources */ = {isa = PBXBuildFile; fileRef = 9979D662289BC7B9008BD172 /* Auth.docc */; };
@@ -15,6 +22,15 @@
 		9979D66F289BC7B9008BD172 /* Auth.h in Headers */ = {isa = PBXBuildFile; fileRef = 9979D661289BC7B9008BD172 /* Auth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9979D67D289BC81C008BD172 /* AuthFrameworkRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D67C289BC81C008BD172 /* AuthFrameworkRegistration.swift */; };
 		9979D680289BC84F008BD172 /* Utilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9979D67F289BC84F008BD172 /* Utilities.framework */; };
+		AAD11E16C2CD5B50C9ABC853 /* UI1ViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54304B57DA4908BE593620C /* UI1ViewModels.swift */; };
+		B8A5F88617AAB7EBB00D21D8 /* UI1ModuleInputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD34301E73746BA467FAF625 /* UI1ModuleInputOutput.swift */; };
+		C285286F1A783DCEC7EF8011 /* UI1InteractorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFCBD7E59E6D3ABAD37129E /* UI1InteractorInput.swift */; };
+		C2C3DDC346647DD40F0DE243 /* UI1PresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCBE5D6A57B92B16C21E471 /* UI1PresenterTests.swift */; };
+		C5BF667C800ACD46D3646FE9 /* UI1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69462ED3D767D068D078B7 /* UI1View.swift */; };
+		C943BACDF4B555A66F1BB616 /* UI1ViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFC2D9AEE7C0423BE113C75 /* UI1ViewTests.swift */; };
+		DA53C84AD5688E88A273B34D /* UI1RouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554A3DD2E6CCF33C6F9941B2 /* UI1RouterInput.swift */; };
+		DFEF20885DE66709C5BDE0FE /* UI1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B664B21EF3AAA06FAF70A791 /* UI1ViewController.swift */; };
+		EBEA64F09A6318E2D4B7D530 /* UI1InteractorOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896E95B0A999C89AA48E54B0 /* UI1InteractorOutput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +58,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C671945911FA705C6404FD0 /* UI1Router.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1Router.swift; sourceTree = "<group>"; };
+		2FFCBD7E59E6D3ABAD37129E /* UI1InteractorInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1InteractorInput.swift; sourceTree = "<group>"; };
+		41DD85F695595F2F4287FD9E /* UI1ViewInputOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1ViewInputOutput.swift; sourceTree = "<group>"; };
+		554A3DD2E6CCF33C6F9941B2 /* UI1RouterInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1RouterInput.swift; sourceTree = "<group>"; };
+		6078A284942F772451E80E8F /* UI1Assemblying.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1Assemblying.swift; sourceTree = "<group>"; };
+		6CFC2D9AEE7C0423BE113C75 /* UI1ViewTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1ViewTests.swift; sourceTree = "<group>"; };
+		6ED2F0323B1E9B290F304ABA /* UI1Assembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1Assembly.swift; sourceTree = "<group>"; };
+		7A9063F60DEC52735B07E26A /* UI1AssemblyTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1AssemblyTests.swift; sourceTree = "<group>"; };
+		896E95B0A999C89AA48E54B0 /* UI1InteractorOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1InteractorOutput.swift; sourceTree = "<group>"; };
 		99662E0A28A0E530001F087A /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = ../Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		9979D65E289BC7B9008BD172 /* Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9979D661289BC7B9008BD172 /* Auth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Auth.h; sourceTree = "<group>"; };
@@ -50,6 +75,13 @@
 		9979D66D289BC7B9008BD172 /* AuthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTests.swift; sourceTree = "<group>"; };
 		9979D67C289BC81C008BD172 /* AuthFrameworkRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFrameworkRegistration.swift; sourceTree = "<group>"; };
 		9979D67F289BC84F008BD172 /* Utilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Utilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD34301E73746BA467FAF625 /* UI1ModuleInputOutput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1ModuleInputOutput.swift; sourceTree = "<group>"; };
+		B54304B57DA4908BE593620C /* UI1ViewModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1ViewModels.swift; sourceTree = "<group>"; };
+		B664B21EF3AAA06FAF70A791 /* UI1ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1ViewController.swift; sourceTree = "<group>"; };
+		BFCBE5D6A57B92B16C21E471 /* UI1PresenterTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1PresenterTests.swift; sourceTree = "<group>"; };
+		CC5D379C08F87F5DC151A6F9 /* UI1Presenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1Presenter.swift; sourceTree = "<group>"; };
+		CD69462ED3D767D068D078B7 /* UI1View.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1View.swift; sourceTree = "<group>"; };
+		F0F6BB8EAD8EE2A0E9C0BDCB /* UI1Interactor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UI1Interactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +105,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A83012F31B51B269A35E6CA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6CFC2D9AEE7C0423BE113C75 /* UI1ViewTests.swift */,
+			);
+			name = View;
+			path = View;
+			sourceTree = "<group>";
+		};
+		186B747A23000915DC433368 /* UI1 */ = {
+			isa = PBXGroup;
+			children = (
+				6DE95521E62034E6E98DD974 /* Assembly */,
+				0A83012F31B51B269A35E6CA /* View */,
+				B6F10A49FD0A911067C0FF59 /* Presenter */,
+			);
+			name = UI1;
+			path = UI1;
+			sourceTree = "<group>";
+		};
+		1FF01ABE66068233B308B81A /* UI1 */ = {
+			isa = PBXGroup;
+			children = (
+				89E3F497AEC94C34BB72A4C0 /* Assembly */,
+				9F79695E15DEB7392FA2E634 /* Presenter */,
+				FE3A96D8E3FD46F04BC7BF37 /* Interactor */,
+				E4FADA223DE2A9CD6A2620CA /* Router */,
+				A9C1F42BE5FF469052252D44 /* ViewController */,
+			);
+			name = UI1;
+			path = UI1;
+			sourceTree = "<group>";
+		};
+		52208BA6DF40B11AEE44A575 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD69462ED3D767D068D078B7 /* UI1View.swift */,
+			);
+			name = View;
+			path = View;
+			sourceTree = "<group>";
+		};
+		6DE95521E62034E6E98DD974 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				7A9063F60DEC52735B07E26A /* UI1AssemblyTests.swift */,
+			);
+			name = Assembly;
+			path = Assembly;
+			sourceTree = "<group>";
+		};
+		89E3F497AEC94C34BB72A4C0 /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				6078A284942F772451E80E8F /* UI1Assemblying.swift */,
+				6ED2F0323B1E9B290F304ABA /* UI1Assembly.swift */,
+			);
+			name = Assembly;
+			path = Assembly;
+			sourceTree = "<group>";
+		};
 		993A1CDE28CB3FDF0009B14E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				186B747A23000915DC433368 /* UI1 */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -122,6 +216,7 @@
 		9979D67A289BC7DB008BD172 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1FF01ABE66068233B308B81A /* UI1 */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -141,6 +236,58 @@
 				9979D67F289BC84F008BD172 /* Utilities.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F79695E15DEB7392FA2E634 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				AD34301E73746BA467FAF625 /* UI1ModuleInputOutput.swift */,
+				CC5D379C08F87F5DC151A6F9 /* UI1Presenter.swift */,
+			);
+			name = Presenter;
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		A9C1F42BE5FF469052252D44 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				52208BA6DF40B11AEE44A575 /* View */,
+				41DD85F695595F2F4287FD9E /* UI1ViewInputOutput.swift */,
+				B664B21EF3AAA06FAF70A791 /* UI1ViewController.swift */,
+				B54304B57DA4908BE593620C /* UI1ViewModels.swift */,
+			);
+			name = ViewController;
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		B6F10A49FD0A911067C0FF59 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				BFCBE5D6A57B92B16C21E471 /* UI1PresenterTests.swift */,
+			);
+			name = Presenter;
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		E4FADA223DE2A9CD6A2620CA /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				554A3DD2E6CCF33C6F9941B2 /* UI1RouterInput.swift */,
+				1C671945911FA705C6404FD0 /* UI1Router.swift */,
+			);
+			name = Router;
+			path = Router;
+			sourceTree = "<group>";
+		};
+		FE3A96D8E3FD46F04BC7BF37 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				2FFCBD7E59E6D3ABAD37129E /* UI1InteractorInput.swift */,
+				896E95B0A999C89AA48E54B0 /* UI1InteractorOutput.swift */,
+				F0F6BB8EAD8EE2A0E9C0BDCB /* UI1Interactor.swift */,
+			);
+			name = Interactor;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,6 +402,19 @@
 			files = (
 				9979D663289BC7B9008BD172 /* Auth.docc in Sources */,
 				9979D67D289BC81C008BD172 /* AuthFrameworkRegistration.swift in Sources */,
+				2C0029E4B8B9EE2E63FE370C /* UI1Assemblying.swift in Sources */,
+				8E265592A26D1824E868887A /* UI1Assembly.swift in Sources */,
+				B8A5F88617AAB7EBB00D21D8 /* UI1ModuleInputOutput.swift in Sources */,
+				615E9B639F39C976AF0B2FE4 /* UI1Presenter.swift in Sources */,
+				C285286F1A783DCEC7EF8011 /* UI1InteractorInput.swift in Sources */,
+				EBEA64F09A6318E2D4B7D530 /* UI1InteractorOutput.swift in Sources */,
+				57605E653E8DDF9FA74EAE2C /* UI1Interactor.swift in Sources */,
+				DA53C84AD5688E88A273B34D /* UI1RouterInput.swift in Sources */,
+				82C859272AF764825DE4B265 /* UI1Router.swift in Sources */,
+				C5BF667C800ACD46D3646FE9 /* UI1View.swift in Sources */,
+				1EB5EB7B87BF9742E4074799 /* UI1ViewInputOutput.swift in Sources */,
+				DFEF20885DE66709C5BDE0FE /* UI1ViewController.swift in Sources */,
+				AAD11E16C2CD5B50C9ABC853 /* UI1ViewModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +423,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9979D66E289BC7B9008BD172 /* AuthTests.swift in Sources */,
+				599F863560CE558A8F35284D /* UI1AssemblyTests.swift in Sources */,
+				C943BACDF4B555A66F1BB616 /* UI1ViewTests.swift in Sources */,
+				C2C3DDC346647DD40F0DE243 /* UI1PresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
