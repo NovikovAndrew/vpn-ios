@@ -10,6 +10,8 @@
 
 - [Localization texts workflow](#localization-texts-workflow)
 
+- [Swiftgen workflow](#swiftgen-workflow)
+
 - [Firebase workflow](#firebase-workflow)
 
 - [Design migration AB testing](#design-migration-ab-testing)
@@ -181,6 +183,24 @@ There is no default values, so it is required to add values for ru, en languages
 
 to get new keys from phrase, just run 
 `phraseapp pull`
+
+### Swiftgen workflow
+
+####
+
+#### How update image, color or localization string 
+
+If you want to add a new icon color or localization string you have to go to swiftgen directory
+
+```
+cd projectDirectory/Utilities/Utilities/Resources 
+```
+
+For updatding use command 
+
+```
+swiftgen
+```
 
 ### Firebase workflow
 

@@ -12,7 +12,6 @@
 		9900A5DC289B984A0050CE26 /* UtilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A5DB289B984A0050CE26 /* UtilitiesTests.swift */; };
 		9900A5DD289B984A0050CE26 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 9900A5CF289B98490050CE26 /* Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9900A5FF289BA0760050CE26 /* AppImageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */; };
-		9900A602289BA0A20050CE26 /* AppColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */; };
 		9900A633289BA29D0050CE26 /* FrameworkRegistrationPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */; };
 		9905B57528A0DE6E004839D1 /* FeatureToggle.liquid in Sources */ = {isa = PBXBuildFile; fileRef = 9905B57428A0DE6E004839D1 /* FeatureToggle.liquid */; };
 		9905B57B28A0E23F004839D1 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9905B57A28A0E23F004839D1 /* Alamofire.xcframework */; };
@@ -22,15 +21,20 @@
 		991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */; };
 		991A91EE28A122960091AD80 /* VPNConfigKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991A91ED28A122960091AD80 /* VPNConfigKey.swift */; };
 		992AD98C28BF302D00FBB20C /* printDEBUG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992AD98B28BF302D00FBB20C /* printDEBUG.swift */; };
+		993DC6E128D97A5B00307CD9 /* ErrorCodes.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993DC6E028D97A5A00307CD9 /* ErrorCodes.generated.swift */; };
+		993DC6E328D97A6B00307CD9 /* VPNStrings.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993DC6E228D97A6B00307CD9 /* VPNStrings.generated.swift */; };
+		993DC6E528D97B1600307CD9 /* VPNAssets.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993DC6E428D97B1600307CD9 /* VPNAssets.generated.swift */; };
+		993DC6FD28D97FAB00307CD9 /* ApiLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 993DC6FF28D97FAB00307CD9 /* ApiLocalizable.strings */; };
 		99662E0728A0E4A6001F087A /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; };
 		99662E0828A0E4A6001F087A /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99662E0628A0E4A6001F087A /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B13289FE5E800C9C4E3 /* swiftgen.yml */; };
 		99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */; };
 		99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */; };
 		99A44B1C289FE79D00C9C4E3 /* api_codes_flatkeys.stencil in Sources */ = {isa = PBXBuildFile; fileRef = 99A44B1B289FE79D00C9C4E3 /* api_codes_flatkeys.stencil */; };
-		99A44B1E289FE91400C9C4E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B1D289FE91400C9C4E3 /* Localizable.strings */; };
-		99A44B20289FE92F00C9C4E3 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */; };
-		99A44B23289FEE7200C9C4E3 /* ApiLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */; };
+		99CCEBEA28D98A9E002EE3F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99CCEBEC28D98A9E002EE3F2 /* Localizable.strings */; };
+		99CCEBF028D98AB2002EE3F2 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 99CCEBF228D98AB2002EE3F2 /* Localizable.stringsdict */; };
+		99CCEBF528D98F41002EE3F2 /* AppColorAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99CCEBF428D98F41002EE3F2 /* AppColorAssets.xcassets */; };
+		99CCEBF728D98FBA002EE3F2 /* VPNColors.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CCEBF628D98FBA002EE3F2 /* VPNColors.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +69,6 @@
 		9900A5D6289B984A0050CE26 /* UtilitiesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilitiesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9900A5DB289B984A0050CE26 /* UtilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesTests.swift; sourceTree = "<group>"; };
 		9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppImageAssets.xcassets; sourceTree = "<group>"; };
-		9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppColorAssets.xcassets; sourceTree = "<group>"; };
 		9900A632289BA29C0050CE26 /* FrameworkRegistrationPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkRegistrationPresentable.swift; sourceTree = "<group>"; };
 		9905B57428A0DE6E004839D1 /* FeatureToggle.liquid */ = {isa = PBXFileReference; lastKnownFileType = text; path = FeatureToggle.liquid; sourceTree = "<group>"; };
 		9905B57A28A0E23F004839D1 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
@@ -74,14 +77,23 @@
 		991A91EB28A1220A0091AD80 /* VPNConfigTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigTypes.swift; sourceTree = "<group>"; };
 		991A91ED28A122960091AD80 /* VPNConfigKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNConfigKey.swift; sourceTree = "<group>"; };
 		992AD98B28BF302D00FBB20C /* printDEBUG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = printDEBUG.swift; sourceTree = "<group>"; };
+		993DC6E028D97A5A00307CD9 /* ErrorCodes.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.generated.swift; sourceTree = "<group>"; };
+		993DC6E228D97A6B00307CD9 /* VPNStrings.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNStrings.generated.swift; sourceTree = "<group>"; };
+		993DC6E428D97B1600307CD9 /* VPNAssets.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNAssets.generated.swift; sourceTree = "<group>"; };
+		993DC6EC28D97E2A00307CD9 /* ios_colors.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ios_colors.json; sourceTree = "<group>"; };
+		993DC6FE28D97FAB00307CD9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ApiLocalizable.strings; sourceTree = "<group>"; };
+		993DC70028D97FAD00307CD9 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/ApiLocalizable.strings; sourceTree = "<group>"; };
 		99662E0628A0E4A6001F087A /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = ../Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		99A44B13289FE5E800C9C4E3 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		99A44B17289FE70C00C9C4E3 /* vpn_assets.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = vpn_assets.stencil; sourceTree = "<group>"; };
 		99A44B19289FE78700C9C4E3 /* vpn-locale.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vpn-locale.stencil"; sourceTree = "<group>"; };
 		99A44B1B289FE79D00C9C4E3 /* api_codes_flatkeys.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = api_codes_flatkeys.stencil; sourceTree = "<group>"; };
-		99A44B1D289FE91400C9C4E3 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
-		99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = ApiLocalizable.strings; sourceTree = "<group>"; };
+		99CCEBEB28D98A9E002EE3F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99CCEBED28D98AA1002EE3F2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99CCEBF128D98AB2002EE3F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		99CCEBF328D98AB3002EE3F2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		99CCEBF428D98F41002EE3F2 /* AppColorAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppColorAssets.xcassets; sourceTree = "<group>"; };
+		99CCEBF628D98FBA002EE3F2 /* VPNColors.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNColors.generated.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,7 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				9900A5FE289BA0760050CE26 /* AppImageAssets.xcassets */,
-				9900A601289BA0A20050CE26 /* AppColorAssets.xcassets */,
+				99CCEBF428D98F41002EE3F2 /* AppColorAssets.xcassets */,
 			);
 			path = XCAssets;
 			sourceTree = "<group>";
@@ -165,20 +177,10 @@
 			path = Extentions;
 			sourceTree = "<group>";
 		};
-		9900A603289BA0BE0050CE26 /* localization */ = {
-			isa = PBXGroup;
-			children = (
-				99A44B1D289FE91400C9C4E3 /* Localizable.strings */,
-				99A44B1F289FE92F00C9C4E3 /* Localizable.stringsdict */,
-			);
-			name = localization;
-			path = Localization/localization;
-			sourceTree = "<group>";
-		};
 		9900A604289BA0C20050CE26 /* apiErrors */ = {
 			isa = PBXGroup;
 			children = (
-				99A44B22289FEE7200C9C4E3 /* ApiLocalizable.strings */,
+				993DC6FF28D97FAB00307CD9 /* ApiLocalizable.strings */,
 			);
 			path = apiErrors;
 			sourceTree = "<group>";
@@ -236,10 +238,11 @@
 		99A44B12289FE53900C9C4E3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				993DC6EC28D97E2A00307CD9 /* ios_colors.json */,
+				99CCEBE728D98A7E002EE3F2 /* localization */,
+				9900A604289BA0C20050CE26 /* apiErrors */,
 				99A44B15289FE6EE00C9C4E3 /* swiftgen_templates */,
 				9900A5FB289BA03E0050CE26 /* XCAssets */,
-				9900A604289BA0C20050CE26 /* apiErrors */,
-				9900A603289BA0BE0050CE26 /* localization */,
 				99A44B13289FE5E800C9C4E3 /* swiftgen.yml */,
 			);
 			path = Resources;
@@ -267,8 +270,21 @@
 		99A44B21289FEA9C00C9C4E3 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
+				993DC6E428D97B1600307CD9 /* VPNAssets.generated.swift */,
+				993DC6E028D97A5A00307CD9 /* ErrorCodes.generated.swift */,
+				993DC6E228D97A6B00307CD9 /* VPNStrings.generated.swift */,
+				99CCEBF628D98FBA002EE3F2 /* VPNColors.generated.swift */,
 			);
 			path = Generated;
+			sourceTree = "<group>";
+		};
+		99CCEBE728D98A7E002EE3F2 /* localization */ = {
+			isa = PBXGroup;
+			children = (
+				99CCEBEC28D98A9E002EE3F2 /* Localizable.strings */,
+				99CCEBF228D98AB2002EE3F2 /* Localizable.stringsdict */,
+			);
+			path = localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +344,7 @@
 		9900A5C3289B98490050CE26 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
+				BuildIndependentTargetsInParallel = NO;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
@@ -346,6 +362,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 				Base,
 			);
 			mainGroup = 9900A5C2289B98490050CE26;
@@ -364,10 +381,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9900A602289BA0A20050CE26 /* AppColorAssets.xcassets in Resources */,
-				99A44B23289FEE7200C9C4E3 /* ApiLocalizable.strings in Resources */,
-				99A44B20289FE92F00C9C4E3 /* Localizable.stringsdict in Resources */,
-				99A44B1E289FE91400C9C4E3 /* Localizable.strings in Resources */,
+				993DC6FD28D97FAB00307CD9 /* ApiLocalizable.strings in Resources */,
+				99CCEBF528D98F41002EE3F2 /* AppColorAssets.xcassets in Resources */,
+				99CCEBF028D98AB2002EE3F2 /* Localizable.stringsdict in Resources */,
+				99CCEBEA28D98A9E002EE3F2 /* Localizable.strings in Resources */,
 				9900A5FF289BA0760050CE26 /* AppImageAssets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,10 +403,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CCEBF728D98FBA002EE3F2 /* VPNColors.generated.swift in Sources */,
 				9905B57528A0DE6E004839D1 /* FeatureToggle.liquid in Sources */,
 				99A44B1A289FE78700C9C4E3 /* vpn-locale.stencil in Sources */,
+				993DC6E328D97A6B00307CD9 /* VPNStrings.generated.swift in Sources */,
 				99A44B14289FE5E800C9C4E3 /* swiftgen.yml in Sources */,
 				99A44B18289FE70C00C9C4E3 /* vpn_assets.stencil in Sources */,
+				993DC6E128D97A5B00307CD9 /* ErrorCodes.generated.swift in Sources */,
+				993DC6E528D97B1600307CD9 /* VPNAssets.generated.swift in Sources */,
 				991A91EC28A1220A0091AD80 /* VPNConfigTypes.swift in Sources */,
 				991A91E628A11D340091AD80 /* ModuleInjection.swift in Sources */,
 				9900A5D1289B98490050CE26 /* Utilities.docc in Sources */,
@@ -418,6 +439,36 @@
 			targetProxy = 9900A5D8289B984A0050CE26 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		993DC6FF28D97FAB00307CD9 /* ApiLocalizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				993DC6FE28D97FAB00307CD9 /* en */,
+				993DC70028D97FAD00307CD9 /* ru */,
+			);
+			name = ApiLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		99CCEBEC28D98A9E002EE3F2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99CCEBEB28D98A9E002EE3F2 /* en */,
+				99CCEBED28D98AA1002EE3F2 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		99CCEBF228D98AB2002EE3F2 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99CCEBF128D98AB2002EE3F2 /* en */,
+				99CCEBF328D98AB3002EE3F2 /* ru */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9900A5DE289B984A0050CE26 /* Debug */ = {
@@ -471,7 +522,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -528,7 +579,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -1,24 +1,32 @@
 strings:
- - inputs: localization/ru.lproj/Localizable.strings
-   outputs:
-    - templatePath: swiftgen_templates/strings/vpn-locale.stencil
-      output: ../Generated/VPNStrings.generated.swift
-      params:
-        enumName: VPNLocale
-        publicAccess: true
- - inputs: apiErrors/ru.lproj/ApiLocalizable.strings
-   outputs:
-    - templatePath: swiftgen_templates/strings/api_codes_flatkeys.stencil
-      output: ../Generated/ErrorCodes.generated.swift
-      params:
-        enumName: ErrorCodes
-        publicAccess: true
-
+  - inputs: localization/en.lproj/Localizable.strings
+    outputs:
+      - templatePath: swiftgen_templates/strings/vpn-locale.stencil
+        output: ../Generated/VPNStrings.generated.swift
+        params:
+          enumName: VPNLocale
+          publicAccess: true
+strings:
+  - inputs: apiErrors/en.lproj/ApiLocalizable.strings
+    outputs:
+      - templatePath: swiftgen_templates/strings/api_codes_flatkeys.stencil
+        output: ../Generated/ErrorCodes.generated.swift
+        params:
+          enumName: ErrorCodes
+          publicAccess: true
+      
 xcassets:
- - inputs: XCAssets/AppImageAssets.xcassets
-  outputs:
-    - templatePath: swiftgen_templates/vpn_assets.stencil
-      output: ../Generated/VPNAssets.generated.swift
-      params:
-        enumName: VPNAssets
-        publicAccess: true
+  - inputs: XCAssets/AppImageAssets.xcassets
+    outputs:
+      - templatePath: swiftgen_templates/vpn_assets.stencil
+        output: ../Generated/VPNAssets.generated.swift
+        params:
+          enumName: VPNAssets
+          publicAccess: true
+  - inputs: XCAssets/AppColorAssets.xcassets
+    outputs:
+      - templatePath: swiftgen_templates/vpn_assets.stencil
+        output: ../Generated/VPNColors.generated.swift
+        params:
+          enumName: VPNColors
+          publicAccess: true
